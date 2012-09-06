@@ -73,9 +73,7 @@ if (f) while(1) {
      if (bytes<=0) break;
      bytes = on_out(arg,buf,bytes); // print or other
      if (bytes!=0) { pclose(f); return bytes; }
-     //printf("\nread <%d><%*.*s>\n",bytes,bytes,bytes,buf);
      }
-//printf("done p=%p\n",f);
 pclose(f);
 return 1; // ok
 }
