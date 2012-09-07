@@ -32,6 +32,12 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="vos.h" />
+		<Unit filename="vos_com_linux.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="vos_linux_kbhit.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Extensions>
 			<envvars />
 			<code_completion />
