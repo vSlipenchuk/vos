@@ -2,8 +2,37 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "vos.h"
+#include "string.h"
 
 // stab tester ^)
+
+int comPortTest(char *com) {
+void *c= prt_open(com);
+if (!c) {
+    printf("Fail open comport %s\n",com);
+    return 0;
+   }
+printf("comPort %s opened OK in handle=%p\n",com,c);
+char buf[256];
+while(1) {
+   int len = prt_peek(c,buf,sizeof(buf));
+   if (len>0) {
+      //printf("{%*.*s}",len,len,buf);
+      printf("%*.*s",len,len,buf);
+      }
+    if (len==0) msleep(100); // do not 100% proc-usage
+    // how - check - do we have smth to push???
+   if (kbhit()) { // sim...
+       gets(buf);
+       if (buf[0]==0) break; // done
+       strcat(buf,"\r\n");
+       prt_write(c,buf,strlen(buf));
+      }
+   }
+prt_close(com);
+printf("comPort closed\n");
+return 1;
+}
 
 int mythread(int param) {
 printf("Param here=%d from thread\n",param);
@@ -46,6 +75,7 @@ return 0;
 }
 
 int main() {
+    return comPortTest("/dev/gobi/modem");
     return read_proc();
     //return count_max_threads();
     printf("Hello world!\n");

@@ -21,4 +21,14 @@ unsigned long os_ticks(); //GetTickCount()
 // exec programs - to get out in a buffer
 int os_exec(char *cmd, int (*on_out)(), void *arg); // on_out ret 0 = ok, continue
 
+// anyc com-ports wrapping (vos_com_[OS].c
+void *prt_open (char *name); // 0=error
+int   prt_peek (void *com,void *buf, int bytes); // (AsyncRead) 0=not-ready, <0 error
+int   prt_write(void *com,void *buf, int bytes); // <0 error
+void  prt_close(void *com);
+
+// term extenstions (win like)
+int kbhit();
+
+
 #endif // VOS_H_INCLUDED

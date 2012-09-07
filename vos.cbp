@@ -22,9 +22,16 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Linker>
+			<Add library="pthread" />
+		</Linker>
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="vos.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="vos.h" />
 		<Extensions>
 			<envvars />
 			<code_completion />
