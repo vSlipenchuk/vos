@@ -23,10 +23,10 @@ return (void*)h;
 int   prt_peek (void *com,void *buf, int size) {
 int h=(int)com; int bytesWaiting=1;
 if (h==0) return 0; // invalid
-ioctl(h, FIONREAD, &bytesWaiting);
+if (ioctl(h, FIONREAD, &bytesWaiting)!=0) return -1;
 if (bytesWaiting<=0) return bytesWaiting; // not yet
 if (bytesWaiting>size) bytesWaiting=size;
-return read(h,buf,bytesWaiting);
+return read(h,buf,bytesWaiting); // EOF=0 reading, like on sockets???
 }
 
 int   prt_write(void *com,void *buf, int len) {
