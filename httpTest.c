@@ -15,6 +15,11 @@
 #include "httpSrv.h"
 
 #ifdef httpTestMain
+
+
+#include "logger.c"
+#include "std_sock.c"
+
 /* compile with all need sources --- */
 #include "exe.c"
 #include "sock.c"
@@ -22,7 +27,7 @@
 #include "vos.c"
 #include "vs0.c"
 #include "vss.c"
-#include "logger.c"
+
 #include "coders.c"
 //#pragma comment(lib,"ws2_32")
 #endif
