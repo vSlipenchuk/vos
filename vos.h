@@ -1,6 +1,29 @@
 #ifndef VOS_H_INCLUDED
 #define VOS_H_INCLUDED
 
+#include "vtypes.h" // add my types
+#include <fcntl.h>
+#include <netdb.h>
+#include <sys/stat.h>
+#include <sys/socket.h>
+#define MAX_PATH PATH_MAX
+#define _vsnprintf vsnprintf
+#define closesocket close
+#define stricmp(str1,str2) strcasecmp(str1,str2)
+#define strnicmp(str1,str2,len) strncasecmp(str1,str2,len)
+
+
+#ifdef __WIN32__ // Win32 or WinCE here
+#include <windows.h>
+
+
+#define MSWIN
+#else // LINUX or UNIX
+#include <unistd.h>
+#define O_BINARY 0
+
+#endif
+
 // threads
 void *thread_create (void *proc, void *arg); // creates a new thread (and returns it handler), or return NULL (on ERROR)
 //void  thread_suspend(void *thread); // win-only?
@@ -30,5 +53,9 @@ void  prt_close(void *com);
 // term extenstions (win like)
 int kbhit();
 
+
+// sockets
+
+int sock_accept(int lsock, int *ip);
 
 #endif // VOS_H_INCLUDED

@@ -1,0 +1,60 @@
+<html>
+<script src=/j/vs.js></script>
+<h1>microHttp server statistics</h1>
+
+<table width=100% border=1>
+<tr><td width=25%>Parameter<td width=25%>Value<td width=25%>Parameter<td width=25%>Value
+<tr><td width=25%>Connects:<td id=connects width=25%>    <td>Clients:<td id=clients>
+<tr><td>ServerTime:<td id=serverTime><td>Requests<td id=requests>
+<tr><td>MemUsed:<td id=mem><td>PacketPerSecond<td id=pps>
+<tr><td><b>AuthoRefresh (msec):</b><td> <input id="AutoRefresh" value="1000" />
+   <td><button onClick="ApplyRefTime()" style='width:100%'>Apply</button>
+
+</table>
+
+<hr>
+<a href=/httpTest.txt>httpTest.txt</a> <a href=/readme.txt>readme.txt</a>
+<hr>
+
+<script>
+
+var refTime = 1000;
+
+function ApplyRefTime() {
+var i = id('AutoRefresh').value;
+refTime = parseInt(i);
+if (i) Refresh();
+}
+
+function Refresh() {
+var e;
+try {
+//vReqText("","/big.txt"); // Just For big data...
+try{
+var text  = vReqText('','/.stat');
+text = eval('tmp='+text);
+} catch(e) {
+ //alert("ExceptOnRequest:"+e.message+",Text="+text);
+ }
+for(a in text) {
+  try {
+  id(a).innerHTML=text[a];
+  } catch(e) {
+    //alert('noid='+a);
+    //alert(text[a]);
+    }
+  }
+} catch(e) {
+ }
+if (refTime) setTimeout(Refresh,refTime);
+}
+
+Refresh();
+
+</script>
+
+
+
+
+
+</html>

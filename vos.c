@@ -77,3 +77,9 @@ if (f) while(1) {
 pclose(f);
 return 1; // ok
 }
+
+
+int os_mem_used() { // long int ???
+ return -1; // TOFO !!!
+}
+

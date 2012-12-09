@@ -1,10 +1,11 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
 #include "vos.h"
-#include "string.h"
+
 
 // stab tester ^)
+
+//int aborted;
+//time_t TimeNow;
+//char szTimeNow[18],szTime2Now[18];
 
 int comPortTest(char *com) {
 void *c= prt_open(com);
@@ -74,9 +75,19 @@ printf("code=%d\n",code);
 return 0;
 }
 
-int main() {
-    return comPortTest("/dev/gobi/modem");
-    return read_proc();
+
+int comPortSrvTest() {
+//printf("Hello WIN_32=%d!\n",0);
+
+return 0;
+}
+
+int main(int npar,char **par) {
+    return httpTestMain(npar,par);
+    //return MicroHttpMain(npar,par);
+    //return comPortSrvTest();
+    //return comPortTest("/dev/gobi/modem");
+    //return read_proc();
     //return count_max_threads();
     printf("Hello world!\n");
     void *th = thread_create(mythread,0);

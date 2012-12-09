@@ -1,0 +1,369 @@
+<!--<h1>Test comPort monitor</h1>
+
+<script src="/j/vs.js"></script>
+<script src="/j/comPort.js"></script>
+-->
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8;charset=utf-8" />
+<title>58ç"_æ_>æ__ç_¢ - 58.com </title>
+<style type="text/css">
+*{ margin:0; padding:0;}
+html,body{ height:100%;}
+body{ font:12px/180% normal Arial;}
+a:link{ color:#3366CC;}
+a:visited{color:#3366CC}
+a:hover{color:#3366CC}
+a:active{color:#3366CC}
+h3{ font-size:13px;}
+.w{ width:984px; margin:auto; clear:both;}
+#header{background:url(base_bg0.gif) repeat-x 0 45px;height:70px; padding-top:15px;}
+#logo{ float:left; margin:12px 10px 0 0; width:162px;}
+#searchbar{ height:26px;}
+#searchbar #sch_button{ height:24px; width:80px;}
+.keyword{ width:480px; height:18px;}
+
+#hotwords{ font-size:13px; height:26px;}
+#hotwords a{ margin:0 6px;}
+.gray{ color:#999;}
+
+.box_4_c{ width:23%; margin:1% 0.5% 0 0.5%; float:left; display:inline-block;}
+.box_4_c h3{ height:29px; line-height:29px; overflow:hidden; background:url(bar_bg00.gif) repeat-x 0 -174px; color:#444;}
+.box_4_c h3 span{ float:left; text-indent:0.4em;}
+.box_4_c h3 span.roll_l,.box_4_c h3 span.roll_r{ width:9px; height:29px; display:inline-block; background:url(bar_bg00.gif) no-repeat 0 0;}
+.box_4_c h3 span.roll_l{ float:left;}
+.box_4_c h3 span.roll_r{ float:right; background-position:0 -87px;}
+.box_4_c h3.color_2{ background-position:0 -203px;}
+.box_4_c h3.color_2 span.roll_l{ background-position:0 -29px;}
+.box_4_c h3.color_2 span.roll_r{ background-position:0 -116px;}
+
+.box_4_c h3.color_4{ background-position:0 -232px;}
+.box_4_c h3.color_4 span.roll_l{ background-position:0 -58px;}
+.box_4_c h3.color_4 span.roll_r{ background-position:0 -145px;}
+
+.box_4_c h3.color_3{ background-position:0 -290px;}
+.box_4_c h3.color_3 span.roll_l{ background-position:0 -261px;}
+.box_4_c h3.color_3 span.roll_r{ background-position:0 -319px;}
+
+.box_4_c h3.color_5{background-position:0 -377px;}
+.box_4_c h3.color_5 span.roll_l{ background-position:0 -348px;}
+.box_4_c h3.color_5 span.roll_r{ background-position:0 -406px;}
+
+.box_4_c h3.color_6{ background-position:0 -464px;}
+.box_4_c h3.color_6 span.roll_l{ background-position:0 -435px;}
+.box_4_c h3.color_6 span.roll_r{ background-position:0 -493px;}
+
+.box_4_c h3.color_7{ background-position:0 -551px;}
+.box_4_c h3.color_7 span.roll_l{ background-position:0 -522px;}
+.box_4_c h3.color_7 span.roll_r{ background-position:0 -580px;}
+
+.box_4_c h3.color_8{ background-position:0 -638px;}
+.box_4_c h3.color_8 span.roll_l{ background-position:0 -609px;}
+.box_4_c h3.color_8 span.roll_r{ background-position:0 -667px;}
+
+.box_4_c table{ border-left:solid 1px #C7C5C6; border-right:solid 1px #C7C5C6;}
+.box_4_c table th,.box_4_c table td{ height:22px; line-height:22px; text-align:center; border-bottom:solid 1px #f5f5f5; padding:2px 6px; white-space:nowrap;text-align:left;}
+.box_4_c table th{color:#999; font-size:12px;}
+.box_4_c table th{ text-align:center;}
+.box_4_c table tr.title th{ text-align:left; font-weight:normal;}
+
+h3 span.more { float:right; font-weight:normal!important;font-size:11px;padding-right:10px;}
+h3 span.more a{ color:#999;}
+
+.foot,.foot span{ background:url(foot_bg0.gif) no-repeat left 0; height:7px; line-height:7px; font-size:7px; overflow:hidden; clear:both;}
+.foot span{background:url(foot_bg0.gif) no-repeat right 0; width:10px; float:right;}
+#footer{ clear:both; text-align:center; font-family:Arial, Helvetica, sans-serif; padding-top:40px;}
+</style>
+<script language="javascript">
+function Go58Search(space)
+{
+    var value=value=document.getElementById("keyword").value;
+    if (value=="")
+    {
+        alert("è¯·è_"å:_å:_é"Rå--");
+        return false;
+    }
+    top.location.href="http://sou.58.com/?key4="+encodeURI(value)+"";
+}
+
+var isLast=false;
+function jsHot(obj,cindex,showCount)
+{
+    curreIndex=cindex;
+    var jsArrary=new Array();
+    jsArrary =obj.toString().split(",");
+    var icount=jsArrary.length;
+    if(curreIndex>=icount )
+        {curreIndex=0;}
+        
+    curreIndex++;
+    // alert(curreIndex);
+    var startIndex=curreIndex;
+    var endIndex = startIndex + showCount;
+    if(endIndex>icount)
+    {
+        isLast=true;
+        startIndex = 0;
+        endIndex = startIndex + showCount;
+    }
+ 
+    var links="";
+    var lstSearch=jsArrary.slice(startIndex,endIndex).toString().split(",");
+    //alert(lstSearch);
+    for(var i=0;i<lstSearch.length;i++)
+    {
+    links += "<tr><th>" + (i + 1) + ".</th><td>" + lstSearch[i]+ "</td><td><img src='http://pic2.58.com/images/5_0/ico_" + ((Math.round(Math.random()*10%7)/2) > 2 ? "down" : "up") + ".gif' /></td></tr>";
+
+    }
+   return links;
+    
+}
+
+// å+Tcookieså+_æ° 
+function SetCookie(name, value)// ä¸¤ä¸ªå_'æ°ï__ä¸_ä¸ªæ_¯cookieç_"å__å-_ï__ä¸_ä¸ªæ_¯å__
+{
+   var Days = 30;
+   var exp = new Date();
+   exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+   document.cookie = name + "=" + escape (value) + ";expires=" + exp.toGMTString()+"; path=" + "/" ;
+}
+
+function getCookie(name)// å_-cookieså+_æ°
+{
+   var arr = document.cookie.match(new RegExp("(^| )" + name + "=([^;]*)(;|$)"));
+   if(arr != null) return unescape(arr[2]);
+   return null;
+
+}
+
+function delCookie(name)//å_ éT¤cookie
+{
+    var exp = new Date();
+    exp.setTime(exp.getTime() - 1);
+    var cval=getCookie(name);
+    if(cval!=null) document.cookie= name + "="+cval+";expires="+exp.toGMTString();
+}
+
+
+ function GetLinks(cookieName,values)
+ { 
+    if(!getCookie(cookieName))
+        {SetCookie(cookieName,"0");}
+    lindex=getCookie(cookieName);
+   document.write(jsHot(values,lindex,10));
+   lindex++;
+   delCookie(cookieName);
+   if(isLast)
+    {SetCookie(cookieName,0);}
+    else
+    { SetCookie(cookieName,lindex);};
+  }
+
+</script>
+<base target="_blank" />
+
+</head>
+
+<body>
+<div id="header">
+<div class="w"><input type="hidden" id="hidsh" />
+<div id="logo"><img src="logonew0.gif" alt="sou.58.com" /></div>
+<div class="topright">
+<p id="hotwords">
+</p>
+
+<div id="searchbar">
+         <input type="text" id="keyword" class="keyword" value=""/> 
+         <input type="submit" id="sch_button" value="æ__ç_¢" onclick="Go58Search()" />  
+  </div>
+</div>
+</div>
+</div>
+<div class="w">
+<div class="box_4_c">
+<h3 class="color_1"><span class="roll_l"></span><span>ç"_æ_>ä¿¡æ_¯ç_-æ¦_</span><span class="roll_r"></span><span class="more"><a href="http://bj.58.com/">æ>_å¤_</a></span></h3>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr class="title">
+    <th width="15%" scope="col">æ_'è¡_</th>
+    <th width="64%" scope="col">å:_é"Rè¯_</th>
+    <th width="21%" scope="col">å_+éT_</th>
+  </tr>
+   
+   
+  <script>GetLinks("shenghuo",'<a href="http://go.58.com/?adsys=53&adcode=22&adpage=http%3A%2F%2Fdoc.70yx.com%2FCounter.aspx%3FCode%3D47462%26keys%3DS92EDFQNVQ0SGTT&tn=myie2dg" target="_blank">å:_è_¹é¢+ç_°é+'Qå¸_çº¢é'></a>,<a href="http://quanguo.58.com/nvyou/#topggad">ç__å__å:_è_¹è§+é¢'è__å¤c</a>,<a href="http://quanguo.58.com/yishusheying/#topggad">å°'å__äººä_"è%ºæ_¯ç:§å¤§è÷_</a>,<a style="color:red !important;" href="http://quanguo.58.com/zhengxingmr/#topggad">æ-_å__è_¸é_¨æ_å_¢ç_°å_º</a>,<a href="http://quanguo.58.com/nanzhuang/#topggad">ç__å__é__æ__æ-¶è_:ç§_è§+é¢'</a>,<a href="http://quanguo.58.com/gerenxiezhen/#topggad">å¹_æTç__å__å+Tç__</a>,<a href="http://quanguo.58.com/fukeyiy/#topggad">å__æ_§é__é_"ç__åR¹æ¸:æT°å¤§å>_</a>,<a href="http://quanguo.58.com/wangyou/#topggad">ç__å__è"+è¡_å°_æ¸¸æ__</a>,<a href="http://quanguo.58.com/yishusheying/#topggad">è¶:æ¨¡è¯+æ_'å+Tç__</a>,<a href="http://quanguo.58.com/laoxiang/#topggad">å¤§å-¦æ ¡è_+é>+ä_"äº¤å_<</a>,<a href="http://quanguo.58.com/wudaopeixun/#topggad">ç__å__æ<%ä¸_è__å_¹èR-ç_°å_º</a>,<a style="color:red !important;" href="http://quanguo.58.com/qitazhxing/#topggad">å¤-é__æ_å_¢åR_å>_</a>,<a href="http://quanguo.58.com/neiyijia/#topggad">ç__å__é__æ__å+:è¡_ç§_ç_°å_º</a>,<a href="http://quanguo.58.com/lifu/#topggad">09æ-°æ¬_åc_çº+å:_è_¹åR_å__</a>,<a href="http://quanguo.58.com/yishusheying/#topggad">ä¿"ç_-æ-¯ç__å__çcºå§_è¯+æ_'ç:§</a>,<a href="http://quanguo.58.com/kaquan/#topggad">å:_è_¹è_¬èRcç'_ä__ä__æ_ å_¡</a>,<a href="http://quanguo.58.com/nvyou/#topggad">å_èº<ä¿+ä¹_é_¨å:_è_¹ä_"éª_</a>,<a href="http://quanguo.58.com/xingqu/#topggad">æ_§æ"_çT_é¢+ç_'ä¸_å__åc_</a>,<a href="http://quanguo.58.com/zuliao/#topggad">2æ__ç"·å-_SPAä__æ%_æ__è¯¢</a>,<a style="color:red !important;" href="http://quanguo.58.com/yishusheying/#topggad">ç__å__ç_cåR¶ç"_æ_>è+ªæ<_</a>,<a href="http://quanguo.58.com/jianshen/#topggad">å"ªé+_ç_"å__èº<æ_¿ç__å__å¤_</a>,<a href="http://quanguo.58.com/qitazhxing/#topggad">æ_%æ'cä¸°è_¸æ_æ__å¯¹æ¯"</a>,<a href="http://quanguo.58.com/yishusheying/#topggad">æ_§æ"_å__ä¿_é-èR-ç>_è§+é¢'</a>,<a href="http://quanguo.58.com/gerenxiezhen/#topggad">å_+å+_äº_å§_æ_§æ"_å+Tç__</a>,<a style="color:red !important;" href="http://go.58.com/?adsys=53&adcode=16&adpage=http://www.51mdq.com/shop/index_10001_300.aspx" target="_blank">å>_åº+ç"÷åT¨ä¸_å:_æ_¢è_-</a>,<a href="http://q.58.com/yssearch.aspx?key=%u6700%u65B0%u5927%u7247">æ__æ-°å¤§ç%+å_¨çº¿è§'ç_<</a>');</script>
+</table>
+<div class="foot"><span></span></div>
+</div>
+
+<div class="box_4_c">
+<h3 class="color_5"><span class="roll_l"></span><span>æ<>å+å_ ç>_</span><span class="roll_r"></span><span class="more"><a href="http://bj.58.com/zhaoshang/">æ>_å¤_</a></span></h3>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr class="title">
+    <th width="15%" scope="col">æ_'è¡_</th>
+    <th width="64%" scope="col">å:_é"Rè¯_</th>
+    <th width="21%" scope="col">å_+éT_</th>
+  </tr>
+   
+           <script>GetLinks("touzi",'<a href="http://quanguo.58.com/canyinjia/#topggad">9å:_å¿<é¤_å_ ç>_</a>,<a href="http://quanguo.58.com/liangyuandian/#topggad">ä>_ä¹_å°_åº-æ__è÷_é'+</a>,<a href="http://quanguo.58.com/qitajiameng/#topggad">æ__è÷_8å__æ+'äººç"¨å"_</a>,<a href="http://quanguo.58.com/canyinjia/#topggad">æ_'æ__å¿<é__è÷_é'+</a>,<a href="http://quanguo.58.com/liangyuandian/#topggad">å°_æ_¬å_>ä¸_ä>_ä¹_è÷_é'+å¤_</a>,<a href="http://quanguo.58.com/neiyijia/#topggad">é>¶æ_è÷"è÷_é'+</a>,<a href="http://quanguo.58.com/shishangyinpin/#topggad">å+°æ·+æ·<åº-æ__é'+å_-</a>,<a href="http://quanguo.58.com/meirongbaojain/#topggad">ç_°å_¨æ__è÷_é'+ç_"é¡¹ç>R</a>,<a href="http://quanguo.58.com/tongzhuangjia/#topggad">å°_æ_¬ç"_æ"_å__å¹_å__æ'_éc¬</a>,<a href="http://quanguo.58.com/hanguoshipin/#topggad">é_°å"_åº-æ_è÷"å_+æ__</a>,<a href="http://quanguo.58.com/lipinjiameng/#topggad">å__å:_æ_è÷"å__åº-</a>,<a href="http://quanguo.58.com/neiyijia/#topggad">æ__ç_<ç_"è÷_é'+é¡¹ç>R</a>,<a href="http://quanguo.58.com/jingdianxiaochi/#topggad">å°_å__è_¦ä>·æ _</a>,<a href="http://quanguo.58.com/liangyuandian/#topggad">é>¶æ_è÷"å_>ä¸_å_ ç>_åº-</a>,<a href="http://quanguo.58.com/fuzhuangjia/#topggad">ä¸_å¹_è÷_å:<ä¸+æ__è_:ç"_æ"_</a>,<a href="http://quanguo.58.com/xiangbaojia/#topggad">å:_è_¹å_>ä¸_ç'¹å-_</a>,<a href="http://quanguo.58.com/shipinjiameng/#topggad">å_cæ¶¦æ__äººç_"é>¶æ__æ_¬å_>ä¸_</a>,<a href="http://quanguo.58.com/jiajuhuanbao/#topggad">ä>_ä¹_é¡¹ç>Rè÷_é'+æ__å¿<</a>,<a href="http://quanguo.58.com/qitajiameng/#topggad">å¹_æ_-åº-å:_è_¹å_ ç>_</a>,<a href="http://quanguo.58.com/nvzhuangjia/#topggad">å__åº-é_%å__åR_ç"¨æ%<å+_</a>,<a href="http://quanguo.58.com/shipinjiameng/#topggad">é>¶æ__æ_¬å_>ä¸_å¹_è÷_10ä¸+</a>,<a href="http://quanguo.58.com/meirongspa/#topggad">ç__åR¹å_ ç>_æ__è÷_5000</a>,<a href="http://quanguo.58.com/nvzhuangjia/#topggad">8å:_å_ ç>_æ-¶å°_é_cæ__åº-</a>,<a href="http://quanguo.58.com/jiajuhuanbao/#topggad">å_¨åR¶æ__è÷_6000ç_"é¡¹ç>R</a>,<a href="http://quanguo.58.com/shipinjiameng/#topggad">1å:_æ-¶å°_é_°å"_åº-å_ ç>_</a>,<a href="http://quanguo.58.com/canyinjia/#topggad">2009å¹_ç_"å_'è_¢ç'¹å-_</a>,<a href="http://quanguo.58.com/canyinjia/#topggad">ä>_ä¹_é¡¹ç>Ræ__è__æ__é'+</a>,<a href="http://quanguo.58.com/liangyuandian/#topggad">é>¶é__éTcä¸¤å:_åº-å:_è_¹å_ ç>_</a>,<a href="http://quanguo.58.com/jingdianxiaochi/#topggad">å°_æ_¬ç"_æ"_è÷_å¤§é'+</a>,<a href="http://quanguo.58.com/chuantshipin/#topggad">å¹_å_cçT_ä¸+ç%¹è%_é¤_é_Rå_ ç>_</a>,<a href="http://quanguo.58.com/tongzhuangjia/#topggad">æ__è_:æ%¹å_'æ__æ_¬ä__è÷_å¤§é'+</a>,<a href="http://quanguo.58.com/neiyijia/#topggad">09å¹_å¿<é__æ__é+'è+_å¯_ç'¹å-_</a>,<a href="http://quanguo.58.com/huahzuangpin/#topggad">ç__åR¹éT¢è÷_é'+ç§_å¯+æ¡_æ¡_</a>,<a href="http://quanguo.58.com/yangshen/#topggad">å-¦ç"_ä¸ºä>_ä¹_æ__äº+æ__å_'æ_·</a>,<a href="http://quanguo.58.com/lipinjiameng/#topggad">å"ªç§_å_ ç>_åº-è÷_é'+æ__å¿<</a>,<a href="http://quanguo.58.com/canyinjia/#topggad">æ_è÷"å__å¹_è÷_10ä¸+å__åR_éc¬</a>,<a href="http://quanguo.58.com/shipinjiameng/#topggad">å_ ç>_2å:_é_°å"_å¹_æ__20ä¸+</a>,<a href="http://quanguo.58.com/tongzhuangjia/#topggad">ç<_è_:å_ ç>_æ__è÷_6000</a>,<a href="http://quanguo.58.com/jingdianxiaochi/#topggad">ç_¯ä¿_å°_å__è_¦å:_è_¹å_ ç>_</a>,<a href="http://quanguo.58.com/qitajiameng/#topggad">æ__è÷_6000ç_"å_>ä¸_é¡¹ç>R</a>,<a href="http://quanguo.58.com/fuzhuangjia/#topggad">å°_æ_è÷"èRcä_ æ__è÷_8000</a>,<a href="http://quanguo.58.com/nvzhuangjia/#topggad">å°_æ__æ_¬æ__é_°å¹_å_cçT_ä¸+</a>,<a href="http://quanguo.58.com/qitajiameng/#topggad">å¦'ä_é>¶æ_è÷"è÷_å¤§é'+</a>,<a href="http://quanguo.58.com/neiyijia/#topggad">é>¶æ__æ_¬æ__é_°åº-æ__è÷_3ä¸+</a>,<a href="http://quanguo.58.com/qitajiameng/#topggad">19å__ç__å__æ__æ"¶å:_8000</a>,<a href="http://quanguo.58.com/canyinjia/#topggad">1å__æ_è÷"å°_å__åº-æ__è÷_3ä¸+</a>,<a href="http://quanguo.58.com/gongyipin/#topggad">æ__æ ·å¿<é__æ__ä¸ºæ__å_'æ_·</a>,<a href="http://quanguo.58.com/nvxie/#topggad">å_ ç>_é_cç%_å__é_<æ__è÷_10ä¸+</a>,<a href="http://quanguo.58.com/tongzhuangjia/#topggad">ä¸_å__å:_å__åº-å¹_å_c30ä¸+</a>,<a href="http://quanguo.58.com/nvzhuangjia/#topggad">å:_è_¹å__è_:å_ ç>_å¹_æ__çT_ä¸+</a>,<a href="http://quanguo.58.com/canyinjia/#topggad">ç>_ç'¹è÷_é'+æ__å¿<ç_"æ-¹æ_</a>,<a href="http://quanguo.58.com/jingdianxiaochi/#topggad">æ__é__ç"¨é'+æ__ä¹_å__</a>,<a href="http://quanguo.58.com/hanguoshipin/#topggad">å°_é_°å"_æ_è÷"æ__è÷_2ä¸+</a>,<a href="http://quanguo.58.com/meirongbaojain/#topggad">09å¹_ç¨_è÷_å_ ç>_é¡¹ç>Ræ_¨è__</a>,<a href="http://quanguo.58.com/xiangbaojia/#topggad">æ¯ä¸_å_"æ__å__è__æ_¿è÷_çT_ä¸+</a>,<a href="http://quanguo.58.com/neiyijia/#topggad">æ__è÷_é'+ç_"æ__å_cè¡_ä¸_</a>,<a href="http://quanguo.58.com/lipinjiameng/#topggad">è_+å-_å°'å__è÷_é'+æ_%"å__æ-¹"</a>,<a href="http://quanguo.58.com/liangyuandian/#topggad">ç_'ç>_è÷_é'+å:_é-¨æ_+å_-</a>,<a href="http://quanguo.58.com/jingdianxiaochi/#topggad">è¶:è÷_é'+ç_"å°_å__å_ ç>_é¡¹ç>R</a>,<a href="http://quanguo.58.com/nvzhuangjia/#topggad">å_ ç>_æ·'å__è_:ä¸_æ__è÷_å__ä¸+</a>');</script>
+</table>
+<div class="foot"><span></span></div>
+</div>
+
+<div class="box_4_c">
+<h3 class="color_3"><span class="roll_l"></span><span>æ_¿å+<ä¿¡æ_¯</span><span class="roll_r"></span><span class="more"><a href="http://bj.58.com/house/">æ>_å¤_</a></span></h3>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr class="title">
+    <th width="15%" scope="col">æ_'è¡_</th>
+    <th width="64%" scope="col">å:_é"Rè¯_</th>
+    <th width="21%" scope="col">å_+éT_</th>
+  </tr>
+ 
+      <script>GetLinks("fangwu",'<a href="http://quanguo.58.com/zhaozu/#topggad">å__å:¬æ__æ+'ç§_</a>,<a href="http://quanguo.58.com/gongyu/#topggad">ç__è_:å:¬å¯"å+ºç§_</a>,<a href="http://quanguo.58.com/menmian/#topggad">å+é"ºå+ºç§_</a>,<a href="http://quanguo.58.com/ershoufang/#topggad">ç__è_:æ_¿ä__ä>·å+ºå"R</a>,<a href="http://quanguo.58.com/hezu/#topggad">äº_å+:åR¤å__ç§_</a>,<a href="http://quanguo.58.com/ershoufang/#topggad">å+å"_æ_¿å+ºå"R</a>,<a href="http://quanguo.58.com/xiezilou/#topggad">ä__ä>·å+Tå--æ__å+ºå"R</a>,<a href="http://quanguo.58.com/hezu/#topggad">ç__è_:ä¸%å+:åR¤å__ä__</a>,<a href="http://quanguo.58.com/zhaozu/#topggad">å__å:¬å+Tå--é-_ç>_ç§_</a>,<a href="http://quanguo.58.com/shangpu/#topggad">é-¨è"¸æ_¿å+ºç§_</a>,<a href="http://quanguo.58.com/duanzu/#topggad">è_¿åR¢ç<Tç_-ç§_</a>,<a href="http://quanguo.58.com/fangchan/#topggad">åº"æ_¿å+ºç§_</a>,<a href="http://quanguo.58.com/changfang/#topggad">ä¸ªäººå_'æ_¿æ<>ç§_</a>,<a href="http://quanguo.58.com/zufang/#topggad">ä_¿åR_æ_¿å-_è_¬ç§_</a>,<a href="http://quanguo.58.com/dixiashi/#topggad">å+ºç§_å__å_°ä¸<åR¤</a>');</script>
+</table>
+<div class="foot"><span></span></div>
+</div>
+<div class="box_4_c">
+<h3 class="color_4"><span class="roll_l"></span><span>æ<>è__/çR_å_+</span><span class="roll_r"></span><span class="more"><a href="http://bj.58.com/job/">æ>_å¤_</a></span></h3>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr class="title">
+    <th width="15%" scope="col">æ_'è¡_</th>
+    <th width="64%" scope="col">å:_é"Rè¯_</th>
+    <th width="21%" scope="col">å_+éT_</th>
+  </tr>
+  
+       <script>GetLinks("zhaopin",'<a href="http://quanguo.58.com/jzxiaoshou/#topggad">å:_è__é"_å"R</a>,<a href="http://quanguo.58.com/wenziluru/#topggad">æ__è__è¡_æ"¿æ-+å'_</a>,<a href="http://quanguo.58.com/xueshengjianzi/#topggad">å-¦ç"_å:_è__</a>,<a href="http://quanguo.58.com/xiaoshou/#topggad">è¶:å¸'ä¸_æ-¶ä¿_é"_</a>,<a href="http://quanguo.58.com/qiuzhi/#topggad">å¸¦è_¦å_¸æ_ºæ<>è__</a>,<a href="http://quanguo.58.com/partime/#topggad">å:_è__ç"÷è"'ç>_æ_¤å'_</a>,<a href="http://quanguo.58.com/wangluogongchengshi/#topggad">ç_'ç>_çR¡ç_+æ<>è__</a>,<a href="http://quanguo.58.com/jinrong/#topggad">é+'è__å¸_æ<>è__</a>,<a href="http://quanguo.58.com/wangluogongchengshi/#topggad">æ<>è__å·_ç¨<å¸_</a>,<a href="http://quanguo.58.com/jinrong/#topggad">è¯_è__è¯_å_¸ç>_çºªäºº</a>,<a href="http://quanguo.58.com/bianji/#topggad">æ<>è__ç_'ç>_ç_-è_'</a>,<a href="http://quanguo.58.com/kefu/#topggad">æ<>è__åR¢æ__ç>_ç_+</a>,<a href="http://quanguo.58.com/zixunshi/#topggad">æ<>è__å¿_ç_+å'¨è¯¢å¸_</a>,<a href="http://quanguo.58.com/jinrong/#topggad">æ<>è__æ_è÷"é¡_é-R</a>,<a href="http://quanguo.58.com/tech/#topggad">æ<>è__é<_çº§ç¨<åº_å'_</a>');</script>
+</table>
+<div class="foot"><span></span></div>
+</div>
+</div>
+<div class="w">
+<div class="box_4_c">
+<h3 class="color_2"><span class="roll_l"></span><span>è_¦è_+ä¹°å_-ä¸_æ__å_¡</span><span class="roll_r"></span><span class="more"><a href="http://bj.58.com/car/">æ>_å¤_</a></span></h3>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr class="title">
+    <th width="15%" scope="col">æ_'è¡_</th>
+    <th width="64%" scope="col">å:_é"Rè¯_</th>
+    <th width="21%" scope="col">å_+éT_</th>
+  </tr>
+    
+     <script>GetLinks("car",'<a href="http://quanguo.58.com/qichepeijian/">æ+_è_¦é:_ä>¶æ%¹å_'</a>,<a href="http://quanguo.58.com/maiche/">ä¸_é__æ-_äº§è_cé_¸</a>,<a href="http://quanguo.58.com/qixiu/">æ+_è_¦ä¿_å:>è¿_é"_åº-</a>,<a href="http://quanguo.58.com/maiche/">æ-°å__æ<"è_¦æ__ä>·</a>,<a href="http://quanguo.58.com/qixiu/">ä¸"ä¸_æ+_è_¦å-·æ_+</a>,<a href="http://quanguo.58.com/qixiu/">æ+_è_¦ç__åR¹</a>,<a href="http://quanguo.58.com/maiche/">ç_°ä>_ä__å:°ç%¹4Såº-</a>,<a href="http://quanguo.58.com/qichefuwu/">ä¸"ä¸_ä>_å__æ+_è_¦ä¿_éTc</a>,<a href="http://quanguo.58.com/maiche/">éc¬è+ªè__6ä¸"å_-</a>,<a href="http://quanguo.58.com/peijia/">æ+_è_¦éTªç>_æ__å_¡</a>,<a href="http://quanguo.58.com/maiche/">å_<å:<å+¯è¶_ä¸"å_-ä¸"ä¿R</a>,<a href="http://quanguo.58.com/cheliangfuwu/">æ+_è_¦æ__å_¡ä¸-å¿_</a>,<a href="http://quanguo.58.com/qixiu/">æ_¬ç"°ä¸"ä¿Rç<T</a>,<a href="http://quanguo.58.com/anquanyongpin/">è_¦ä__é"_åR%è_:</a>,<a href="http://quanguo.58.com/peijia/">ä_¿åR_ç_"æ+_è_¦ä>_éc_</a>');</script>
+
+</table>
+<div class="foot"><span></span></div>
+</div>
+<div class="box_4_c">
+<h3 class="color_8"><span class="roll_l"></span><span>æTè'_å_¹èR-</span><span class="roll_r"></span><span class="more"><a href="http://bj.58.com/jiaoyu/">æ>_å¤_</a></span></h3>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr class="title">
+    <th width="15%" scope="col">æ_'è¡_</th>
+    <th width="64%" scope="col">å:_é"Rè¯_</th>
+    <th width="21%" scope="col">å_+éT_</th>
+  </tr>
+ 
+                <script>GetLinks("jiaoyu",'<a href="http://quanguo.58.com/mbapeixun/#topggad">mbaå_¹èR-ä¿_è¿+ç_-ç_-æ<></a>,<a style="color:red !important;" href="http://ielts.58.com.cn/" target="_blank">8å¤cæ__é<_é>:æ__1å_+ç_"ç§_è¯_</a>,<a href="http://quanguo.58.com/rjgcspeixun/#topggad">è_¯ä>¶å·_ç¨<å¸_å:_è_¹å_¹èR-</a>,<a href="http://quanguo.58.com/yingyupx/#topggad">å:_è_¹ä¸_å¯¹ä¸_è<+è¯-å_¹èR-</a>,<a href="http://quanguo.58.com/renliziyuanpeixun/#topggad">æ_¡è__ä¸_å¤§å-¦æ__ä¹_å__</a>,<a href="http://quanguo.58.com/lx/#topggad">é<_è__è¿+å__å+ºå>_çTå-¦ç_-</a>,<a style="color:red !important;" href="http://ielts.58.com.cn/" target="_blank">8å¤cæ__é<_é>:æ__1å_+ç_"ç§_è¯_</a>,<a href="http://quanguo.58.com/jisuanji/#topggad">30å¤cæTä_ å-¦ä__å__ç_'ç<T</a>,<a href="http://quanguo.58.com/fudao/#topggad">æ_'æ__åR¶æTä¿_å_+å-¦</a>,<a href="http://quanguo.58.com/yingyupx/#topggad">æ__ä¹_æ__é<_è<+è¯-å+Tä__æ°_å¹_</a>,<a href="http://quanguo.58.com/zikao/#topggad">ä¸-è__è__æ¦_ç"_ä>_å_+å¤§å-¦æ¢¦</a>,<a style="color:red !important;" href="http://ielts.58.com.cn/" target="_blank">8å¤cæ__é<_é>:æ__1å_+ç_"ç§_è¯_</a>,<a href="http://quanguo.58.com/wenke/#topggad">ä¸_çº¿æTå¸_å:_è_¹ä¸_é-¨è_:å¯_</a>,<a href="http://quanguo.58.com/xuelirenzheng/#topggad">ç__å__é<_ä¸-ä¿_ä¸_å¤§å-¦</a>,<a href="http://quanguo.58.com/waiyu/#topggad">å¤-è¯-å__è¯-å_¹èR-å:_è_¹è¯å-¦</a>');</script>
+</table>
+<div class="foot"><span></span></div>
+</div>
+
+<div class="box_4_c">
+<h3 class="color_6"><span class="roll_l"></span><span> æ°ç _äº§å"_</span><span class="roll_r"></span><span class="more"><a href="http://bj.58.com/shuma/">æ>_å¤_</a></span></h3>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr class="title">
+    <th width="15%" scope="col">æ_'è¡_</th>
+    <th width="64%" scope="col">å:_é"Rè¯_</th>
+    <th width="21%" scope="col">å_+éT_</th>
+  </tr>
+ 
+              <script>GetLinks("shuma",'<a href="http://quanguo.58.com/shouji/">æ%<æ_º</a>,<a href="http://quanguo.58.com/taishiji/">å_°å__ç"÷è"'</a>,<a href="http://quanguo.58.com/bijiben/">ç¬"èR°æ_¬ç"÷è"'</a>,<a href="http://quanguo.58.com/shumaxiangji/">æ°ç _ç>¸æ_º</a>,<a href="http://quanguo.58.com/saomiaoyi/">æ%<æ__ä>ª</a>,<a href="http://quanguo.58.com/smqita/">è"_ç%Tè__æ_º</a>,<a href="http://quanguo.58.com/smqita/">æ- çº¿ç_'å_¡</a>,<a href="http://quanguo.58.com/shexiangji/">æ°ç _æ'"å__æ_º</a>,<a href="http://quanguo.58.com/bianxiechucun/">40Gç§>å_¨ç¡¬ç>_</a>,<a href="http://quanguo.58.com/bianxiechucun/">é-ªç>_</a>,<a href="http://quanguo.58.com/smqita/">æ°ç _ç>¸æ¡+</a>,<a href="http://quanguo.58.com/wanju/">å_Rè_¯xbox360</a>,<a href="http://quanguo.58.com/shumaluyinbi/">æ°ç _å_é__ç¬"</a>,<a href="http://quanguo.58.com/dayinji/">æ%"å_°æ_º</a>,<a href="http://quanguo.58.com/sangshouji/">iphone3Gæ%<æ_º</a>');</script>
+</table>
+<div class="foot"><span></span></div>
+</div>
+<div class="box_4_c">
+<h3 class="color_7"><span class="roll_l"></span><span>æ¯_åc_/å"¿ç<_ç"¨å"_</span><span class="roll_r"></span><span class="more"><a href="http://bj.58.com/yingyou/">æ>_å¤_</a></span></h3>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr class="title">
+    <th width="15%" scope="col">æ_'è¡_</th>
+    <th width="64%" scope="col">å:_é"Rè¯_</th>
+    <th width="21%" scope="col">å_+éT_</th>
+  </tr>
+  
+                <script>GetLinks("muying",'<a href="http://quanguo.58.com/yingerche/">åc_å"¿æ_¨è_¦</a>,<a href="http://quanguo.58.com/fangfusefu/">é__è__å°"å-å¦+è_:</a>,<a href="http://quanguo.58.com/ertongyongpin/">å__å-cå-_ç<_è_¦</a>,<a href="http://quanguo.58.com/yingerche/">åR_åR_å_cå_>è_¦</a>,<a href="http://quanguo.58.com/yingeryongpin/">ä¸¤å'¨å__æTºå_>ç_cå:·</a>,<a href="http://quanguo.58.com/yingerxihu/">åc_å"¿æ_¤è'¤ç"¨å"_</a>,<a href="http://quanguo.58.com/yingerchuang/">åc_å"¿åº_</a>,<a href="http://quanguo.58.com/yingeryongpin/">è'¸æ+_æ¶_æ¯'åT¨</a>,<a href="http://quanguo.58.com/ertongyongpin/">å"¿ç<_æ+_è_¦åR%å:¨åº§æ¤:</a>,<a href="http://quanguo.58.com/zhiniaoku/">åR_åR_çº¸å°¿è_¤</a>,<a href="http://quanguo.58.com/ertongyongpin/">å"¿ç<_æ%<å·_å¸_é_<</a>,<a href="http://quanguo.58.com/yingerxihu/">åR_åR_æ_-æ÷_ç"¨å"_</a>,<a href="http://quanguo.58.com/yingerche/">äº_æ%<å-¦æ-_è_¦</a>,<a href="http://quanguo.58.com/yingeryongpin/">åc_å"¿æ¸¸æ__æ+ </a>,<a href="http://quanguo.58.com/ertongyongpin/">å¤-è_¸ç<_è_:æ%¹å_'</a>');</script>
+</table>
+<div class="foot"><span></span></div>
+</div>
+</div>
+
+<div class="w">
+<div class="box_4_c">
+<h3 class="color_1"><span class="roll_l"></span><span>æ-:æ¸¸ä_'é-_</span><span class="roll_r"></span><span class="more"><a href="http://bj.58.com/lvyouxiuxian/">æ>_å¤_</a></span></h3>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr class="title">
+    <th width="15%" scope="col">æ_'è¡_</th>
+    <th width="64%" scope="col">å:_é"Rè¯_</th>
+    <th width="21%" scope="col">å_+éT_</th>
+  </tr>
+    
+                   <script>GetLinks("lvyou",'<a href="http://quanguo.58.com/dujia/">è_¹å_>åº¦å_+æ_'</a>,<a href="http://quanguo.58.com/yiriyou/">æ_°å++ä¸_æ-_æ¸¸</a>,<a href="http://quanguo.58.com/lvyouxianlu/">ä¹_å¯¨æ__æ-:æ¸¸çº¿è·¯</a>,<a href="http://quanguo.58.com/wenquandujiacun/">æ¸cæ_%åº¦å_+æ_'</a>,<a href="http://quanguo.58.com/jdyd/">å¯+äº'åº¦å_+é:'åº-</a>,<a href="http://quanguo.58.com/guoneilvyou/">æ_+æ__ä_'é-_æ-:æ¸¸</a>,<a href="http://quanguo.58.com/guoneilvyou/">äº'å_-æ-:æ¸¸</a>,<a href="http://quanguo.58.com/guojilvyou/">æ-_æ_¬æ¸cæ_%å:-æ-_æ¸¸</a>,<a href="http://quanguo.58.com/zizhulvyou/">æ-¦å¤·å++è+ªå_cæ¸¸</a>,<a href="http://quanguo.58.com/guoneilvyou/">ä¸%äº_å_:æ_ºäº"æ-_æ¸¸</a>,<a href="http://quanguo.58.com/zizhulvyou/">è_¿å__ç%_çº_è+ªå_cæ¸¸</a>,<a href="http://quanguo.58.com/spaspa/">é_Tæ_%äº'æ°_é-_å:>ç"_</a>,<a href="http://quanguo.58.com/wenquandujiacun/">å:<è__å_-æ¸cæ_%</a>');</script>
+</table>
+<div class="foot"><span></span></div>
+   
+
+</div>
+<div class="box_4_c">
+<h3 class="color_2"><span class="roll_l"></span><span>æ_å_<é+'è__æ__å_¡</span><span class="roll_r"></span><span class="more"><a href="http://bj.58.com/lvshi/">æ>_å¤_</a></span></h3>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr class="title">
+    <th width="15%" scope="col">æ_'è¡_</th>
+    <th width="64%" scope="col">å:_é"Rè¯_</th>
+    <th width="21%" scope="col">å_+éT_</th>
+  </tr>
+    
+    <script>GetLinks("falv",'<a href="http://quanguo.58.com/caiwushenpi/">ä__èR¡åR¡èR¡</a>,<a href="http://quanguo.58.com/laodong/">å__å_¨å__å__æ¡_ä_<å_+æ__</a>,<a href="http://quanguo.58.com/laodong/">å__å_¨æ_è§_è¯></a>,<a href="http://quanguo.58.com/lvshi/">å:_è_¹æ_å_<å'¨è¯¢</a>,<a href="http://quanguo.58.com/jiufen/">å+ä¸_çº çº·æ__ä¹_è§_å+_</a>,<a href="http://quanguo.58.com/falvgewen/">ç¦>åc_å_<å¸_</a>,<a href="http://quanguo.58.com/falvyuanzhu/">ç¦>åc_è÷·è¯%ä¹¦</a>,<a href="http://quanguo.58.com/susdaili/">è¯%èR_ä>_ç_+æ-_éª¤</a>,<a href="http://quanguo.58.com/danban/">æ_è÷"æ<:ä¿_</a>,<a href="http://quanguo.58.com/baoxianfuwu/">ä¿_éTcå'¨è¯¢ç_-çº¿</a>,<a href="http://quanguo.58.com/daibanshenpi/">ä>_å__å:¬å_¸æ_¨å+_</a>');</script>
+</table>
+<div class="foot"><span></span></div>
+</div>
+<div class="box_4_c">
+<h3 class="color_3"><span class="roll_l"></span><span>ç_'æ¸¸/èT_æ<_ç%cå"_</span><span class="roll_r"></span><span class="more"><a href="http://bj.58.com/wangyou/">æ>_å¤_</a></span></h3>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr class="title">
+    <th width="15%" scope="col">æ_'è¡_</th>
+    <th width="64%" scope="col">å:_é"Rè¯_</th>
+    <th width="21%" scope="col">å_+éT_</th>
+  </tr>
+ 
+      <script>GetLinks("youxi",'<a href="http://quanguo.58.com/wangyoudianka/">ä¸_ç"¨ç'¹å_¡ç_"æ¸¸æ__</a>,<a href="http://quanguo.58.com/wangyou/">æ__äººç_'é¡÷æ¸¸æ__</a>,<a href="http://quanguo.58.com/wangyou/">ä>_ä¹_å:_è_¹ç_'æ¸¸å__ç_c</a>,<a href="http://quanguo.58.com/wangyou/">ç__å__ç_'é¡÷æ¸¸æ__</a>,<a href="http://quanguo.58.com/wangyou/">09æ__æ-°ç_'æ¸¸</a>,<a href="http://quanguo.58.com/wangyoudianka/">æ¸¸æ__ç'¹å_¡æ%¹å_'</a>,<a href="http://quanguo.58.com/wangyou/">ä_'é-_ç_'é¡÷æ¸¸æ__</a>,<a href="http://quanguo.58.com/wangyou/">ç__å__æ__å¤_ç_"ç_'æ¸¸</a>,<a href="http://quanguo.58.com/wangyou/">09æ__æ-°å:_è_¹ç_'æ¸¸</a>,<a href="http://quanguo.58.com/wangyou/">å__å:¬åR¤ç_'æ¸¸</a>,<a href="http://quanguo.58.com/wangyou/">18ç¦_ç_'æ¸¸</a>,<a href="http://quanguo.58.com/wyqita/">æ__ä¹_å_·ç'¹å_¡</a>,<a href="http://quanguo.58.com/wangyou/">09ç_'æ¸¸æ_'è¡_</a>,<a href="http://quanguo.58.com/wyqita/">å:_è_¹å_·æ¸¸æ__ç'¹å_¡</a>,<a href="http://quanguo.58.com/wangyou/">ç¦_æ'-æ_§æ"_ç_'æ¸¸MV</a>');</script>
+</table>
+<div class="foot"><span></span></div>
+</div>
+<div class="box_4_c">
+<h3 class="color_4"><span class="roll_l"></span><span>åR ç%c/åR ç%cç"¨å"_</span><span class="roll_r"></span><span class="more"><a href="http://bj.58.com/pets/">æ>_å¤_</a></span></h3>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tr class="title">
+    <th width="15%" scope="col">æ_'è¡_</th>
+    <th width="64%" scope="col">å:_é"Rè¯_</th>
+    <th width="21%" scope="col">å_+éT_</th>
+  </tr>
+  
+      <script>GetLinks("chongwu",'<a href="http://quanguo.58.com/maoyongpin/">ç_<ç '</a>,<a href="http://quanguo.58.com/dog/">çº¯ç§_é_¿æ<%æ-¯å_ </a>,<a href="http://quanguo.58.com/dog/">é+'æ¯>å¯>å>_ç__ç_¬</a>,<a href="http://quanguo.58.com/guanshangyu/">æ·¡æ°_é+_ç_¸</a>,<a href="http://quanguo.58.com/zangao/">è-_ç_'å¹_ç_¬</a>,<a href="http://quanguo.58.com/ditaixiong/">è_¶æ_¯æ_°è¿ªç+_</a>,<a href="http://quanguo.58.com/chongwumeirong/">åR ç%cç__åR¹</a>,<a href="http://quanguo.58.com/cat/">ç_-æ¯>å_ è__ç_<</a>,<a href="http://quanguo.58.com/gouliang/">ç<-ç_Ræ%¹å_'</a>,<a href="http://quanguo.58.com/hudiequan/">è__è_¶ç_¬åR_åR_</a>,<a href="http://quanguo.58.com/labuladuo/">æ<%å¸_æ<%å¤_</a>,<a href="http://quanguo.58.com/maoyongpin/">äº_æ%<ç_<ç_¬æ_¶</a>,<a href="http://quanguo.58.com/chongwujiyang/">åR ç%cå¯"å:></a>,<a href="http://quanguo.58.com/chongwupeizhong/">åR ç%cé:_ç§_æ__å_¡</a>');</script>
+
+</table>
+<div class="foot"><span></span></div>
+</div>
+</div>
+<div id="footer">
+<p class="w"><a href="http://about.58.com/v5/58.html">ç_'ç<TçR_ä><</a> | <a href="http://about.58.com/contract/1/">è_"ç_>æ_'ä>¬</a> | <a href="http://about.58.com/v5/help.html">å:_è__å_°æ__</a> | <a href="http://about.58.com/v5/hezuo.html">å¯¹å¤-å__ä__</a> | <a href="">æ"_è§_å__é¦_</a> <br/>&copy; 2009  58.com  <a target="_blank" href="http://www.miibeian.gov.cn/">äº¬ICPè¯_060405</a> </p></div>
+<div style="display:none">
+<script src="stat0000.htm" language="JavaScript" charset="gb2312"></script>
+</div>
+</body>
+</html>
+
+<!-- This document saved from http://211.151.64.46/index.aspx -->
+
+
+
+

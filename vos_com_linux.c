@@ -9,6 +9,27 @@ info about serial:
 #include "sys/ioctl.h"
 #include "sys/types.h"
 
+#include <termios.h>
+
+void static prt_cfg(int ttyDev,int baudrate) {
+struct termios oldtio,newtio;
+
+tcgetattr(ttyDev, &oldtio); //backup current settings
+newtio.c_cflag = baudrate | CS8 | CLOCAL | CREAD;
+newtio.c_cflag &= ~CRTSCTS; //disable hw flow control
+newtio.c_iflag &= ~(IXON | IXOFF | IXANY); //disable flow control
+newtio.c_iflag |= IGNPAR; //ignore parity
+newtio.c_oflag = 0;
+newtio.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG); //raw mode
+newtio.c_cc[VMIN] = 1;
+newtio.c_cc[VTIME] = 0;
+ //cfsetspeed(&newtio, getBaud(baudrate));
+tcflush(ttyDev, TCIFLUSH);
+tcsetattr(ttyDev, TCSANOW, &newtio);
+//clear RTS
+//ioctl(ttyDev, TIOCMBIC, &mcs);
+}
+
 void *prt_open (char *name) {
 int h;
 char fname[1024];
@@ -17,6 +38,7 @@ if (*name!='/') { // add default /dev
   }
 h = open(name,O_RDWR | O_NOCTTY,0);
 if (h<0) { return 0;} // error
+  prt_cfg(h, B115200 );
 return (void*)h;
 }
 
@@ -24,8 +46,9 @@ int   prt_peek (void *com,void *buf, int size) {
 int h=(int)com; int bytesWaiting=1;
 if (h==0) return 0; // invalid
 if (ioctl(h, FIONREAD, &bytesWaiting)!=0) return -1;
+//printf("(%d)\n",bytesWaiting);
 if (bytesWaiting<=0) return bytesWaiting; // not yet
-if (bytesWaiting>size) bytesWaiting=size;
+if (bytesWaiting>=size) bytesWaiting=size-1;
 return read(h,buf,bytesWaiting); // EOF=0 reading, like on sockets???
 }
 
