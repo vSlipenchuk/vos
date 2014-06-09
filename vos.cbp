@@ -13,6 +13,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-Wno-pointer-sign" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -25,7 +26,28 @@
 		<Linker>
 			<Add library="pthread" />
 		</Linker>
+		<Unit filename="coders.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="exe.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="httpSrv.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="httpTest.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="logger.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="sock.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="std_sock.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="vos.c">
@@ -36,6 +58,12 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="vos_linux_kbhit.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="vs0.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="vss.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>

@@ -96,7 +96,7 @@ return 2; // realloced
 
 uchar *strNew(uchar *data, int len) { // Создаем строку по указанному массиву
 uchar *d;
-if (len<0) { len = data?strlen(data):0; }; // Автовычисление длины
+if (len<0) { len = data?strlen((char*)data):0; }; // Автовычисление длины
 d = arrayNew(StringClass,len+1);
 if (!d) return 0;
 obj2head(d)->len=len; // remove 0 trailer
@@ -109,7 +109,7 @@ return d;
 
 uchar *strLoad(uchar *filename) { // Создает строку, загружая ее из файла
 int file,len; uchar *str;
-file = open(filename,O_RDONLY | O_BINARY,0);
+file = open((char*)filename,O_RDONLY | O_BINARY,0);
 if (file<=0) return 0;
 len = filelength(file);
 //printf("filename=%s has %d bytes\n",filename,len);
@@ -123,7 +123,7 @@ return str;
 
 int buf2file(uchar *data,int len,uchar *filename) {
 int file;
-file = open(filename,O_WRONLY | O_BINARY | O_TRUNC | O_CREAT,S_IREAD|S_IWRITE);
+file = open((char*)filename,O_WRONLY | O_BINARY | O_TRUNC | O_CREAT,S_IREAD|S_IWRITE);
 if (file<=0) return -1;
 if (write(file,data,len)!=len) { close(file); return -1; }
 close(file);
@@ -136,7 +136,7 @@ return buf2file(str,strLength(str),filename);
 
 uchar *strCatFile(uchar **Str,uchar *filename) { // Создает строку, загружая ее из файла
 int file,len; uchar *str;
-file = open(filename,O_RDONLY | O_BINARY,0);
+file = open((char*)filename,O_RDONLY | O_BINARY,0);
 if (file<=0) return 0;
 len = filelength(file);
 //printf("filename=%s has %d bytes\n",filename,len);
@@ -152,7 +152,7 @@ return str;
 uchar *strCat(uchar **str, uchar *data, int len) { // Добавить в буффер
 uchar *d;
 if (!str) return 0;
-if (len<0) { len = data?strlen(data):0; }; // Автовычисление длины
+if (len<0) { len = data?strlen((char*)data):0; }; // Автовычисление длины
 if (!*str) { *str = strNew(data,len); return *str;} // Пустая строка - автосоздание
 //printf("CAT %d bytes to %d bytes <%s>\n",len,obj2head(*str)->len,*str);
 d = arrAddN((void**)str,len+1); // check - if ok?
@@ -168,7 +168,7 @@ return d;
 
 uchar *strCatD(uchar **str, uchar *src, int len, int (*decoder)()) {
 int sz; uchar *d;
-if (len<0) len = strlen(src); // Длина для кодирования
+if (len<0) len = strlen((char*)src); // Длина для кодирования
 sz = decoder(0,src,len); // Определяем длину выходного буфера
 if (sz<0) return 0; // Ошибка декодирования
 //printf("HereBufZ=%d\n",sz);
@@ -180,7 +180,7 @@ return d;
 
 int strSetLength(uchar **str, int newLength) {
 objHead *h;
-if (newLength<0) { newLength=0; if (*str) newLength=strlen(*str); }
+if (newLength<0) { newLength=0; if (*str) newLength=strlen((char*)*str); }
 if (!*str) {*str = strNew(0,newLength); return 1;}
  else arrSetLength((void**)str,newLength+1); // SetIt... Zero Terminated???
 h = obj2head(*str); h->len--;
@@ -380,7 +380,7 @@ return res;
 }
 
 void *arrAddN(void **arr, int count) { // Добавляем в массив -)))
-objHead *h; uchar *d,*data; int i;
+//objHead *h; uchar *d,*data; //int i;
 return arrInsN(arr,-1,count); // Добавить в конец
 //if (!arr) return 0; // dont now size --)))
 /*
@@ -581,8 +581,8 @@ return r2;
 objRef *_attAddStr(void *obj,char *name,char *val) {
 objRef *r;
 r = _attAdd(obj); if (!r)  return 0;
-r->name = strNew(name,-1);
-r->data = strNew(val,-1);
+r->name = strNew((void*)name,-1);
+r->data = strNew((void*)val,-1);
 return r;
 }
 

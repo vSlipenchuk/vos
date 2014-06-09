@@ -79,7 +79,17 @@ return 1; // ok
 }
 
 
+#include <sys/resource.h>
+//#include <procfs.h>
 int os_mem_used() { // long int ???
- return -1; // TOFO !!!
+    struct rusage rusage;
+    getrusage( RUSAGE_SELF, &rusage );
+#if defined(__APPLE__) && defined(__MACH__)
+    return (size_t)rusage.ru_maxrss;
+#else
+    return (size_t)(rusage.ru_maxrss * 1024L);
+#endif
+
+
 }
 

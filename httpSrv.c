@@ -1,4 +1,5 @@
 #include "httpSrv.h"
+#include <stdarg.h>
 
 /*
 
@@ -246,7 +247,7 @@ while(1) {
     if (st.st_mode & S_IFDIR) {
         sprintf(buf,"<a href=\"%*.*s%s/\"  >%s/</a><br>\n",VSS(url),name,name);
         } else {
-        sprintf(buf,"<a href=\"%*.*s%s\" title=\"size:%d\" >%s</a><br>\n",VSS(url),name,st.st_size,name);
+        sprintf(buf,"<a href=\"%*.*s%s\" title=\"size:%ld\" >%s</a><br>\n",VSS(url),name,st.st_size,name);
         }
     strCat(out,buf,-1);
     }

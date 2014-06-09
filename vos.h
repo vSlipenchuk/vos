@@ -6,6 +6,7 @@
 #include <netdb.h>
 #include <sys/stat.h>
 #include <sys/socket.h>
+
 #define MAX_PATH PATH_MAX
 #define _vsnprintf vsnprintf
 #define closesocket close
@@ -21,6 +22,7 @@
 #else // LINUX or UNIX
 #include <unistd.h>
 #define O_BINARY 0
+int filelength(int file);
 
 #endif
 
@@ -53,9 +55,17 @@ void  prt_close(void *com);
 // term extenstions (win like)
 int kbhit();
 
+int os_mem_used();
+
 
 // sockets
 
+int net_init();
+int sock_async(int sock);
+int sock_listen(int port, int jobs);
 int sock_accept(int lsock, int *ip);
+int sock_readable(int sock);
+int sock_writable(int sock);
+int sock_close(int sock);
 
 #endif // VOS_H_INCLUDED

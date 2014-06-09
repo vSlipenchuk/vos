@@ -53,8 +53,10 @@ void RunSleep(int cnt);
 // some simple declares
 
 #define BUF_FMT(buf,fmt) {va_list va; va_start(va,fmt); _vsnprintf((char*)buf,sizeof(buf)-1,(char*)fmt,va); buf[sizeof(buf)-1]=0; va_end(va);}
-#define strNcpy(A,B) { strncpy(A,B,sizeof(A)-1); A[sizeof(A)-1]=0;}
 
+#ifndef strNcpy
+#define strNcpy(A,B) { strncpy(A,B,sizeof(A)-1); A[sizeof(A)-1]=0;}
+#endif
 
 
 #endif // VTYPES_H_INCLUDED

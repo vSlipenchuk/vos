@@ -1,4 +1,5 @@
 #include "sock.h"
+#include <stdarg.h>
 
 #define MAX_INT 0x7FFFFFFF
 
