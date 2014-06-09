@@ -18,13 +18,14 @@
 #include <windows.h>
 
 
-#define MSWIN
+
 #else // LINUX or UNIX
 #include <unistd.h>
 #define O_BINARY 0
 int filelength(int file);
 
 #endif
+
 
 // threads
 void *thread_create (void *proc, void *arg); // creates a new thread (and returns it handler), or return NULL (on ERROR)
@@ -67,5 +68,10 @@ int sock_accept(int lsock, int *ip);
 int sock_readable(int sock);
 int sock_writable(int sock);
 int sock_close(int sock);
+
+// timing
+
+extern int sleepTime; // defined in exe.c
+
 
 #endif // VOS_H_INCLUDED

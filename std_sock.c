@@ -75,17 +75,27 @@ memset(&s,0,sizeof(s));
 s.sa_family=AF_INET;
 *(short*)(s.sa_data)=htons((short)port);
 addr=inet_addr(host);
-if (addr>0)  {
+//printf("ADDR=%d for host=%s\n",addr,host);
+if (addr != INADDR_NONE)  {
  *(int*)(&s.sa_data[2])=addr;
- if (connect(sock,&s,sizeof(s))) return 0;
+ if (connect(sock,&s,sizeof(s))) {
+      printf("fail connect to addr %s port %d code %d\n",host,port,addr);
+      return 0;
+      }
  return 1;
  }
 h=gethostbyname(host);
-if (!h) return 0;
+if (!h) {
+    printf("get hostbyname failed");
+    return 0;
+    }
 //h->
-//memcpy(&s.sa_data[2],&h->h_addr_list,4);
-//*(int*)(&s.sa_data[2])=*(int*)(h->h_addr_list[0]);
-if (connect(sock,&s,sizeof(s))) return 0;
+memcpy(&s.sa_data[2],&h->h_addr_list,4);
+*(int*)(&s.sa_data[2])=*(int*)(h->h_addr_list[0]);
+if (connect(sock,&s,sizeof(s))) {
+     return 0;
+     printf("fail connect to namehost %s port %d\n",addr,port);
+     }
 return 1;
 }
 

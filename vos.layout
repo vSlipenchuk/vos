@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Release" />
+	<File name="httpSrv.c" open="1" top="0" tabpos="6">
+		<Cursor position="2759" topLine="73" />
+	</File>
+	<File name="httpTest.c" open="1" top="0" tabpos="3">
+		<Cursor position="6182" topLine="172" />
+	</File>
+	<File name="main.c" open="1" top="0" tabpos="1">
+		<Cursor position="1718" topLine="80" />
+	</File>
+	<File name="sock.c" open="1" top="0" tabpos="8">
+		<Cursor position="9958" topLine="244" />
+	</File>
+	<File name="std_sock.c" open="1" top="0" tabpos="11">
+		<Cursor position="10395" topLine="9" />
+	</File>
+	<File name="vos.c" open="1" top="1" tabpos="2">
+		<Cursor position="1729" topLine="75" />
+	</File>
+	<File name="vos.h" open="1" top="0" tabpos="10">
+		<Cursor position="524" topLine="16" />
+	</File>
+	<File name="vs0.c" open="1" top="0" tabpos="5">
+		<Cursor position="231" topLine="5" />
+	</File>
+	<File name="vss.c" open="1" top="0" tabpos="12">
+		<Cursor position="33" topLine="12" />
+	</File>
+</CodeBlocks_layout_file>

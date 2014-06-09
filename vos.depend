@@ -1,0 +1,169 @@
+# depslib dependency file v1.0
+1402308712 source:/mnt/c/prj/vos/main.c
+	"vos.h"
+
+1402309605 /mnt/c/prj/vos/vos.h
+	"vtypes.h"
+	<fcntl.h>
+	<netdb.h>
+	<sys/stat.h>
+	<sys/socket.h>
+	<windows.h>
+	<unistd.h>
+
+1400828470 /mnt/c/prj/vos/vtypes.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+
+1400828435 source:/mnt/c/prj/vos/vos_com_linux.c
+	"vos.h"
+	"stdio.h"
+	"unistd.h"
+	"fcntl.h"
+	"sys/ioctl.h"
+	"sys/types.h"
+	<termios.h>
+
+1400828435 source:/mnt/c/prj/vos/vos_linux_kbhit.c
+	"vos.h"
+	<termios.h>
+	<stropts.h>
+	<stdio.h>
+	<sys/ioctl.h>
+
+1402308725 source:/mnt/c/prj/vos/vos.c
+	"vos.h"
+	"pthread.h"
+	"stdlib.h"
+	"unistd.h"
+	<sys/time.h>
+	<stdio.h>
+
+1400828435 source:/mnt/c/prj/vos/httpTest.c
+	"httpSrv.h"
+	"logger.c"
+	"std_sock.c"
+	"exe.c"
+	"sock.c"
+	"httpSrv.c"
+	"vos.c"
+	"vs0.c"
+	"vss.c"
+	"coders.c"
+	<signal.h>
+
+1400828435 /mnt/c/prj/vos/httpSrv.h
+	"vos.h"
+	"sock.h"
+	"vss.h"
+
+1400828435 /mnt/c/prj/vos/sock.h
+	"vos.h"
+	"vs0.h"
+	"vss.h"
+	"logger.h"
+	"vtypes.h"
+
+1400828435 /mnt/c/prj/vos/vs0.h
+	"vtypes.h"
+	"vss.h"
+
+1400828435 /mnt/c/prj/vos/vss.h
+	"vtypes.h"
+
+1400828435 /mnt/c/prj/vos/logger.h
+	"vs0.h"
+	<stdio.h>
+	<time.h>
+	"coders.h"
+
+1400828435 /mnt/c/prj/vos/coders.h
+	"vtypes.h"
+
+1400828435 /mnt/c/prj/vos/logger.c
+	"logger.h"
+	<time.h>
+	<stdarg.h>
+	"vos.h"
+
+1400828435 /mnt/c/prj/vos/std_sock.c
+	"vos.h"
+	"mutex-1.1.c"
+
+1400828435 /mnt/c/prj/vos/exe.c
+	"vtypes.h"
+	"coders.h"
+	"vos.h"
+
+1402308989 /mnt/c/prj/vos/sock.c
+	"sock.h"
+	<stdarg.h>
+
+1402309579 /mnt/c/prj/vos/httpSrv.c
+	"httpSrv.h"
+	<stdarg.h>
+	<dirent.h>
+
+1402310288 /mnt/c/prj/vos/vos.c
+	"vos.h"
+	"pthread.h"
+	"stdlib.h"
+	"unistd.h"
+	<sys/time.h>
+	<stdio.h>
+	<sys/resource.h>
+
+1402308843 /mnt/c/prj/vos/vs0.c
+	<fcntl.h>
+	"vs0.h"
+	"vos.h"
+	<fcntl.h>
+
+1402309279 /mnt/c/prj/vos/vss.c
+	"vss.h"
+	"vos.h"
+
+1400828435 /mnt/c/prj/vos/coders.c
+	"coders.h"
+	<stdarg.h>
+
+1400828435 source:/mnt/c/prj/vos/logger.c
+	"logger.h"
+	<time.h>
+	<stdarg.h>
+	"vos.h"
+
+1400828435 source:/mnt/c/prj/vos/exe.c
+	"vtypes.h"
+	"coders.h"
+	"vos.h"
+
+1402308843 source:/mnt/c/prj/vos/vs0.c
+	<fcntl.h>
+	"vs0.h"
+	"vos.h"
+	<fcntl.h>
+
+1402309279 source:/mnt/c/prj/vos/vss.c
+	"vss.h"
+	"vos.h"
+
+1402309579 source:/mnt/c/prj/vos/httpSrv.c
+	"httpSrv.h"
+	<stdarg.h>
+	<dirent.h>
+
+1402308989 source:/mnt/c/prj/vos/sock.c
+	"sock.h"
+	<stdarg.h>
+
+1400828435 source:/mnt/c/prj/vos/coders.c
+	"coders.h"
+	<stdarg.h>
+
+1400828435 source:/mnt/c/prj/vos/std_sock.c
+	"vos.h"
+	"mutex-1.1.c"
+
