@@ -754,6 +754,38 @@ return r;
 }
 
 
+/*
+    Привет -> 04 1f 04 40 04 38 04 32 04 35 04 42
+*/
+
+int utf2gsm(uchar *d,uchar *src,int len) {
+uchar u[8]; int cnt=0;
+if (len<0) len=strlen(src);
+while (len>0) {
+  int l = utf8_peek(u,src,len);
+  if (l<0) break;
+  //printf("u0=%d u1=%d u2=%d u3=%d\n",u[0],u[1],u[2],u[3]);
+  d[0]=u[1]; d[1]=u[0];
+  //d[0]=
+  len-=l; src+=l; cnt+=2; d+=2;
+  }
+return cnt;
+}
+
+int utf_nonstd(uchar *src,int len) {
+uchar u[8]; int cnt=0;
+if (len<0) len=strlen(src);
+while (len>0) {
+  int l = utf8_peek(u,src,len);
+  if (l<0) break;
+  if (u[1]) cnt++; // how many non-en pages?
+  //d[0]=
+  len-=l; src+=l;
+  }
+return cnt;
+}
+
+
 #undef ENC
 
 

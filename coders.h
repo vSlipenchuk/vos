@@ -191,4 +191,9 @@ int sms_put_addr2(char *dst, char *addr);
 // Дебуг
 int hex_dump(char *msg,uchar *s,int len); // где лежит???
 
+// some utf8 coders
+
+int utf2gsm(uchar *d,uchar *src,int len); // code to GSM UCS2
+int utf_nonstd(uchar *src,int len); // calc non-eng letters
+
 #endif // CODERS_H
