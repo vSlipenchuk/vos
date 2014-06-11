@@ -785,6 +785,22 @@ while (len>0) {
 return cnt;
 }
 
+int utf2koi(uchar *dst, uchar *src, int len) {
+uchar u[8]; int cnt=0;
+if (len<0) len=strlen(src);
+while (len>0) {
+  int l = utf8_peek(u,src,len);
+  if (l<0) break;
+  // now - convert unicode->win->koi
+  *dst = unichar(u[1],u[0],'?');
+  *dst = win_koi[*dst];
+  len-=l; src+=l; dst++; cnt++;
+  }
+*dst=0;
+return cnt;
+}
+
+
 
 #undef ENC
 

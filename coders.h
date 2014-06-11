@@ -195,5 +195,6 @@ int hex_dump(char *msg,uchar *s,int len); // где лежит???
 
 int utf2gsm(uchar *d,uchar *src,int len); // code to GSM UCS2
 int utf_nonstd(uchar *src,int len); // calc non-eng letters
+int utf2koi(uchar *dst, uchar *src, int len); // utf ->UNI->win->koi
 
 #endif // CODERS_H
