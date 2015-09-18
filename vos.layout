@@ -1,31 +1,64 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Release" />
-	<File name="httpSrv.c" open="1" top="0" tabpos="6">
-		<Cursor position="2759" topLine="73" />
+	<File name="vos_com_linux.c" open="1" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="78" topLine="1" />
+		</Cursor>
 	</File>
-	<File name="httpTest.c" open="1" top="0" tabpos="3">
-		<Cursor position="6182" topLine="172" />
+	<File name="coders.c" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="117" topLine="1" />
+		</Cursor>
 	</File>
-	<File name="main.c" open="1" top="0" tabpos="1">
-		<Cursor position="1718" topLine="80" />
+	<File name="sock.c" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="0" />
+		</Cursor>
 	</File>
-	<File name="sock.c" open="1" top="0" tabpos="8">
-		<Cursor position="9958" topLine="244" />
+	<File name="httpTest.c" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="0" />
+		</Cursor>
 	</File>
-	<File name="std_sock.c" open="1" top="0" tabpos="11">
-		<Cursor position="10395" topLine="9" />
+	<File name="main.c" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1666" topLine="73" />
+		</Cursor>
 	</File>
-	<File name="vos.c" open="1" top="1" tabpos="2">
-		<Cursor position="1729" topLine="75" />
+	<File name="std_sock.c" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="11766" topLine="424" />
+		</Cursor>
 	</File>
-	<File name="vos.h" open="1" top="0" tabpos="10">
-		<Cursor position="524" topLine="16" />
+	<File name="vos.c" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="89" topLine="0" />
+		</Cursor>
 	</File>
-	<File name="vs0.c" open="1" top="0" tabpos="5">
-		<Cursor position="231" topLine="5" />
+	<File name="vos.h" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1840" topLine="32" />
+		</Cursor>
 	</File>
-	<File name="vss.c" open="1" top="0" tabpos="12">
-		<Cursor position="33" topLine="12" />
+	<File name="vos_linux_kbhit.c" open="1" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="35" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="httpSrv.c" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="60" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="vs0.c" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="vss.c" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="0" />
+		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

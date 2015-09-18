@@ -1,16 +1,10 @@
 #include "vos.h"
+#include "vtypes.h"
+#include <sys/stat.h>
 
-//#include <psapi.h>
 
-#ifdef MSWIN
-int os_mem_used() {
-	PROCESS_MEMORY_COUNTERS pmc;
-	GetProcessMemoryInfo(GetCurrentProcess(),&pmc,sizeof(pmc));
-	return pmc.PeakWorkingSetSize;
-}
-#endif
 
-#ifdef __WIN32__
+#ifndef __linux__
 int net_init() {
 WSADATA wsadata;
 return WSAStartup(MAKEWORD(2,2),&wsadata)==0;
@@ -52,7 +46,7 @@ return l>0;
 }
 
 int sock_async(int sock) {
-#ifdef MSWIN
+#ifndef __linux__
 int val=1;
 return ioctlsocket(sock, FIONBIO , (void*)&val)==0;
 #else
@@ -212,23 +206,19 @@ return (int)t;
 
 int os_time() { time_t t; time(&t); return (int)t;}
 
+/*
 void *dl_open(char *name,int mode) { return LoadLibrary(name); }
 void *dl_sym(void *lib, char *name) { return GetProcAddress(lib,name);}
 void dl_close(void *lib) { FreeLibrary(lib);}
-
+*/
 // Потоки
 
 #define VTHREAD_MAX_STACK 1 /* Только один передаваемый через стек параметр */
 
-typedef struct {
-  HANDLE handle;
-  int (*proc)(void*,...);
-  int done;
-  int *par;
-} thread_create_struct;
 
 
 
+/*
 typedef struct {
   int p[VTHREAD_MAX_STACK];
 } thread_create_struct_tmp;
@@ -253,7 +243,7 @@ void process_destroy(int code)
   ExitProcess(code);
 }
 
-/*
+
 DWORD WINAPI thread_create_do(thread_create_struct *fs) {
   thread_create_struct_tmp p;
   HANDLE handle;
@@ -265,8 +255,10 @@ DWORD WINAPI thread_create_do(thread_create_struct *fs) {
   CloseHandle(handle);
   return 0;
 }
-*/
-void *thread_create(int (*proc)(void*,...),...) {
+
+void *thread_create (void *_proc, void *arg) {
+//void *thread_create(int (*proc)(void*,...),...) {
+  int (*proc)() = _proc ;
   HANDLE tid;
   DWORD  ID;
   //int p[VTHREAD_MAX_STACK];
@@ -277,7 +269,7 @@ void *thread_create(int (*proc)(void*,...),...) {
   fs.par=(void*)((int*)(pp)+1);
   fs.handle=0;
   tid=CreateThread(NULL,0,(void*)(thread_create_do),&fs,0,&ID);
-  if(!tid){  /*errno=GetLastError(); */ return 0; }
+  if(!tid){  return 0; }
   fs.handle=tid;
   while(!fs.done) Sleep(1);
   return (void*)tid;
@@ -287,7 +279,13 @@ int thread_suspend(void* thread){ return SuspendThread((HANDLE)thread); }
 int thread_resume(void* thread){  return ResumeThread((HANDLE)thread);  }
 int thread_destroy(void *thread,int code) { return TerminateThread((HANDLE)thread,code); }
 void *thread_self() { return (void*) GetCurrentThreadId(); }
+*/
 
+typedef struct {
+  HANDLE hIn, hOut;
+  HANDLE hProcess;
+  int code;
+  } os_proc;
 
 int proc_create(os_proc *p, char *cmd ) { // Запуск файла, получение процесса и выходного потока
   SECURITY_ATTRIBUTES sa;
@@ -357,7 +355,7 @@ if (p->hProcess) {
 return 1;
 } // Типа завершает процесс
 
-#include "mutex-1.1.c"
+//#include "mutex-1.1.c"
 
 #endif // MSWIN
 

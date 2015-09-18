@@ -7,6 +7,11 @@
 #include <string.h>
 #include <time.h>
 
+#ifndef __linux__
+#include <windows.h>
+#define MSWIN
+#endif
+
 // common header for add-on-types
 
 typedef unsigned char uchar;

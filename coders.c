@@ -5,7 +5,7 @@
 //#include "vs.h"
 #include "coders.h"
 #include <stdarg.h>
-//#include <windows.h>
+#include "vtypes.h"
 
 uchar *CP_DECODE(uchar *dst, uchar *src, int len, uchar *tbl) {
 char *ret = dst;

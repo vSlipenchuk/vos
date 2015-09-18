@@ -167,3 +167,196 @@
 	"vos.h"
 	"mutex-1.1.c"
 
+1442572055 source:c:\prj\vos\coders.c
+	"coders.h"
+	<stdarg.h>
+	"vtypes.h"
+
+1441209169 c:\prj\vos\coders.h
+	"vtypes.h"
+
+1442572031 c:\prj\vos\vtypes.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	<windows.h>
+
+1441209169 source:c:\prj\vos\exe.c
+	"vtypes.h"
+	"coders.h"
+	"vos.h"
+
+1442572414 c:\prj\vos\vos.h
+	"vtypes.h"
+	<fcntl.h>
+	<netdb.h>
+	<sys/stat.h>
+	<sys/socket.h>
+	<windows.h>
+	<unistd.h>
+
+1442571893 source:c:\prj\vos\httpsrv.c
+	"httpSrv.h"
+	<stdarg.h>
+	<fcntl.h>
+	<dirent.h>
+
+1441209169 c:\prj\vos\httpsrv.h
+	"vos.h"
+	"sock.h"
+	"vss.h"
+
+1441209169 c:\prj\vos\sock.h
+	"vos.h"
+	"vs0.h"
+	"vss.h"
+	"logger.h"
+	"vtypes.h"
+
+1441209169 c:\prj\vos\vs0.h
+	"vtypes.h"
+	"vss.h"
+
+1441209169 c:\prj\vos\vss.h
+	"vtypes.h"
+
+1441209169 c:\prj\vos\logger.h
+	"vs0.h"
+	<stdio.h>
+	<time.h>
+	"coders.h"
+
+1441209169 source:c:\prj\vos\httptest.c
+	"httpSrv.h"
+	"logger.c"
+	"std_sock.c"
+	"exe.c"
+	"sock.c"
+	"httpSrv.c"
+	"vos.c"
+	"vs0.c"
+	"vss.c"
+	"coders.c"
+	<signal.h>
+
+1441209169 c:\prj\vos\logger.c
+	"logger.h"
+	<time.h>
+	<stdarg.h>
+	"vos.h"
+
+1442572830 c:\prj\vos\std_sock.c
+	"vos.h"
+	"vtypes.h"
+	<sys/stat.h>
+	<psapi.h>
+
+1441209169 c:\prj\vos\exe.c
+	"vtypes.h"
+	"coders.h"
+	"vos.h"
+
+1441209169 c:\prj\vos\sock.c
+	"sock.h"
+	<stdarg.h>
+
+1442571893 c:\prj\vos\httpsrv.c
+	"httpSrv.h"
+	<stdarg.h>
+	<fcntl.h>
+	<dirent.h>
+
+1441210227 c:\prj\vos\vos.c
+	"vos.h"
+	"pthread.h"
+	"stdlib.h"
+	"unistd.h"
+	<sys/time.h>
+	<stdio.h>
+	<sys/resource.h>
+	"vos_win.c"
+
+1442572588 c:\prj\vos\vos_win.c
+	<stdio.h>
+	<stdlib.h>
+	<winsock.h>
+	<time.h>
+	<sys/types.h>
+	<sys/stat.h>
+	<psapi.h>
+	<windows.h>
+	"vos.h"
+
+1441210014 c:\prj\vos\vs0.c
+	<fcntl.h>
+	"vs0.h"
+	"vos.h"
+	<sys/stat.h>
+	<fcntl.h>
+
+1441209169 c:\prj\vos\vss.c
+	"vss.h"
+	"vos.h"
+
+1442572055 c:\prj\vos\coders.c
+	"coders.h"
+	<stdarg.h>
+	"vtypes.h"
+
+1441209169 source:c:\prj\vos\logger.c
+	"logger.h"
+	<time.h>
+	<stdarg.h>
+	"vos.h"
+
+1441209169 source:c:\prj\vos\main.c
+	"vos.h"
+
+1441209169 source:c:\prj\vos\sock.c
+	"sock.h"
+	<stdarg.h>
+
+1442572830 source:c:\prj\vos\std_sock.c
+	"vos.h"
+	"vtypes.h"
+	<sys/stat.h>
+	<psapi.h>
+
+1441210227 source:c:\prj\vos\vos.c
+	"vos.h"
+	"pthread.h"
+	"stdlib.h"
+	"unistd.h"
+	<sys/time.h>
+	<stdio.h>
+	<sys/resource.h>
+	"vos_win.c"
+
+1442572622 source:c:\prj\vos\vos_com_linux.c
+	"vos.h"
+	"stdio.h"
+	"unistd.h"
+	"fcntl.h"
+	"<sys/ioctl.h>
+	"<sys/types.h>
+	<termios.h>
+
+1442572661 source:c:\prj\vos\vos_linux_kbhit.c
+	"vos.h"
+	<termios.h>
+	<stropts.h>
+	<stdio.h>
+	<sys/ioctl.h>
+
+1441210014 source:c:\prj\vos\vs0.c
+	<fcntl.h>
+	"vs0.h"
+	"vos.h"
+	<sys/stat.h>
+	<fcntl.h>
+
+1441209169 source:c:\prj\vos\vss.c
+	"vss.h"
+	"vos.h"
+

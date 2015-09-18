@@ -6,6 +6,8 @@
 */
 #include "vos.h"
 
+#ifdef __linux__
+
 #define __USE_UNIX98
 #include "pthread.h"
 #include "stdlib.h"  // malloc,free
@@ -93,3 +95,8 @@ int os_mem_used() { // long int ???
 
 }
 
+#else
+
+#include "vos_win.c"
+
+#endif

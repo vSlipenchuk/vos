@@ -1,4 +1,5 @@
 #include "vos.h"
+#ifdef __linux__
 
 #include <termios.h>
 #include <stropts.h>
@@ -24,3 +25,6 @@ int kbhit() {
     ioctl(STDIN, FIONREAD, &bytesWaiting);
     return bytesWaiting;
 }
+
+
+#endif

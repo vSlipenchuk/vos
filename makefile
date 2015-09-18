@@ -1,4 +1,6 @@
-all: httpTest
+all: httpTest.exe
+
+Release:	all
 
 clean:
 	rm *.exe

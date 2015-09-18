@@ -1,5 +1,6 @@
 #include "httpSrv.h"
 #include <stdarg.h>
+#include <fcntl.h>
 
 /*
 

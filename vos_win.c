@@ -1,22 +1,24 @@
+#ifndef __linux__
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <winsock.h>
 #include <time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <psapi.h>
-#include <windows.h>
 #include "vos.h"
 
-#define MSWIN
 
-/*
+#include <psapi.h>
+#include <windows.h>
 int os_mem_used() {
 	PROCESS_MEMORY_COUNTERS pmc;
 	GetProcessMemoryInfo(GetCurrentProcess(),&pmc,sizeof(pmc));
 	return pmc.PeakWorkingSetSize;
 }
-*/
+
+unsigned long os_ticks() { return GetTickCount(); }
+
 char *exe_name; // Aie?ii auou onoaiiaeaii ia eiy exe-i?ia?aiiu
 char  exe_compiled[200]; // Aaoa-a?aiy nai?ee. Iiianoeou a enoiaiue oaee
 
@@ -225,14 +227,14 @@ void *mutex_create() {
 void mutex_lock(void *mutex){
   if(!mutex) return 0;
   EnterCriticalSection(mutex);
-  return 1;
+  return ;
 }
 
 
 void mutex_unlock(void *mutex) {
   if(!mutex) return 0;
   LeaveCriticalSection((void*)mutex);
-  return 1;
+  return ;
 }
 
 
@@ -246,4 +248,4 @@ void mutex_destroy(void * mutex)
 
 
 
-
+#endif
