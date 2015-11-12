@@ -181,7 +181,7 @@ SocketPool *srv = sock->pool;
         len = recv(sock->sock,buf,len,0); // Try it
         cnt++;
         sock->modified = TimeNow;
-        if (len==0) SocketDie(sock,"client close connection");
+        if (len==0) SocketDie(sock,"connection closed remotely");
         else if (len<0) SocketDie(sock,"read error");
             else { // OK!
             //printf("recv %d bytes\n", len);
