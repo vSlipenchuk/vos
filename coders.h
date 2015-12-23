@@ -149,7 +149,7 @@ typedef struct {  // by GSM 03.40
   char da[28]; // Destination Address (up to 12 octet in source stream) or src addr for DELIVR or report...
   int  pid; // Protocol Identifier, - 1 octet
   int  dcs; // DataCodingCheme  - 1 octet
-  char vp[16]; // ValidityPeriod, up to 7 octet in stream (YYMMDDHHNNSS+TZ)
+  char vp[16+2]; // ValidityPeriod, up to 7 octet in stream (YYMMDDHHNNSS+TZ)
   int  udl; // UserDataLength - 1 octet
   unsigned char *ud; // UserData - Depend of udhi & cs !!!
   unsigned char *udh; // MayBy NULL if no UDHI...
