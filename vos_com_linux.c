@@ -34,7 +34,7 @@ tcsetattr(ttyDev, TCSANOW, &newtio);
 //ioctl(ttyDev, TIOCMBIC, &mcs);
 }
 
-void *prt_open (char *name) {
+void *prt_open (char *name,int speed) {
 int h;
 char fname[1024];
 if (*name!='/') { // add default /dev
@@ -42,7 +42,13 @@ if (*name!='/') { // add default /dev
   }
 h = open(name,O_RDWR | O_NOCTTY,0);
 if (h<0) { return 0;} // error
-  prt_cfg(h, B115200 );
+int mode=B115200; // default mode
+switch(speed) {
+ case 57600: mode=B57600; break;
+ case 19200: mode=B19200; break;
+ case 9600:  mode=B9600;  break;
+ }
+if (speed>0) prt_cfg(h,mode);
 return (void*)h;
 }
 
