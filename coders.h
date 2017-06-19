@@ -4,6 +4,9 @@
 #include "vtypes.h"
 // strutil.c
 
+int hexdump(char *msg,uchar *s,int len);
+int hexstr2bin_(unsigned char *out,int out_sz,unsigned char *in, int len);
+
 uchar *get_row(uchar **tbl); //@strutil.c
 uchar *get_col(uchar **row); //@strutil.c
 int get_cols(uchar **row,uchar *fmt,...); //@strutil.c
