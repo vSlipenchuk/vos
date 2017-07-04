@@ -1,7 +1,9 @@
 #include "vos.h"
 #include "vtypes.h"
 #include <sys/stat.h>
-
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 
 
 #ifndef __linux__
@@ -88,7 +90,7 @@ memcpy(&s.sa_data[2],&h->h_addr_list,4);
 *(int*)(&s.sa_data[2])=*(int*)(h->h_addr_list[0]);
 if (connect(sock,&s,sizeof(s))) {
      return 0;
-     printf("fail connect to namehost %s port %d\n",addr,port);
+     //printf("fail connect to namehost %d port %d\n",(char*)addr,port);
      }
 return 1;
 }
@@ -360,6 +362,8 @@ return 1;
 #endif // MSWIN
 
 // -- udp from 1.0
+
+int net_sa(void *sa,char *host, int port) ;
 
 int udp_sock(int port,uchar *ip) { // Create UDP sock & starts listen (if need)
 int sock;

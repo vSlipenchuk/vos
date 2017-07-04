@@ -49,7 +49,7 @@ typedef struct {
 
 extern int aborted;
 extern time_t TimeNow;
-extern char szTimeNow[18],szTime2Now[18];
+extern char szTimeNow[2*18],szTime2Now[2*18];
 void TimeUpdate();
 void Reportf(uchar *fmt,...);
 void sig_done(int); // default aborted=1 handler

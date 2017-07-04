@@ -4,6 +4,8 @@
 #include "vtypes.h"
 // strutil.c
 
+int gsm2utf(char *out,char *ucs2,int len) ;
+
 int hexdump(char *msg,uchar *s,int len);
 int hexstr2bin_(unsigned char *out,int out_sz,unsigned char *in, int len);
 
@@ -199,5 +201,7 @@ int hex_dump(char *msg,uchar *s,int len); // где лежит???
 int utf2gsm(uchar *d,uchar *src,int len); // code to GSM UCS2
 int utf_nonstd(uchar *src,int len); // calc non-eng letters
 int utf2koi(uchar *dst, uchar *src, int len); // utf ->UNI->win->koi
+
+int bin2hexstr(uchar *out,uchar *bin,int len);
 
 #endif // CODERS_H

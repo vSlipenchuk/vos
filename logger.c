@@ -34,7 +34,7 @@ if (log->file) {
 
 //#define BUF_FMT(buf,fmt) {va_list va; va_start(va,fmt); _vsnprintf(buf,sizeof(buf)-1,fmt,va); va_end(va);}
 
-char szTimeNow[18],szTime2Now[18],szTime3Now[18];
+char szTimeNow[2*18],szTime2Now[2*18],szTime3Now[2*18];
 struct tm sysTime; // myTime
 
 void TimeUpdate() {
