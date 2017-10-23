@@ -56,14 +56,19 @@ int   prt_peek (void *com,void *buf, int size) {
 int h=(int)com; int bytesWaiting=1;
 if (h==0) return 0; // invalid
 if (ioctl(h, FIONREAD, &bytesWaiting)!=0) return -1;
-//printf("(%d)\n",bytesWaiting);
+// if (bytesWaiting) printf("(%d,%d)\n",bytesWaiting,size);
 if (bytesWaiting<=0) return bytesWaiting; // not yet
 if (bytesWaiting>=size) bytesWaiting=size-1;
-return read(h,buf,bytesWaiting); // EOF=0 reading, like on sockets???
+memset(buf,0,bytesWaiting);
+int r = read(h,buf,bytesWaiting); // EOF=0 reading, like on sockets???
+  //printf("\nREAD: %d \n%*.*s\n",r,r,r,buf);
+  //hex_dump("com_read ",buf,r);
+return r;
 }
 
 int   prt_write(void *com,void *buf, int len) {
 if (!com) return 0;
+  //hex_dump("com_write",buf,len);
 return  write((int)com,buf,len);
 }
 

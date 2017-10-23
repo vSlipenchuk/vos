@@ -100,7 +100,7 @@ if (len<0) { len = data?strlen((char*)data):0; }; // Автовычисление длины
 d = arrayNew(StringClass,len+1);
 if (!d) return 0;
 obj2head(d)->len=len; // remove 0 trailer
-if (data) memcpy(d,data,len); else memset(d,0,len); // copy it !!!
+if (data) memmove(d,data,len); else memset(d,0,len); // copy it !!!
 d[len]=0;
 return d;
 }
@@ -159,7 +159,7 @@ d = arrAddN((void**)str,len+1); // check - if ok?
 //printf("DoneMalloc %d bytes res='%s' strlen=%d,len=%d\n",len+1,*str,strlen(*str),obj2head(*str)->len);
 //printf("P=%p D=%p SHIFT=%d\n",*str,d,*str-d);
 if (!d) return 0;
-if (data) memcpy(d,data,len); else memset(d,0,len);
+if (data) memmove(d,data,len); else memset(d,0,len);
 d[len]=0;
 //printf("RESLEN=%d RES='%s', ADD='%s; D-1=%s\n",obj2head(*str)->len,*str,d,d-8);
 obj2head(*str)->len--;
