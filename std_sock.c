@@ -64,7 +64,7 @@ struct hostent *h;
 int addr;
 if (cl<0) cl=strlen(cs);
 if (cl>79) cl=79;
-memcpy(host,cs,cl); host[cl]=0;
+memmove(host,cs,cl); host[cl]=0;
 p=strchr(host,':');
 if (p) {*p=0; sscanf(p+1,"%d",&port);}
 memset(&s,0,sizeof(s));

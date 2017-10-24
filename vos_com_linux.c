@@ -42,11 +42,22 @@ if (*name!='/') { // add default /dev
   }
 h = open(name,O_RDWR | O_NOCTTY,0);
 if (h<0) { return 0;} // error
-int mode=B115200; // default mode
+int mode=0; // default mode
 switch(speed) {
+ case 1000000: mode=B1000000; break;
+ case 921600: mode=B921600; break;
+ case 500000: mode=B500000; break;
+ case 576000: mode=B576000; break;
+ case 460800: mode=B460800; break;
+ case 230400: mode=B230400; break;
+ case 115200: mode=B115200; break;
  case 57600: mode=B57600; break;
+// case 48000: mode=B48000; break;
+ case 38400: mode=B38400; break;
+ //case 28800: mode=B28800; break;
  case 19200: mode=B19200; break;
  case 9600:  mode=B9600;  break;
+
  }
 if (speed>0) prt_cfg(h,mode);
 return (void*)h;
