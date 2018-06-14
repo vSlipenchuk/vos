@@ -176,12 +176,14 @@ return 0; // Not ready yet...
 }
 */
 
-int SocketSendHttp(Socket *sock, vssHttp *req, uchar *data, int len) {
+/*
+
+int SocketSendHttpCode(Socket *sock, vssHttp *req, char *code, uchar *data, int len) {
 char buf[1024];
 vss reqID = {0,0};
 if (req && req->reqID.len>0) reqID=req->reqID;
 if (len<0) len = strlen(data);
-sprintf(buf,"HTTP/1.1 200 OK\r\nConnection: %s\r\n%s: %*.*s\r\nContent-Length: %d\r\n\r\n",sock->dieOnSend?"close":"Keep-Alive",
+snprintf(buf,sizeof(buf),"HTTP/1.1 %s\r\nConnection: %s\r\n%s: %*.*s\r\nContent-Length: %d\r\n\r\n",code,sock->dieOnSend?"close":"Keep-Alive",
     X_REQUEST_ID,VSS(reqID),len);
 strCat(&sock->out,buf,-1); // Add a header
 strCat(&sock->out,data,len); // Push it & Forget???
@@ -189,6 +191,12 @@ strCat(&sock->out,data,len); // Push it & Forget???
 sock->state = sockSend;
 // Wait???
 return 1;
+}
+
+*/
+
+int SocketSendHttp(Socket *sock, vssHttp *req, uchar *data, int len) {
+return SocketSendHttpCode(sock,req,"200 OK",data,len);
 }
 
 int SocketPrintHttp(Socket *sock,vssHttp *req, uchar *fmt,...) { // Simple Print Here
@@ -209,9 +217,9 @@ while(FindNextFile(fh,&fd)) {
     char *name = fd.cFileName;
     if (name[0]=='.') continue; // Never show
     if (fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
-        sprintf(buf,"<a href=\"%*.*s%s/\"  >%s/</a><br>\n",VSS(url),name,name);
+        snprintf(buf,sizeof(buf),"<a href=\"%*.*s%s/\"  >%s/</a><br>\n",VSS(url),name,name);
         } else {
-        sprintf(buf,"<a href=\"%*.*s%s\" title=\"size:%d\" >%s</a><br>\n",VSS(url),name,(int)fd.nFileSizeLow,name);
+        snprintf(buf,sizeof(buf),"<a href=\"%*.*s%s\" title=\"size:%d\" >%s</a><br>\n",VSS(url),name,(int)fd.nFileSizeLow,name);
         }
     strCat(out,buf,-1);
         /*
@@ -246,9 +254,9 @@ while(1) {
     snprintf(fname,sizeof(fname),"%s/%s",dir,name);
     if (lstat(fname,&st)!=0) continue; // error on stat??? - link follows
     if (st.st_mode & S_IFDIR) {
-        sprintf(buf,"<a href=\"%*.*s%s/\"  >%s/</a><br>\n",VSS(url),name,name);
+        snprintf(buf,sizeof(buf),"<a href=\"%*.*s%s/\"  >%s/</a><br>\n",VSS(url),name,name);
         } else {
-        sprintf(buf,"<a href=\"%*.*s%s\" title=\"size:%ld\" >%s</a><br>\n",VSS(url),name,st.st_size,name);
+        snprintf(buf,sizeof(buf),"<a href=\"%*.*s%s\" title=\"size:%ld\" >%s</a><br>\n",VSS(url),name,st.st_size,name);
         }
     strCat(out,buf,-1);
     }
@@ -285,7 +293,7 @@ if (len<=0) {
     return 1;
     }
 CLOG(srv,3," sent '%*.*s', %d bytes for %s\n",VSS(req->U),len,sock->szip);
-sprintf(szPath,"HTTP/1.1 200 OK\r\nContent-Length: %d\r\nContent-Type: %*.*s\r\nConnection: %s\r\n\r\n",len,VSS(m),
+snprintf(szPath,sizeof(szPath),"HTTP/1.1 200 OK\r\nContent-Length: %d\r\nContent-Type: %*.*s\r\nConnection: %s\r\n\r\n",len,VSS(m),
    sock->dieOnSend?"close":"Keep-Alive");
 CLOG(srv,6,"new httpResponce#%d/%d headers '%s'\n",sock->N,sock->recvNo,szPath);
 strCat(&sock->out,szPath,-1); // Add a header
@@ -293,6 +301,24 @@ strCat(&sock->out,srv->buf,len); // Push it & Forget???
 return 1; // -- process
 }
 
+
+int basicAuth_getUserPass(vss *heads,char *buf,int size) { // fill user-password buffer
+vss A={0,0};
+char *p;
+int ok;
+if (!vssFindMimeHeader(heads,"Authorization",&A)) return 0;
+vss2str(buf,size,&A);
+//   printf("Auth: %s\n", buf);
+p = strstr(buf,"Basic");
+if (!p) return 0;
+p+=5; while(*p && p==' ') p++;
+memmove(buf,p,strlen(p)+1); p=buf; // remove "basic"
+decode_base64(p,p,strlen(p));
+char *u=p; p=strchr(u,':'); if (!p) return 0;
+//*p=0;
+//printf("User=%s Pass=%s\n",u,p+1);
+return 1; // no auth yet
+}
 
 int onHttpClientPacket(uchar *data,int len, Socket *sock) { // CHeck - if packet ready???
 //vssHttp req;
@@ -303,6 +329,18 @@ CLOG(srv,6,"new httpRequest#%d/%d requestBody '%s'\n",sock->N,sock->recvNo,data)
 // Сначала - пытаемся найти мапу. Для этого - нужно разобрать запрос
 if (!srv->keepAlive) sock->dieOnSend = 1;
 srv->req = httpReq(data,len); // Быстро разбираем запрос
+#ifdef HTTPSRV_AUTH
+char buf[512];
+int  auth_ok = basicAuth_getUserPass(&srv->req.H,buf,sizeof(buf));
+if  (auth_ok && srv->auth) auth_ok = srv->auth(buf,srv);
+srv->userId = auth_ok; // copy
+if (auth_ok<=0) { // unauth
+   if (!srv->realm) srv->realm="";
+   snprintf(buf,sizeof(buf),"401 Unauthorized\r\nWWW-Authenticate: Basic realm=\"%s\"",srv->realm);
+   SocketSendHttpCode(sock,&srv->req,buf, 0,0 );
+   return len;
+   }
+#endif
 SocketMap *map;
 map =SocketMapFind(srv->map, &srv->req.page);
 if (!map) {
@@ -526,10 +564,10 @@ if (!url) url="";
 while (*url=='/') url++; // Already has it -)))
 //printf("Sendf?\n");
 if (cli->proxy[0]) { // ProxyConnection???
-    sprintf(buf,"%s http://%s%s%s HTTP/1.1\r\nHost: %s\r\n%s\r\n",
+    snprintf(buf,sizeof(buf),"%s http://%s%s%s HTTP/1.1\r\nHost: %s\r\n%s\r\n",
    method,cli->host,cli->page,url,cli->host,cli->Heads);
     }
-else sprintf(buf,"%s /%s%s HTTP/1.1\r\nHost: %s\r\n%s: %d\r\n%sContent-Length: %d\r\n\r\n",
+else snprintf(buf,sizeof(buf),"%s /%s%s HTTP/1.1\r\nHost: %s\r\n%s: %d\r\n%sContent-Length: %d\r\n\r\n",
     method,cli->page,url,cli->host,X_REQUEST_ID,cmdn,cli->Heads,len);
 ok  = SocketSend(sock,buf,strlen(buf));
 if (ok && len) ok = SocketSend(sock,data,len);

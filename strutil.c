@@ -72,12 +72,14 @@ return cnt;
 
 uchar *get_word(uchar **str) { // gets a word or ""
 uchar *r = *str,*ret;
+//printf("R=<%s>\n",r);
 while(*r && *r<=32) r++; // ltrim
 ret = r;
 while(*r && *r>32) r++; // collect
 if (*r)  { *r=0; r++;}
 while(*r && *r<=32) r++; // ltrim again
 *str = r;
+//printf("R=<%s>\n",r);
 return ret;
 }
 

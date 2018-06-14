@@ -18,6 +18,8 @@ typedef struct { // Маппер используется для соответствия URL (или SOAP)
 VS0OBJH(SocketMap);
 
 int httpReady(char *s);
+
+int SocketSendHttpCode(Socket *sock, vssHttp *req, char *code, uchar *data, int len); // Headers -> max 1024 bytes
 int SocketSendHttp(Socket *sock, vssHttp *req, uchar *data, int len);
 vssHttp httpReq(uchar *data, int len); // Разборщик
 
@@ -25,7 +27,7 @@ typedef struct {
     vss ext,mime;
     } httpMime;
 
-typedef struct {
+typedef struct _httpSrv {
     SocketPool srv; // Тут все сокеты (включая слушателя)
     char name[14]; int logLevel; logger *log; // Logging
     SocketMap **map; // Залинкованные URL (файловые и программные)
@@ -41,6 +43,11 @@ typedef struct {
     time_t created; // When it has beed created -)))
     time_t runTill;
     void *handle; // any user defined handle
+#ifdef HTTPSRV_AUTH
+    char *realm; // report on 401 Unauthorized
+    int  (*auth)(char *UserPass, struct _httpSrv *); // user:password, func must return >0 on success
+    int  userId; // last auth result (app must copy it)
+#endif
     } httpSrv;
 
 

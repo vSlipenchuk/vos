@@ -57,7 +57,7 @@ void RunSleep(int cnt);
 
 // some simple declares
 
-#define BUF_FMT(buf,fmt) {va_list va; va_start(va,fmt); _vsnprintf((char*)buf,sizeof(buf)-1,(char*)fmt,va); buf[sizeof(buf)-1]=0; va_end(va);}
+#define BUF_FMT(buf,fmt) {va_list va; va_start(va,fmt); vsnprintf((char*)buf,sizeof(buf)-1,(char*)fmt,va); buf[sizeof(buf)-1]=0; va_end(va);}
 
 #ifndef strNcpy
 #define strNcpy(A,B) { strncpy(A,B,sizeof(A)-1); A[sizeof(A)-1]=0;}
