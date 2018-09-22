@@ -285,7 +285,7 @@ if (len>0 && szPath[len-1]=='/') { // is Dir!!!
     return 1; // DONE
     }
 httpMime *mime; vss m = srv->defmime;
-mime = httpSrvGetMime(srv,req->U); if (mime) m = mime->mime;
+mime = httpSrvGetMime(srv,req->page); if (mime) m = mime->mime;
 len  = getFileData(szPath,&srv->buf); //req->page);
 if (len<=0) {
     SocketPrintHttp(sock,&srv->req,"File %*.*s not found on a server, code:%d",VSS(req->page),len);
