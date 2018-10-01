@@ -176,7 +176,7 @@ return 0; // Not ready yet...
 }
 */
 
-/*
+
 
 int SocketSendHttpCode(Socket *sock, vssHttp *req, char *code, uchar *data, int len) {
 char buf[1024];
@@ -193,7 +193,7 @@ sock->state = sockSend;
 return 1;
 }
 
-*/
+
 
 int SocketSendHttp(Socket *sock, vssHttp *req, uchar *data, int len) {
 return SocketSendHttpCode(sock,req,"200 OK",data,len);

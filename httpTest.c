@@ -191,6 +191,88 @@ SocketPrintHttp(sock,req,"%s",buf); // Flash Results as http
 return 1; // OK - generated
 }
 
+ #include <openssl/sha.h>
+
+int SocketSendHttpWS(Socket *sock, vssHttp *req) {
+char buf[1024],buf2[512];
+vss reqID = {0,0};
+vss K; char key[100],b64[200];
+if (req && req->reqID.len>0) reqID=req->reqID;
+//if (len<0) len = strlen(data);
+if (!vssFindMimeHeader(&req->H,"Sec-WebSocket-Key",&K)) return 0;
+printf("Key=%*.*s\n",K.len,K.len,K.data);
+vss2str(buf,40,&K);
+
+
+//strcpy(buf,"dGhlIHNhbXBsZSBub25jZQ==");
+strcat(buf,"258EAFA5-E914-47DA-95CA-C5AB0DC85B11");
+unsigned char hash[SHA_DIGEST_LENGTH];
+printf("MakeIt to sha: %s\n",buf);
+SHA1(buf,strlen(buf), hash);
+encode_base64(b64,hash,SHA_DIGEST_LENGTH);
+printf("b64: %s\n",b64);
+
+snprintf(buf2,sizeof(buf2),"HTTP/1.1 101 Switching Protocols\r\n"
+"Upgrade: websocket\r\n"
+"Connection: Upgrade\r\n"
+"Sec-WebSocket-Accept: %s\r\n"
+"Sec-WebSocket-Protocol: chat\r\n"
+"\r\n",b64);
+strCat(&sock->out,buf2,-1); // Add a header
+//strCat(&sock->out,data,len); // Push it & Forget???
+//printf("TOSEND:%s\n",sock->out);
+sock->state = sockSend;
+// Wait???
+return 1;
+}
+
+int SocketPutStr(Socket *sock, char *data,int len) {
+char ch=0;
+char h[]={0x81,0x05,0x48,0x65,0x6c,0x6c,0x6f};
+strCat(&sock->out,h,7); //data,len);
+/*
+if (len<0) len = strlen(data);
+ch = 0; strCat(&sock->out,&ch,1); //zero
+strCat(&sock->out,data,len);
+ch=255; strCat(&sock->out,&ch,1); //end of data
+*/
+sock->state = sockSend;
+//SocketS
+}
+
+
+
+
+int onWebSock(Socket *sock, vssHttp *req, SocketMap *map) { // Генерация статистики по серверу
+char buf[1024];
+httpSrv *srv = sock->pool;
+strSetLength(&srv->buf,0); // ClearResulted
+vss h=req->H;
+printf("REQ: <%*.*s>\n",h.len,h.len,h.data);
+//Sec-WebSocket-Key
+/*
+sprintf(buf,"{clients:%d,connects:%d,requests:%d,mem:%d,serverTime:'%s',pps:%d}",arrLength(srv->srv.sock)-1,
+  srv->srv.connects,
+  srv->srv.requests,
+  os_mem_used(), szTimeNow,
+  (srv->readLimit.pValue+srv->readLimit.ppValue)/2);
+SocketPrintHttp(sock,req,"%s",buf); // Flash Results as http
+*/
+
+/*
+HTTP/1.1 101 Switching Protocols
+Upgrade: websocket
+Connection: Upgrade
+Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=
+Sec-WebSocket-Protocol: chat
+
+*/
+SocketSendHttpWS(sock,req);
+
+SocketPutStr(sock,"Hello Client from server!",-1);
+return 1; // OK - generated
+}
+
 
 /// --- microHttp Starting here ...
 
@@ -201,7 +283,7 @@ int logLevel = 1;
 int keepAlive = 1;
 int runTill = 0;
 char *rootDir = "./";
-char *mimes=".htm,.html=text/html;charset=windows-1251&.js=text/javascript;charset=windows-1251";
+char *mimes=".htm,.html=text/html;charset=utf-8&.js=text/javascript;charset=utf-8";
 
 
 int MicroHttpMain(int npar,char **par) {
@@ -235,12 +317,14 @@ IFLOG(srv,0,"...starting microHttp {port:%d,logLevel:%d,rootDir:'%s',keepAlive:%
   port,logLevel,rootDir,keepAlive,Limit,
   mimes);
 //printf("...Creating a http server\n");
-srv->defmime= vssCreate("text/plain;charset=windows-1251",-1);
+srv->defmime= vssCreate("text/plain;charset=utf-8",-1);
 httpSrvAddMimes(srv,mimes);
 //httpMime *m = httpSrvGetMime(srv,vssCreate("1.HHtm",-1));printf("Mime here %*.*s\n",VSS(m->mime));
 //httpSrvAddFS(srv,"/c/","c:/",0); // Adding some FS mappings
 httpSrvAddFS(srv,"/",rootDir,0); // Adding some FS mappings
 httpSrvAddMap(srv, strNew("/.stat",-1), onHttpStat, 0);
+httpSrvAddMap(srv, strNew("/echo",-1), onWebSock, 0);
+
 if (httpSrvListen(srv,port)<=0) { // Starts listen port
    Logf("-FAIL start listener on port %d\n",port); return 1;
    }
