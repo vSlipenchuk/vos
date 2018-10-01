@@ -13,6 +13,7 @@
 */
 
 #include "httpSrv.h"
+#include "wsSrv.h"
 
 #ifdef httpTestMain
 
@@ -191,56 +192,10 @@ SocketPrintHttp(sock,req,"%s",buf); // Flash Results as http
 return 1; // OK - generated
 }
 
- #include <openssl/sha.h>
-
-int SocketSendHttpWS(Socket *sock, vssHttp *req) {
-char buf[1024],buf2[512];
-vss reqID = {0,0};
-vss K; char key[100],b64[200];
-if (req && req->reqID.len>0) reqID=req->reqID;
-//if (len<0) len = strlen(data);
-if (!vssFindMimeHeader(&req->H,"Sec-WebSocket-Key",&K)) return 0;
-printf("Key=%*.*s\n",K.len,K.len,K.data);
-vss2str(buf,40,&K);
 
 
-//strcpy(buf,"dGhlIHNhbXBsZSBub25jZQ==");
-strcat(buf,"258EAFA5-E914-47DA-95CA-C5AB0DC85B11");
-unsigned char hash[SHA_DIGEST_LENGTH];
-printf("MakeIt to sha: %s\n",buf);
-SHA1(buf,strlen(buf), hash);
-encode_base64(b64,hash,SHA_DIGEST_LENGTH);
-printf("b64: %s\n",b64);
 
-snprintf(buf2,sizeof(buf2),"HTTP/1.1 101 Switching Protocols\r\n"
-"Upgrade: websocket\r\n"
-"Connection: Upgrade\r\n"
-"Sec-WebSocket-Accept: %s\r\n"
-"Sec-WebSocket-Protocol: chat\r\n"
-"\r\n",b64);
-strCat(&sock->out,buf2,-1); // Add a header
-//strCat(&sock->out,data,len); // Push it & Forget???
-//printf("TOSEND:%s\n",sock->out);
-sock->state = sockSend;
-// Wait???
-return 1;
-}
-
-int SocketPutStr(Socket *sock, char *data,int len) {
-char ch=0;
-char h[]={0x81,0x05,0x48,0x65,0x6c,0x6c,0x6f};
-strCat(&sock->out,h,7); //data,len);
-/*
-if (len<0) len = strlen(data);
-ch = 0; strCat(&sock->out,&ch,1); //zero
-strCat(&sock->out,data,len);
-ch=255; strCat(&sock->out,&ch,1); //end of data
-*/
-sock->state = sockSend;
-//SocketS
-}
-
-
+wsSrv *ws; // webSocket Server
 
 
 int onWebSock(Socket *sock, vssHttp *req, SocketMap *map) { // Генерация статистики по серверу
@@ -267,12 +222,21 @@ Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=
 Sec-WebSocket-Protocol: chat
 
 */
-SocketSendHttpWS(sock,req);
 
-SocketPutStr(sock,"Hello Client from server!",-1);
+wsSrvUpgrade(ws,sock,req); // send upgrade request
+//SocketSendHttpWS(sock,req);
+
+wsPutStr(sock,"Hello Client from server!",-1);
 return 1; // OK - generated
 }
 
+
+int onWebMessage(Socket *sock,char *data,int len) {
+char buf[512];
+sprintf(buf,"YouTyped: %s",data); // echo it back
+wsPutStr(sock,buf,-1);
+return 1;
+}
 
 /// --- microHttp Starting here ...
 
@@ -313,6 +277,10 @@ srv->log =  srv->srv.log = logOpen("microHttp.log"); // Create a logger
 srv->logLevel = srv->srv.logLevel = logLevel;
 srv->keepAlive=keepAlive;
 srv->readLimit.Limit = Limit;
+
+ws = wsSrvCreate();
+ws->onMessage = onWebMessage;
+
 IFLOG(srv,0,"...starting microHttp {port:%d,logLevel:%d,rootDir:'%s',keepAlive:%d,Limit:%d},\n   mimes:'%s'\n",
   port,logLevel,rootDir,keepAlive,Limit,
   mimes);
@@ -330,7 +298,19 @@ if (httpSrvListen(srv,port)<=0) { // Starts listen port
    }
 Logf(".. listener is ready, Ctrl+C to abort\n");
 if (runTill) srv->runTill = TimeNow + runTill;
-httpSrvProcess(srv); // Run All messages till CtrlC...
+
+//httpSrvProcess(srv); // Run All messages till CtrlC...
+
+while(!aborted) {
+  TimeUpdate(); // TimeNow & szTimeNow
+  int cnt = SocketPoolRun(&srv->srv);
+      cnt+=wsSrvStep(ws);
+  //printf("SockPoolRun=%d time:%s\n",cnt,szTimeNow); msleep(1000);
+  RunSleep(cnt); // Empty socket circle -)))
+  if (srv->runTill && TimeNow>=srv->runTill) break; // Done???
+  }
+
+
 TimeUpdate();
 IFLOG(srv,0,"...stop microHttp, done:{connects:%d,requests:%d,runtime:%d}\n",
      srv->srv.connects,srv->srv.requests,TimeNow - srv->created);

@@ -15,7 +15,7 @@ return 0;
 
 int hexdump(char *msg,uchar *s,int len) {
 int i;
- printf("\n%s:",msg);
+ printf("\n%s[%d]:",msg);
  for(i=0;i<len;i++) printf("%02x ",s[i]);
  printf("\n");
 return 0;
