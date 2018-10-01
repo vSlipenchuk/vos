@@ -1,0 +1,38 @@
+
+<html>
+    <head>
+
+<h1> test websocket</h1>
+<textarea id=log>
+</textarea>
+
+<script>
+
+
+            var webSocket = new WebSocket('ws://localhost/echo');
+
+            webSocket.onopen = function(event) {
+                console.log('onopen');
+                //webSocket.send("Hello Web Socket!");
+            };
+
+            webSocket.onmessage = function(event) {
+                alert('onmessage, ' + event.data);
+            };
+
+            webSocket.onclose = function(event) {
+                alert('onclose');
+            };
+	    
+	    webSocket.onerror = function(error) {
+  alert("Ошибка " + toString(error));
+};
+	    
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
+
+
+</html>

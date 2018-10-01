@@ -17,6 +17,9 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add library="pthread" />
+					<Add library="ssl" />
+					<Add library="crypto" />
 				</Linker>
 			</Target>
 		</Build>
