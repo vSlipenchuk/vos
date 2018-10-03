@@ -185,9 +185,7 @@ if (req && req->reqID.len>0) reqID=req->reqID;
 if (len<0) len = strlen(data);
 snprintf(buf,sizeof(buf),"HTTP/1.1 %s\r\nConnection: %s\r\n%s: %*.*s\r\nContent-Length: %d\r\n\r\n",code,sock->dieOnSend?"close":"Keep-Alive",
     X_REQUEST_ID,VSS(reqID),len);
-strCat(&sock->out,buf,-1); // Add a header
-strCat(&sock->out,data,len); // Push it & Forget???
-//printf("TOSEND:%s\n",sock->out);
+SocketSend(sock,data,len);
 sock->state = sockSend;
 // Wait???
 return 1;
@@ -296,8 +294,8 @@ CLOG(srv,3," sent '%*.*s', %d bytes for %s\n",VSS(req->U),len,sock->szip);
 snprintf(szPath,sizeof(szPath),"HTTP/1.1 200 OK\r\nContent-Length: %d\r\nContent-Type: %*.*s\r\nConnection: %s\r\n\r\n",len,VSS(m),
    sock->dieOnSend?"close":"Keep-Alive");
 CLOG(srv,6,"new httpResponce#%d/%d headers '%s'\n",sock->N,sock->recvNo,szPath);
-strCat(&sock->out,szPath,-1); // Add a header
-strCat(&sock->out,srv->buf,len); // Push it & Forget???
+SocketSend(sock,szPath,-1);
+SocketSend(sock,srv->buf,len); // Push it & Forget???
 return 1; // -- process
 }
 

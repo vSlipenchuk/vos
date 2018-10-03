@@ -78,6 +78,7 @@ return 1; // do nothing
 }
 
 int socketReadPush(Socket *sock,uchar *buf,int len) { // Try push it now ->>>
+// if we have ssl - we need to inject read and than - extract read
 if (socketReadPush0(sock,buf,len)<=0) return 0;
 while(socketReadPush0(sock,0,0)>0); // Call All Packets
 return 1;
@@ -121,6 +122,12 @@ sock->state = sockConnected;
 sock->connectStatus = connectTCP;
 sock->modified = TimeNow;
 ip2szbuf(ip,sock->szip);
+#ifdef VOS_SSL
+if (srv->pem_file) { // create ssl mashine
+   sock->ssl = SSLStateMachine_new(srv->pem_file,srv->pem_file);
+   CLOG(srv,6,"SocketPoolAccept created new SSL mashine %x\n",sock->ssl);
+   }
+#endif VOS_SSL
 CLOG(srv,6,"SocketPoolAccept:{n:%d,ip:'%s',sock:%d}\n",sock->N,sock->szip,sock->sock);
 Socket2Pool(sock,srv); // AddIt
 return sock;
@@ -131,7 +138,9 @@ int cnt =0;
 SocketPool *srv = sock->pool;
     sock->readable = sock_readable(sock->sock);
     sock->writable = sock_writable(sock->sock);
-
+#if VOS_SSL
+    if (sock->ssl && SSLStateMachine_write_can_extract(sock->ssl)) SocketSend(sock,0,0); // decode output data
+#endif // VOS SSL
     //sock->readable=1; // ZU!
 
     //printf("\nSock: %d R:%d W:%d listen:%d stte:%d\n",sock->sock,sock->readable,sock->writable,sockListen,sock->state);
@@ -186,7 +195,14 @@ SocketPool *srv = sock->pool;
             else { // OK!
             //printf("recv %d bytes\n", len);
             counterAdd(&sock->readCounter,len);
-            socketReadPush(sock,buf,len); // Try push it now ->>>
+            #if VOS_SSL
+            if (sock->ssl) {
+                SSLStateMachine_read_inject(sock->ssl,buf,len);
+                len = SSLStateMachine_read_extract(sock->ssl,buf,sizeof(buf));
+                if (len<0) SocketDie(sock,"sockSSL read error");
+                }
+            #endif VOS_SSL
+            if (len>0) socketReadPush(sock,buf,len); // Try push it now ->>>
             //printf("done push\n");
             //counterAdd(&sock->readCounter,len);
             }
@@ -259,12 +275,27 @@ Sock->state = sockListen; // Fix it
 return 1; // OK - listen here!!!
 }
 
-int SocketSend(Socket *sock,void *data,int len) {
-if (sock->state<=0) return 0; // Fail
-if (!data) return 0;
+int SocketSend(Socket *sock,void *data,int len) { // masn for send data
+//if (sock->state<=0) return 0; // Fail
+if (!data) data=""; //return 0;
 if (len<0) len = strlen(data);
+#ifdef VOS_SSL
+if (sock->ssl) {
+  hex_dump("inject",data,len);
+  if (len>0) SSLStateMachine_write_inject(sock->ssl,data,len);
+  while ( 1 ) {
+     char buf[1024];
+     int n = SSLStateMachine_write_extract(sock->ssl,buf,sizeof buf);
+     if (n<=0 ) break;
+     printf("PUSH %d bytes to sock_send\n",n);
+     strCat(&sock->out,buf,n );
+     }
+ } else strCat(&sock->out,data,len); // Push it & Forget???
+#else
 if (len<=0) return 0; // Do not send zero -)))
 strCat(&sock->out,data,len); // Push it & Forget???
+#endif // VOS SSL
+
 return len;
 }
 

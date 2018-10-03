@@ -82,6 +82,9 @@ typedef struct _SocketPool {
     int requests; // Total requests processed
     int connects; // Total connects served
     void *handle; // не используется - только для АПП
+    #ifdef VOS_SSL
+    char *pem_file;
+    #endif
     } SocketPool;
 
 VS0OBJH(SocketPool);

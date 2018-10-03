@@ -73,7 +73,47 @@ int sock_close(int sock);
 
 // timing
 
+
+
 extern int sleepTime; // defined in exe.c
+
+
+// SSL - if need
+
+#ifdef VOS_SSL
+#include <openssl/ssl.h>
+#include <assert.h>
+#include <unistd.h>
+#include <string.h>
+#include <openssl/err.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+
+
+typedef struct {
+    SSL_CTX *pCtx;
+    BIO *pbioRead;
+    BIO *pbioWrite;
+    SSL *pSSL;
+    } SSLStateMachine;
+
+
+void ssl_sock_init(); // init all ssl libraries
+
+SSLStateMachine *SSLStateMachine_new(const char *szCertificateFile,     const char *szKeyFile);
+void SSLStateMachine_read_inject(SSLStateMachine *pMachine, const unsigned char *aucBuf,int nBuf);
+int SSLStateMachine_read_extract(SSLStateMachine *pMachine,	 unsigned char *aucBuf,int nBuf);
+int SSLStateMachine_write_can_extract(SSLStateMachine *pMachine);
+int SSLStateMachine_write_extract(SSLStateMachine *pMachine, unsigned char *aucBuf,int nBuf);
+void SSLStateMachine_write_inject(SSLStateMachine *pMachine, const unsigned char *aucBuf,int nBuf);
+// ZU ssl mashine done
+
+
+
+
+#endif // VOS_SSL
+
 
 
 #endif // VOS_H_INCLUDED

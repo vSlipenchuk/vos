@@ -13,6 +13,10 @@ return WSAStartup(MAKEWORD(2,2),&wsadata)==0;
 }
 #else
 int net_init() { // ZU - init number of sockets allowed for app?
+#ifdef VOS_SSL
+ssl_sock_init();
+#endif
+
 return 0;
 }
 #endif

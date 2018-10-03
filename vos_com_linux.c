@@ -15,7 +15,7 @@ info about serial:
 
 #include <termios.h>
 
-void static prt_cfg(int ttyDev,int baudrate) {
+void  prt_cfg(int ttyDev,int baudrate) {
 struct termios oldtio,newtio;
 
 tcgetattr(ttyDev, &oldtio); //backup current settings

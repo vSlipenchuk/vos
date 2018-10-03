@@ -278,6 +278,10 @@ srv->logLevel = srv->srv.logLevel = logLevel;
 srv->keepAlive=keepAlive;
 srv->readLimit.Limit = Limit;
 
+#ifdef VOS_SSL
+srv->srv.pem_file="server.pem"; // if have SSL
+#endif
+
 ws = wsSrvCreate();
 ws->onMessage = onWebMessage;
 
