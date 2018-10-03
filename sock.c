@@ -281,7 +281,7 @@ if (!data) data=""; //return 0;
 if (len<0) len = strlen(data);
 #ifdef VOS_SSL
 if (sock->ssl) {
-  hex_dump("inject",data,len);
+  //hex_dump("inject",data,len);
   if (len>0) SSLStateMachine_write_inject(sock->ssl,data,len);
   while ( 1 ) {
      char buf[1024];
