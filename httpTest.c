@@ -203,7 +203,7 @@ char buf[1024];
 httpSrv *srv = sock->pool;
 strSetLength(&srv->buf,0); // ClearResulted
 vss h=req->H;
-printf("REQ: <%*.*s>\n",h.len,h.len,h.data);
+//printf("REQ: <%*.*s>\n",h.len,h.len,h.data);
 //Sec-WebSocket-Key
 /*
 sprintf(buf,"{clients:%d,connects:%d,requests:%d,mem:%d,serverTime:'%s',pps:%d}",arrLength(srv->srv.sock)-1,
@@ -226,15 +226,16 @@ Sec-WebSocket-Protocol: chat
 wsSrvUpgrade(ws,sock,req); // send upgrade request
 //SocketSendHttpWS(sock,req);
 
-wsPutStr(sock,"Hello Client from server!",-1);
+wsPutStr(sock,"Hello new Websocket client!",-1);
 return 1; // OK - generated
 }
 
 
 int onWebMessage(Socket *sock,char *data,int len) {
 char buf[512];
-sprintf(buf,"YouTyped: %s",data); // echo it back
-wsPutStr(sock,buf,-1);
+sprintf(buf,"%s#%d: %s",sock->szip,sock->N,data); // echo it back
+//wsPutStr(sock,buf,-1);
+wsBroadcast((void*)sock->pool,buf,-1);
 return 1;
 }
 
@@ -248,12 +249,13 @@ int keepAlive = 1;
 int runTill = 0;
 char *rootDir = "./";
 char *mimes=".htm,.html=text/html;charset=utf-8&.js=text/javascript;charset=utf-8";
+char *pem = 0;
 
 
 int MicroHttpMain(int npar,char **par) {
 int i,Limit=1000000;
 if (npar==1) {
-    printf("microHttp.exe -p[port] -r[rootDir] -d[debugLevel] -m[ext=mime[&..]]) -L[limitPPS:1000000]\n");
+    printf("microHttp.exe -p[port] -r[rootDir] -d[debugLevel] -m[ext=mime[&..]]) -L[limitPPS:1000000] -S[cert.pem]\n");
     return 0;
     }
 for(i=1;i<npar;i++) {
@@ -268,6 +270,7 @@ for(i=1;i<npar;i++) {
     case 'L': sscanf(cmd+1,"%d",&Limit); break;
     case 'r': rootDir=cmd+1; break;
     case 'm': mimes = cmd+1; break;
+    case 'S': pem = cmd+1; break;
     }
     }
 net_init();
@@ -279,7 +282,10 @@ srv->keepAlive=keepAlive;
 srv->readLimit.Limit = Limit;
 
 #ifdef VOS_SSL
-srv->srv.pem_file="server.pem"; // if have SSL
+if (pem) {
+srv->srv.pem_file=pem; // if have SSL
+printf("SSL will use pem_file: %s\n",pem);
+} else printf("==NO SSL==, use plain tcp_sockets\n");
 #endif
 
 ws = wsSrvCreate();
@@ -295,7 +301,7 @@ httpSrvAddMimes(srv,mimes);
 //httpSrvAddFS(srv,"/c/","c:/",0); // Adding some FS mappings
 httpSrvAddFS(srv,"/",rootDir,0); // Adding some FS mappings
 httpSrvAddMap(srv, strNew("/.stat",-1), onHttpStat, 0);
-httpSrvAddMap(srv, strNew("/echo",-1), onWebSock, 0);
+httpSrvAddMap(srv, strNew("/.chat",-1), onWebSock, 0);
 
 if (httpSrvListen(srv,port)<=0) { // Starts listen port
    Logf("-FAIL start listener on port %d\n",port); return 1;

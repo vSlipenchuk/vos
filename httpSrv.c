@@ -185,6 +185,7 @@ if (req && req->reqID.len>0) reqID=req->reqID;
 if (len<0) len = strlen(data);
 snprintf(buf,sizeof(buf),"HTTP/1.1 %s\r\nConnection: %s\r\n%s: %*.*s\r\nContent-Length: %d\r\n\r\n",code,sock->dieOnSend?"close":"Keep-Alive",
     X_REQUEST_ID,VSS(reqID),len);
+SocketSend(sock,buf,-1);
 SocketSend(sock,data,len);
 sock->state = sockSend;
 // Wait???
@@ -269,7 +270,7 @@ char szPath[MAX_PATH];
 httpSrv *srv = (void*)sock->pool;
 int len;
 snprintf(szPath,sizeof(szPath),"%s/%*.*s",map->data,VSS(req->page));
-//printf("Try file <%s>\n",szPath);
+ // printf("Try file <%s>\n",szPath);
 len = strlen(szPath); strSetLength(&srv->buf,0);
 if (len>0 && szPath[len-1]=='/') { // is Dir!!!
     if (httpGetDirList(req->U,szPath,&srv->buf)>0) { // List Generated
@@ -291,11 +292,17 @@ if (len<=0) {
     return 1;
     }
 CLOG(srv,3," sent '%*.*s', %d bytes for %s\n",VSS(req->U),len,sock->szip);
-snprintf(szPath,sizeof(szPath),"HTTP/1.1 200 OK\r\nContent-Length: %d\r\nContent-Type: %*.*s\r\nConnection: %s\r\n\r\n",len,VSS(m),
-   sock->dieOnSend?"close":"Keep-Alive");
+
+snprintf(szPath,sizeof(szPath),"HTTP/1.1 200 OK\r\nContent-Length: %d\r\nContent-Type: %*.*s\r\nConnection: %s\r\n\r\n",
+ len,VSS(m), sock->dieOnSend?"close":"Keep-Alive");
 CLOG(srv,6,"new httpResponce#%d/%d headers '%s'\n",sock->N,sock->recvNo,szPath);
+
+
+//printf("HEADS:%s\n",szPath);
 SocketSend(sock,szPath,-1);
 SocketSend(sock,srv->buf,len); // Push it & Forget???
+//SocketSend(sock,"\r\n",-1);
+
 return 1; // -- process
 }
 
@@ -357,6 +364,9 @@ int onHttpClientConnect(Socket *lsock, int handle, int ip) {
 Socket *sock;
 httpSrv *srv = (void*)lsock->pool; // Here My SocketServer ???
 sock = SocketPoolAccept(&srv->srv,handle,ip);
+if (!sock) { // can be if wrong parameters or no pem.file
+   return 0; // killed by SocketPool
+   }
 CLOG(srv,3,"new connect#%d from '%s', accepted\n",sock->N,sock->szip);
 sock->checkPacket = onHttpClientPacket; // When new packet here...
 if (srv->readLimit.Limit) sock->readPacket = &srv->readLimit; // SetLimiter here (if any?)

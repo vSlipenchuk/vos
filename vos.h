@@ -101,7 +101,9 @@ typedef struct {
 
 void ssl_sock_init(); // init all ssl libraries
 
-SSLStateMachine *SSLStateMachine_new(const char *szCertificateFile,     const char *szKeyFile);
+SSLStateMachine *SSLStateMachine_new(const char *szCertificateFile,     const char *szKeyFile,int isServer);
+void  SSLStateMachine_done(SSLStateMachine *pMachine);
+
 void SSLStateMachine_read_inject(SSLStateMachine *pMachine, const unsigned char *aucBuf,int nBuf);
 int SSLStateMachine_read_extract(SSLStateMachine *pMachine,	 unsigned char *aucBuf,int nBuf);
 int SSLStateMachine_write_can_extract(SSLStateMachine *pMachine);

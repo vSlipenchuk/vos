@@ -2,31 +2,46 @@
 <html>
     <head>
 
-<h1> test websocket</h1>
-<textarea id=log>
-</textarea>
 
+<h1> test websocket</h1>
+<textarea id=send>
+</textarea>
+<button onclick="doSend()">Send</button>
+<br>
+
+<textarea id=log cols=80 rows=10>
+</textarea>
 <script>
 
 
-            var webSocket = new WebSocket('ws://localhost/echo');
+            var webSocket = new WebSocket('wss://localhost/.chat');
 
             webSocket.onopen = function(event) {
                 console.log('onopen');
-                webSocket.send("Hello My dear friend");
+                webSocket.send("i am novichok!");
             };
 
             webSocket.onmessage = function(event) {
-                alert('onmessage, ' + event.data);
+                doLog('onmessage: ' + event.data);
             };
 
             webSocket.onclose = function(event) {
-                alert('onclose');
+                doLog('onclose: connecton closed');
             };
 	    
 	    webSocket.onerror = function(error) {
   alert("Ошибка " + error.message);
 };
+
+function doSend() {
+var t =document.getElementById('send').value;
+webSocket.send(t);
+}
+
+function doLog(t) {
+//var t =document.getElementById('log').value;
+document.getElementById('log').value = document.getElementById('log').value + t+'\n';
+}
 	    
         </script>
     </head>

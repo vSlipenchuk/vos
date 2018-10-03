@@ -38,6 +38,7 @@ int wsSrvProcess(wsSrv *srv) ; // LOOP till aborted
 
 // send string
 int wsPutStr(Socket *sock, char *data,int len);
+int wsBroadcast(wsSrv *srv, char *msg,int len); // send to all in a pool
 
 
 

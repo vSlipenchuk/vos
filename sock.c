@@ -29,6 +29,13 @@ c->Total+=sz; c->Value+=sz;
 // Соект Пул - тоже тема??? ???
 
 void SocketDone(Socket *sock) { //
+#ifdef VOS_SSL
+if (sock->ssl) {
+      //printf("Clear Sock SSL\n");
+      SSLStateMachine_done(sock->ssl);
+      sock->ssl=0;
+      }
+#endif VOS_SSL
 if (sock->sock>0) { // Если есть физический сокет
          //printf("SocketDone, close %d handle here...\n",sock->sock);
          send(sock->sock,(void*)&sock,0,MSG_NOSIGNAL); // send ZERO byte - EndOfConnect
@@ -114,20 +121,25 @@ return ip2szbuf(ip,buf);
 
 
 Socket *SocketPoolAccept(SocketPool *srv, int isock, int ip) {
-Socket *sock;
+Socket *sock; void *ssl = 0;
+#ifdef VOS_SSL
+if (srv->pem_file) { // create ssl mashine
+   ssl = SSLStateMachine_new(srv->pem_file,srv->pem_file,1);
+   if (!ssl) {
+          CLOG(srv,1,"SocketPoolAccept  SSL_pem '%s' create failed, kill socket\n",srv->pem_file);
+          return 0; //
+          }
+          else  CLOG(srv,6,"SocketPoolAccept created new SSL mashine %x\n",sock->ssl);
+   }
+#endif VOS_SSL
 sock = SocketNew();
 sock->sock = isock;
 sock->N = ++srv->connects; // first is 1
 sock->state = sockConnected;
 sock->connectStatus = connectTCP;
 sock->modified = TimeNow;
+sock->ssl = ssl;
 ip2szbuf(ip,sock->szip);
-#ifdef VOS_SSL
-if (srv->pem_file) { // create ssl mashine
-   sock->ssl = SSLStateMachine_new(srv->pem_file,srv->pem_file);
-   CLOG(srv,6,"SocketPoolAccept created new SSL mashine %x\n",sock->ssl);
-   }
-#endif VOS_SSL
 CLOG(srv,6,"SocketPoolAccept:{n:%d,ip:'%s',sock:%d}\n",sock->N,sock->szip,sock->sock);
 Socket2Pool(sock,srv); // AddIt
 return sock;
@@ -167,7 +179,7 @@ SocketPool *srv = sock->pool;
             //printf("OK, connection handled, proceed...\n");
             } else {
                 //SocketClosed(sock,sp,"accept error");
-                printf("TCP/sock:decline connection...\n"); // ZU - Never see it???
+                //printf("TCP/sock:decline connection...\n"); // ZU - Never see it???
                 send(s,(void*)&s,0,MSG_NOSIGNAL); // Send disconnect...
                 sock_close(s);
                 }
@@ -283,11 +295,11 @@ if (len<0) len = strlen(data);
 if (sock->ssl) {
   //hex_dump("inject",data,len);
   if (len>0) SSLStateMachine_write_inject(sock->ssl,data,len);
-  while ( 1 ) {
+  while (  SSLStateMachine_write_can_extract(sock->ssl) ) {
      char buf[1024];
      int n = SSLStateMachine_write_extract(sock->ssl,buf,sizeof buf);
      if (n<=0 ) break;
-     printf("PUSH %d bytes to sock_send\n",n);
+     //printf("PUSH %d bytes to sock_send <%*.*s>\n",n,len,len,data);
      strCat(&sock->out,buf,n );
      }
  } else strCat(&sock->out,data,len); // Push it & Forget???
