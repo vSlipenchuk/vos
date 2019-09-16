@@ -40,7 +40,10 @@ char fname[1024];
 if (*name!='/') { // add default /dev
   sprintf(fname,"/dev/%s",name); name=fname;
   }
-h = open(name,O_RDWR | O_NOCTTY,0);
+//printf("begin_open %s\n",name);
+//h = open(name,O_RDWR | O_NOCTTY,0);
+h = open(name,O_RDWR| O_NONBLOCK,0);
+//printf("opening.. =%x\n",h);
 if (h<0) { return 0;} // error
 int mode=0; // default mode
 switch(speed) {
@@ -63,7 +66,21 @@ if (speed>0) prt_cfg(h,mode);
 return (void*)h;
 }
 
-int   prt_peek (void *com,void *buf, int size) {
+int   prt_peek_len(void *com,void *buf, int size) {
+int h=(int)com; int bytesWaiting=1;
+if (h==0) return 0; // invalid
+if (ioctl(h, FIONREAD, &bytesWaiting)!=0) return -1;
+// if (bytesWaiting) printf("(%d,%d)\n",bytesWaiting,size);
+if (bytesWaiting<=0) return bytesWaiting; // not yet
+if (bytesWaiting>=size) bytesWaiting=size;
+memset(buf,0,bytesWaiting);
+int r = read(h,buf,bytesWaiting); // EOF=0 reading, like on sockets???
+  //printf("\nREAD: %d \n%*.*s\n",r,r,r,buf);
+  //hex_dump("com_read ",buf,r);
+return r;
+}
+
+int   prt_peek_old (void *com,void *buf, int size) {
 int h=(int)com; int bytesWaiting=1;
 if (h==0) return 0; // invalid
 if (ioctl(h, FIONREAD, &bytesWaiting)!=0) return -1;

@@ -660,7 +660,7 @@ while(len>=2) {
 return r;
 }
 
-int hexstr2bin(uchar *out,uchar *in, int len) {
+int hexstr2bin(char *out,char *in, int len) {
 int r=0;
 if (len<0) len = strlen(in);
 while(len>0) {

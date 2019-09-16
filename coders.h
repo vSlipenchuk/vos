@@ -66,7 +66,7 @@ int win2gsm(uchar *d,uchar *src,int len);
 int unicode_to_str(uchar *buf,int size,uchar *wbuf,int wsize);
 
 uchar unichar(uchar page, uchar code, uchar def); // win2151 <- unichar
-int hexstr2bin(uchar *out,uchar *in, int len); // converts 00ffbbcc -> len/2
+int hexstr2bin(char *out,char *in, int len); // converts 00ffbbcc -> len/2
 
 int gsm2win(uchar *dst,uchar *src,int len); // gsm unicode converter
 
