@@ -316,7 +316,7 @@ vss2str(buf,size,&A);
 //   printf("Auth: %s\n", buf);
 p = strstr(buf,"Basic");
 if (!p) return 0;
-p+=5; while(*p && p==' ') p++;
+p+=5; while(*p && *p==' ') p++;
 memmove(buf,p,strlen(p)+1); p=buf; // remove "basic"
 decode_base64(p,p,strlen(p));
 char *u=p; p=strchr(u,':'); if (!p) return 0;

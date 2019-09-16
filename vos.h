@@ -7,7 +7,7 @@
 #include <netdb.h>
 #include <sys/stat.h>
 #include <sys/socket.h>
-
+#include <linux/limits.h>
 
 #define MAX_PATH PATH_MAX
 #define _vsnprintf vsnprintf
