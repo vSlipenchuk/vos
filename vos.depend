@@ -360,3 +360,758 @@
 	"vss.h"
 	"vos.h"
 
+1568838574 source:c:\cygwin64\prj\vos\coders.c
+	"coders.h"
+	<stdarg.h>
+	"vtypes.h"
+
+1568927807 c:\cygwin64\prj\vos\coders.h
+	"vtypes.h"
+	"strutil.h"
+
+1568920915 c:\cygwin64\prj\vos\vtypes.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	<windows.h>
+
+1568838574 source:c:\cygwin64\prj\vos\exe.c
+	"vtypes.h"
+	"coders.h"
+	"vos.h"
+
+1568921021 c:\cygwin64\prj\vos\vos.h
+	"vtypes.h"
+	<fcntl.h>
+	<netdb.h>
+	<sys/stat.h>
+	<sys/socket.h>
+	<linux/limits.h>
+	<windows.h>
+	<unistd.h>
+	<sys/socket.h>
+	<netinet/in.h>
+	<arpa/inet.h>
+	<openssl/ssl.h>
+	<assert.h>
+	<unistd.h>
+	<string.h>
+	<openssl/err.h>
+	<sys/types.h>
+	<sys/socket.h>
+	<netinet/in.h>
+
+1568920842 source:c:\cygwin64\prj\vos\httpsrv.c
+	"httpSrv.h"
+	<stdarg.h>
+	<fcntl.h>
+	<dirent.h>
+
+1568838574 c:\cygwin64\prj\vos\httpsrv.h
+	"vos.h"
+	"sock.h"
+	"vss.h"
+
+1568838574 c:\cygwin64\prj\vos\sock.h
+	"vos.h"
+	"vs0.h"
+	"vss.h"
+	"logger.h"
+	"vtypes.h"
+
+1568920817 c:\cygwin64\prj\vos\vs0.h
+	"vtypes.h"
+	"vss.h"
+
+1568838574 c:\cygwin64\prj\vos\vss.h
+	"vtypes.h"
+
+1568838574 c:\cygwin64\prj\vos\logger.h
+	"vs0.h"
+	<stdio.h>
+	<time.h>
+	"coders.h"
+
+1568920955 source:c:\cygwin64\prj\vos\httptest.c
+	"httpSrv.h"
+	"wsSrv.h"
+	"logger.c"
+	"std_sock.c"
+	"exe.c"
+	"sock.c"
+	"httpSrv.c"
+	"vos.c"
+	"vs0.c"
+	"vss.c"
+	"coders.c"
+	<signal.h>
+
+1568838574 c:\cygwin64\prj\vos\wssrv.h
+	"sock.h"
+	"httpSrv.h"
+
+1568838574 c:\cygwin64\prj\vos\logger.c
+	"logger.h"
+	<time.h>
+	<stdarg.h>
+	"vos.h"
+
+1568922741 c:\cygwin64\prj\vos\std_sock.c
+	"vos.h"
+	"vtypes.h"
+	<sys/stat.h>
+
+1568838574 c:\cygwin64\prj\vos\exe.c
+	"vtypes.h"
+	"coders.h"
+	"vos.h"
+
+1568927201 c:\cygwin64\prj\vos\sock.c
+	"sock.h"
+	<stdarg.h>
+
+1568920842 c:\cygwin64\prj\vos\httpsrv.c
+	"httpSrv.h"
+	<stdarg.h>
+	<fcntl.h>
+	<dirent.h>
+
+1568838574 c:\cygwin64\prj\vos\vos.c
+	"vos.h"
+	"pthread.h"
+	"stdlib.h"
+	"unistd.h"
+	<sys/time.h>
+	<stdio.h>
+	<sys/resource.h>
+	"vos_win.c"
+
+1568922753 c:\cygwin64\prj\vos\vos_win.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<sys/types.h>
+	<sys/stat.h>
+	"vos.h"
+	<psapi.h>
+	<windows.h>
+
+1568841276 c:\cygwin64\prj\vos\vs0.c
+	<fcntl.h>
+	"vs0.h"
+	"vos.h"
+	<sys/stat.h>
+	<fcntl.h>
+
+1568838574 c:\cygwin64\prj\vos\vss.c
+	"vss.h"
+	"vos.h"
+
+1568838574 c:\cygwin64\prj\vos\coders.c
+	"coders.h"
+	<stdarg.h>
+	"vtypes.h"
+
+1568838574 source:c:\cygwin64\prj\vos\logger.c
+	"logger.h"
+	<time.h>
+	<stdarg.h>
+	"vos.h"
+
+1568927201 source:c:\cygwin64\prj\vos\sock.c
+	"sock.h"
+	<stdarg.h>
+
+1568922741 source:c:\cygwin64\prj\vos\std_sock.c
+	"vos.h"
+	"vtypes.h"
+	<sys/stat.h>
+
+1568838574 source:c:\cygwin64\prj\vos\vos.c
+	"vos.h"
+	"pthread.h"
+	"stdlib.h"
+	"unistd.h"
+	<sys/time.h>
+	<stdio.h>
+	<sys/resource.h>
+	"vos_win.c"
+
+1568838574 source:c:\cygwin64\prj\vos\vos_com_linux.c
+	"vos.h"
+	"stdio.h"
+	"unistd.h"
+	"fcntl.h"
+	<sys/ioctl.h>
+	<sys/types.h>
+	<termios.h>
+
+1568838574 source:c:\cygwin64\prj\vos\vos_linux_kbhit.c
+	"vos.h"
+	<termios.h>
+	<stropts.h>
+	<stdio.h>
+	<sys/ioctl.h>
+
+1568841276 source:c:\cygwin64\prj\vos\vs0.c
+	<fcntl.h>
+	"vs0.h"
+	"vos.h"
+	<sys/stat.h>
+	<fcntl.h>
+
+1568838574 source:c:\cygwin64\prj\vos\vss.c
+	"vss.h"
+	"vos.h"
+
+1568927760 source:c:\cygwin64\prj\vos\main.c
+	<stdio.h>
+	<stdlib.h>
+	"strutil.h"
+	"sock.h"
+
+1568214648 c:\openssl\include\openssl\ssl.h
+	<openssl/e_os2.h>
+	<openssl/opensslconf.h>
+	<openssl/comp.h>
+	<openssl/bio.h>
+	<openssl/x509.h>
+	<openssl/crypto.h>
+	<openssl/buffer.h>
+	<openssl/lhash.h>
+	<openssl/pem.h>
+	<openssl/hmac.h>
+	<openssl/async.h>
+	<openssl/safestack.h>
+	<openssl/symhacks.h>
+	<openssl/ct.h>
+	<openssl/sslerr.h>
+	<openssl/ssl2.h>
+	<openssl/ssl3.h>
+	<openssl/tls1.h>
+	<openssl/dtls1.h>
+	<openssl/srtp.h>
+
+1568214648 c:\openssl\include\openssl\e_os2.h
+	<openssl/opensslconf.h>
+	<inttypes.h>
+	<stdint.h>
+
+1568214648 c:\openssl\include\openssl\opensslconf.h
+	<openssl/opensslv.h>
+
+1568214648 c:\openssl\include\openssl\opensslv.h
+
+1568214648 c:\openssl\include\openssl\comp.h
+	<openssl/opensslconf.h>
+	<openssl/crypto.h>
+	<openssl/comperr.h>
+
+1568214648 c:\openssl\include\openssl\crypto.h
+	<stdlib.h>
+	<time.h>
+	<openssl/e_os2.h>
+	<stdio.h>
+	<openssl/safestack.h>
+	<openssl/opensslv.h>
+	<openssl/ossl_typ.h>
+	<openssl/opensslconf.h>
+	<openssl/cryptoerr.h>
+	<openssl/ebcdic.h>
+	<openssl/symhacks.h>
+	<openssl/opensslv.h>
+	<pthread.h>
+
+1568214648 c:\openssl\include\openssl\safestack.h
+	<openssl/stack.h>
+	<openssl/e_os2.h>
+
+1568214648 c:\openssl\include\openssl\stack.h
+
+1568214648 c:\openssl\include\openssl\ossl_typ.h
+	<limits.h>
+	<openssl/e_os2.h>
+
+1568214648 c:\openssl\include\openssl\cryptoerr.h
+	<openssl/symhacks.h>
+
+1568214648 c:\openssl\include\openssl\symhacks.h
+	<openssl/e_os2.h>
+
+1568214648 c:\openssl\include\openssl\ebcdic.h
+	<stdlib.h>
+
+1568214648 c:\openssl\include\openssl\comperr.h
+	<openssl/symhacks.h>
+	<openssl/opensslconf.h>
+
+1568214648 c:\openssl\include\openssl\bio.h
+	<openssl/e_os2.h>
+	<stdio.h>
+	<stdarg.h>
+	<openssl/crypto.h>
+	<openssl/bioerr.h>
+
+1568214648 c:\openssl\include\openssl\bioerr.h
+	<openssl/symhacks.h>
+
+1568214648 c:\openssl\include\openssl\x509.h
+	<openssl/e_os2.h>
+	<openssl/ossl_typ.h>
+	<openssl/symhacks.h>
+	<openssl/buffer.h>
+	<openssl/evp.h>
+	<openssl/bio.h>
+	<openssl/asn1.h>
+	<openssl/safestack.h>
+	<openssl/ec.h>
+	<openssl/rsa.h>
+	<openssl/dsa.h>
+	<openssl/dh.h>
+	<openssl/sha.h>
+	<openssl/x509err.h>
+	<openssl/x509_vfy.h>
+	<openssl/pkcs7.h>
+
+1568214648 c:\openssl\include\openssl\buffer.h
+	<openssl/ossl_typ.h>
+	<openssl/crypto.h>
+	<openssl/buffererr.h>
+	<stddef.h>
+	<sys/types.h>
+
+1568214648 c:\openssl\include\openssl\buffererr.h
+	<openssl/symhacks.h>
+
+1568214648 c:\openssl\include\openssl\evp.h
+	<openssl/opensslconf.h>
+	<openssl/ossl_typ.h>
+	<openssl/symhacks.h>
+	<openssl/bio.h>
+	<openssl/evperr.h>
+	<openssl/objects.h>
+
+1568214648 c:\openssl\include\openssl\evperr.h
+	<openssl/symhacks.h>
+
+1568214648 c:\openssl\include\openssl\objects.h
+	<openssl/obj_mac.h>
+	<openssl/bio.h>
+	<openssl/asn1.h>
+	<openssl/objectserr.h>
+
+1568214648 c:\openssl\include\openssl\obj_mac.h
+
+1568214648 c:\openssl\include\openssl\asn1.h
+	<time.h>
+	<openssl/e_os2.h>
+	<openssl/opensslconf.h>
+	<openssl/bio.h>
+	<openssl/safestack.h>
+	<openssl/asn1err.h>
+	<openssl/symhacks.h>
+	<openssl/ossl_typ.h>
+	<openssl/bn.h>
+
+1568214648 c:\openssl\include\openssl\asn1err.h
+	<openssl/symhacks.h>
+
+1568214648 c:\openssl\include\openssl\bn.h
+	<openssl/e_os2.h>
+	<stdio.h>
+	<openssl/opensslconf.h>
+	<openssl/ossl_typ.h>
+	<openssl/crypto.h>
+	<openssl/bnerr.h>
+
+1568214648 c:\openssl\include\openssl\bnerr.h
+	<openssl/symhacks.h>
+
+1568214648 c:\openssl\include\openssl\objectserr.h
+	<openssl/symhacks.h>
+
+1568214648 c:\openssl\include\openssl\ec.h
+	<openssl/opensslconf.h>
+	<openssl/asn1.h>
+	<openssl/symhacks.h>
+	<openssl/bn.h>
+	<openssl/ecerr.h>
+
+1568214648 c:\openssl\include\openssl\ecerr.h
+	<openssl/symhacks.h>
+	<openssl/opensslconf.h>
+
+1568214648 c:\openssl\include\openssl\rsa.h
+	<openssl/opensslconf.h>
+	<openssl/asn1.h>
+	<openssl/bio.h>
+	<openssl/crypto.h>
+	<openssl/ossl_typ.h>
+	<openssl/bn.h>
+	<openssl/rsaerr.h>
+
+1568214648 c:\openssl\include\openssl\rsaerr.h
+	<openssl/symhacks.h>
+
+1568214648 c:\openssl\include\openssl\dsa.h
+	<openssl/opensslconf.h>
+	<openssl/e_os2.h>
+	<openssl/bio.h>
+	<openssl/crypto.h>
+	<openssl/ossl_typ.h>
+	<openssl/bn.h>
+	<openssl/dh.h>
+	<openssl/dsaerr.h>
+
+1568214648 c:\openssl\include\openssl\dh.h
+	<openssl/opensslconf.h>
+	<openssl/e_os2.h>
+	<openssl/bio.h>
+	<openssl/asn1.h>
+	<openssl/ossl_typ.h>
+	<openssl/bn.h>
+	<openssl/dherr.h>
+
+1568214648 c:\openssl\include\openssl\dherr.h
+	<openssl/symhacks.h>
+	<openssl/opensslconf.h>
+
+1568214648 c:\openssl\include\openssl\dsaerr.h
+	<openssl/symhacks.h>
+	<openssl/opensslconf.h>
+
+1568214648 c:\openssl\include\openssl\sha.h
+	<openssl/e_os2.h>
+	<stddef.h>
+
+1568214648 c:\openssl\include\openssl\x509err.h
+	<openssl/symhacks.h>
+
+1568214648 c:\openssl\include\openssl\x509_vfy.h
+	<openssl/x509.h>
+	<openssl/opensslconf.h>
+	<openssl/lhash.h>
+	<openssl/bio.h>
+	<openssl/crypto.h>
+	<openssl/symhacks.h>
+
+1568214648 c:\openssl\include\openssl\lhash.h
+	<openssl/e_os2.h>
+	<openssl/bio.h>
+
+1568214648 c:\openssl\include\openssl\pkcs7.h
+	<openssl/asn1.h>
+	<openssl/bio.h>
+	<openssl/e_os2.h>
+	<openssl/symhacks.h>
+	<openssl/ossl_typ.h>
+	<openssl/pkcs7err.h>
+
+1568214648 c:\openssl\include\openssl\pkcs7err.h
+	<openssl/symhacks.h>
+
+1568214648 c:\openssl\include\openssl\pem.h
+	<openssl/e_os2.h>
+	<openssl/bio.h>
+	<openssl/safestack.h>
+	<openssl/evp.h>
+	<openssl/x509.h>
+	<openssl/pemerr.h>
+	<openssl/symhacks.h>
+
+1568214648 c:\openssl\include\openssl\pemerr.h
+	<openssl/symhacks.h>
+
+1568214648 c:\openssl\include\openssl\hmac.h
+	<openssl/opensslconf.h>
+	<openssl/evp.h>
+
+1568214648 c:\openssl\include\openssl\async.h
+	<stdlib.h>
+	<openssl/asyncerr.h>
+
+1568214648 c:\openssl\include\openssl\asyncerr.h
+	<openssl/symhacks.h>
+
+1568214648 c:\openssl\include\openssl\ct.h
+	<openssl/opensslconf.h>
+	<openssl/ossl_typ.h>
+	<openssl/safestack.h>
+	<openssl/x509.h>
+	<openssl/cterr.h>
+
+1568214648 c:\openssl\include\openssl\cterr.h
+	<openssl/symhacks.h>
+	<openssl/opensslconf.h>
+
+1568214648 c:\openssl\include\openssl\sslerr.h
+	<openssl/symhacks.h>
+
+1568214648 c:\openssl\include\openssl\ssl2.h
+
+1568214648 c:\openssl\include\openssl\ssl3.h
+	<openssl/comp.h>
+	<openssl/buffer.h>
+	<openssl/evp.h>
+	<openssl/ssl.h>
+
+1568214648 c:\openssl\include\openssl\tls1.h
+	<openssl/buffer.h>
+	<openssl/x509.h>
+
+1568214648 c:\openssl\include\openssl\dtls1.h
+
+1568214648 c:\openssl\include\openssl\srtp.h
+	<openssl/ssl.h>
+
+1568214648 c:\openssl\include\openssl\err.h
+	<openssl/e_os2.h>
+	<stdio.h>
+	<stdlib.h>
+	<openssl/ossl_typ.h>
+	<openssl/bio.h>
+	<openssl/lhash.h>
+	<errno.h>
+
+1568927938 source:c:\cygwin64\prj\vos\wssrv.c
+	"httpSrv.h"
+	"wsSrv.h"
+	<openssl/sha.h>
+	"hexdump.c"
+
+1568838574 c:\cygwin64\prj\vos\hexdump.c
+
+1568928116 c:\cygwin64\prj\vos\strutil.h
+	"vtypes.h"
+
+1568927885 source:c:\cygwin64\prj\vos\strutil.c
+	"coders.h"
+	<stdarg.h>
+
+1568838574 source:c:\prj\nbiot_demo\vos\coders.c
+	"coders.h"
+	<stdarg.h>
+	"vtypes.h"
+
+1568927807 c:\prj\nbiot_demo\vos\coders.h
+	"vtypes.h"
+	"strutil.h"
+
+1568920915 c:\prj\nbiot_demo\vos\vtypes.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	<windows.h>
+
+1568928116 c:\prj\nbiot_demo\vos\strutil.h
+	"vtypes.h"
+
+1568838574 source:c:\prj\nbiot_demo\vos\exe.c
+	"vtypes.h"
+	"coders.h"
+	"vos.h"
+
+1568921021 c:\prj\nbiot_demo\vos\vos.h
+	"vtypes.h"
+	<fcntl.h>
+	<netdb.h>
+	<sys/stat.h>
+	<sys/socket.h>
+	<linux/limits.h>
+	<windows.h>
+	<unistd.h>
+	<sys/socket.h>
+	<netinet/in.h>
+	<arpa/inet.h>
+	<openssl/ssl.h>
+	<assert.h>
+	<unistd.h>
+	<string.h>
+	<openssl/err.h>
+	<sys/types.h>
+	<sys/socket.h>
+	<netinet/in.h>
+
+1568920842 source:c:\prj\nbiot_demo\vos\httpsrv.c
+	"httpSrv.h"
+	<stdarg.h>
+	<fcntl.h>
+	<dirent.h>
+
+1568838574 c:\prj\nbiot_demo\vos\httpsrv.h
+	"vos.h"
+	"sock.h"
+	"vss.h"
+
+1568838574 c:\prj\nbiot_demo\vos\sock.h
+	"vos.h"
+	"vs0.h"
+	"vss.h"
+	"logger.h"
+	"vtypes.h"
+
+1568920817 c:\prj\nbiot_demo\vos\vs0.h
+	"vtypes.h"
+	"vss.h"
+
+1568838574 c:\prj\nbiot_demo\vos\vss.h
+	"vtypes.h"
+
+1568838574 c:\prj\nbiot_demo\vos\logger.h
+	"vs0.h"
+	<stdio.h>
+	<time.h>
+	"coders.h"
+
+1568920955 source:c:\prj\nbiot_demo\vos\httptest.c
+	"httpSrv.h"
+	"wsSrv.h"
+	"logger.c"
+	"std_sock.c"
+	"exe.c"
+	"sock.c"
+	"httpSrv.c"
+	"vos.c"
+	"vs0.c"
+	"vss.c"
+	"coders.c"
+	<signal.h>
+
+1568838574 c:\prj\nbiot_demo\vos\wssrv.h
+	"sock.h"
+	"httpSrv.h"
+
+1568838574 c:\prj\nbiot_demo\vos\logger.c
+	"logger.h"
+	<time.h>
+	<stdarg.h>
+	"vos.h"
+
+1568922741 c:\prj\nbiot_demo\vos\std_sock.c
+	"vos.h"
+	"vtypes.h"
+	<sys/stat.h>
+
+1568838574 c:\prj\nbiot_demo\vos\exe.c
+	"vtypes.h"
+	"coders.h"
+	"vos.h"
+
+1568927201 c:\prj\nbiot_demo\vos\sock.c
+	"sock.h"
+	<stdarg.h>
+
+1568920842 c:\prj\nbiot_demo\vos\httpsrv.c
+	"httpSrv.h"
+	<stdarg.h>
+	<fcntl.h>
+	<dirent.h>
+
+1568838574 c:\prj\nbiot_demo\vos\vos.c
+	"vos.h"
+	"pthread.h"
+	"stdlib.h"
+	"unistd.h"
+	<sys/time.h>
+	<stdio.h>
+	<sys/resource.h>
+	"vos_win.c"
+
+1568922753 c:\prj\nbiot_demo\vos\vos_win.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<sys/types.h>
+	<sys/stat.h>
+	"vos.h"
+	<psapi.h>
+	<windows.h>
+
+1568841276 c:\prj\nbiot_demo\vos\vs0.c
+	<fcntl.h>
+	"vs0.h"
+	"vos.h"
+	<sys/stat.h>
+	<fcntl.h>
+
+1568838574 c:\prj\nbiot_demo\vos\vss.c
+	"vss.h"
+	"vos.h"
+
+1568838574 c:\prj\nbiot_demo\vos\coders.c
+	"coders.h"
+	<stdarg.h>
+	"vtypes.h"
+
+1568838574 source:c:\prj\nbiot_demo\vos\logger.c
+	"logger.h"
+	<time.h>
+	<stdarg.h>
+	"vos.h"
+
+1568927760 source:c:\prj\nbiot_demo\vos\main.c
+	<stdio.h>
+	<stdlib.h>
+	"strutil.h"
+	"sock.h"
+
+1568927201 source:c:\prj\nbiot_demo\vos\sock.c
+	"sock.h"
+	<stdarg.h>
+
+1568922741 source:c:\prj\nbiot_demo\vos\std_sock.c
+	"vos.h"
+	"vtypes.h"
+	<sys/stat.h>
+
+1568928195 source:c:\prj\nbiot_demo\vos\strutil.c
+	"coders.h"
+	<stdarg.h>
+
+1568838574 source:c:\prj\nbiot_demo\vos\vos.c
+	"vos.h"
+	"pthread.h"
+	"stdlib.h"
+	"unistd.h"
+	<sys/time.h>
+	<stdio.h>
+	<sys/resource.h>
+	"vos_win.c"
+
+1568838574 source:c:\prj\nbiot_demo\vos\vos_com_linux.c
+	"vos.h"
+	"stdio.h"
+	"unistd.h"
+	"fcntl.h"
+	<sys/ioctl.h>
+	<sys/types.h>
+	<termios.h>
+
+1568838574 source:c:\prj\nbiot_demo\vos\vos_linux_kbhit.c
+	"vos.h"
+	<termios.h>
+	<stropts.h>
+	<stdio.h>
+	<sys/ioctl.h>
+
+1568841276 source:c:\prj\nbiot_demo\vos\vs0.c
+	<fcntl.h>
+	"vs0.h"
+	"vos.h"
+	<sys/stat.h>
+	<fcntl.h>
+
+1568838574 source:c:\prj\nbiot_demo\vos\vss.c
+	"vss.h"
+	"vos.h"
+
+1568927938 source:c:\prj\nbiot_demo\vos\wssrv.c
+	"httpSrv.h"
+	"wsSrv.h"
+	<openssl/sha.h>
+	"hexdump.c"
+
+1568838574 c:\prj\nbiot_demo\vos\hexdump.c
+

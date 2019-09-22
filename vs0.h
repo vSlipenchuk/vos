@@ -103,13 +103,13 @@ uchar *strCat(uchar **str, uchar *data, int len); // Добавить в буффер
 uchar *strCatFile(uchar **Str,uchar *filename); // Добавляет в строку, загружая ее из файла
 uchar *strCatD(uchar **str, uchar *src, int len, int (*decoder)()); // Добавить с декодированием
 int    strLength(uchar *str); // Длина строки
-inline int    strSetLength(uchar **str, int len); // NewLength
+int    strSetLength(uchar **str, int len); // NewLength
 
 int strEnsureSize(uchar **str,int newLength); // ensures that this string buffer can handle newLength
 uchar *strEnsureMore(uchar **str,int addLength); // returns end of current string
 
-inline void strClear(uchar **str);
-inline uchar *strPush(uchar ***str, uchar *data);
+void strClear(uchar **str);
+uchar *strPush(uchar ***str, uchar *data);
 
 
 int arrSetLength(void **arr,int size) ; // Results in length set - it changes arraya anyway!
@@ -146,15 +146,15 @@ typedef struct {
    StaticClass fld##Head = { .head={.mem=0,.ref=0},\
                              .cls={.typ=0,.name=#fld,.size1=sizeof(fld),.done=doneProc }};\
    objClass *fld##Class = &fld##Head.cls;\
-   inline fld* fld##New() { return objNew(&fld##Head.cls,1); }\
-   inline void fld##Clear(fld **f) { objClear((void**)f);}\
-   inline fld*   fld##Array(int size) { return arrNew(sizeof(fld),size); };\
-   inline fld*   fld##Add(fld **f, fld *data) { \
+   fld* fld##New() { return objNew(&fld##Head.cls,1); }\
+   void fld##Clear(fld **f) { objClear((void**)f);}\
+   fld*   fld##Array(int size) { return arrNew(sizeof(fld),size); };\
+   fld*   fld##Add(fld **f, fld *data) { \
          if (!*f) *f = (void*) fld##Array(1);\
          return arrAdd((void**)f,data); };\
-   inline fld**  fld##Vector(int size) { return (void*)vecNew(size); };\
-   inline fld**  fld##Push(fld ***f, fld *data) { return (void*)vecPush((void***)f,(void*)data); };\
-   inline void   fld##Clean(fld ***f) { objClear((void**)f);}\
+   fld**  fld##Vector(int size) { return (void*)vecNew(size); };\
+   fld**  fld##Push(fld ***f, fld *data) { return (void*)vecPush((void***)f,(void*)data); };\
+   void   fld##Clean(fld ***f) { objClear((void**)f);}\
 
 
 
@@ -162,25 +162,25 @@ typedef struct {
    StaticClass fld##Head = { {0,0},\
                              {0, #fld,sizeof(fld),done }};\
    objClass *fld##Class = &fld##Head.cls;\
-   inline fld* fld##New() { return objNew(&fld##Head.cls,1); }\
-   inline void fld##Clear(fld **f) { objClear((void**)f);}\
-   inline fld*   fld##Array(int size) { return arrNew(sizeof(fld),size); };\
-   inline fld*   fld##Add(fld **f, fld *data) { \
+    fld* fld##New() { return objNew(&fld##Head.cls,1); }\
+    void fld##Clear(fld **f) { objClear((void**)f);}\
+    fld*   fld##Array(int size) { return arrNew(sizeof(fld),size); };\
+    fld*   fld##Add(fld **f, fld *data) { \
          if (!*f) *f = (void*) fld##Array(1);\
          return arrAdd((void**)f,data); };\
-   inline fld**  fld##Vector(int size) { return (void*)vecNew(size); };\
-   inline fld**  fld##Push(fld ***f, fld *data) { return (void*)vecPush((void***)f,(void*)data); };\
-   inline void   fld##Clean(fld ***f) { objClear((void**)f);}\
+   fld**  fld##Vector(int size) { return (void*)vecNew(size); };\
+   fld**  fld##Push(fld ***f, fld *data) { return (void*)vecPush((void***)f,(void*)data); };\
+   void   fld##Clean(fld ***f) { objClear((void**)f);}\
 
 #define VS0OBJH(fld)  \
    extern objClass *fld##Class;\
-   inline fld* fld##New();\
-   inline void fld##Clear(fld **f);\
-   inline fld*   fld##Array(int size);\
-   inline fld*   fld##Add(fld **f, fld *data);\
-   inline fld**  fld##Vector(int size);\
-   inline fld**  fld##Push(fld ***f, fld *data);\
-   inline void   fld##Clean(fld ***f);\
+   fld* fld##New();\
+   void fld##Clear(fld **f);\
+   fld*   fld##Array(int size);\
+   fld*   fld##Add(fld **f, fld *data);\
+   fld**  fld##Vector(int size);\
+   fld**  fld##Push(fld ***f, fld *data);\
+   void   fld##Clean(fld ***f);\
 
 #define VS0OBJ(fld) VS0OBJ0(fld,fld##Done)
 #define VS0ARR(fld) VS0OBJ(fld)

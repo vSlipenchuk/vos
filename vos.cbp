@@ -15,9 +15,13 @@
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-Wno-pointer-sign" />
+					<Add directory="../../../OpenSSL/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add library="wsock32" />
+					<Add library="psapi" />
+					<Add library="../../../OpenSSL/lib/libcrypto.lib" />
 				</Linker>
 			</Target>
 		</Build>
@@ -48,6 +52,10 @@
 		<Unit filename="std_sock.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="strutil.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="strutil.h" />
 		<Unit filename="vos.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -62,6 +70,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="vss.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="wsSrv.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>

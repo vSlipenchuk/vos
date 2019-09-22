@@ -1,9 +1,9 @@
 #include "vos.h"
 #include "vtypes.h"
 #include <sys/stat.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
+//#include <sys/socket.h>
+//#include <netinet/in.h>
+//#include <arpa/inet.h>
 
 
 #ifndef __linux__
@@ -24,16 +24,18 @@ return 0;
 
 int sock_listen(int port, int jobs) { // Create a socket for listen
 int sock;
-struct sockaddr s;
+struct sockaddr_in s;
 sock=socket(AF_INET,SOCK_STREAM,0);
 if (sock<0) return -1;
-s.sa_family=AF_INET;
-*(short*)(s.sa_data)=htons((short)port);
-*(int*)(&s.sa_data[2])=0;
+s.sin_family=AF_INET;
+s.sin_port = htons((short)port);
+s.sin_addr.s_addr = htonl(INADDR_ANY);
+//*(short*)(s.sa_data)=htons((short)port);
+//*(int*)(&s.sa_data[2])=0;
 #ifndef MSWIN
 int on = 1; setsockopt( sock, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on) );
 #endif
-if (bind(sock,&s,sizeof(s))) {   closesocket(sock);  return -2;  }
+if (bind(sock,(struct sockaddr*)&s,sizeof(s))) {   closesocket(sock);  return -2;  }
 if (listen(sock,jobs))       {   closesocket(sock);  return -3;  }
 return sock;
 }
@@ -63,7 +65,7 @@ return fcntl(sock, F_SETFL, O_NONBLOCK); // =х сыюъшЁє¦•шщ ёюъхЄ...
 
 int _sock_connect(int sock, unsigned char *cs,int cl, int port) {
 uchar host[80],*p;
-struct sockaddr s;
+struct sockaddr_in s;
 struct hostent *h;
 int addr;
 if (cl<0) cl=strlen(cs);
@@ -72,13 +74,13 @@ memmove(host,cs,cl); host[cl]=0;
 p=strchr(host,':');
 if (p) {*p=0; sscanf(p+1,"%d",&port);}
 memset(&s,0,sizeof(s));
-s.sa_family=AF_INET;
-*(short*)(s.sa_data)=htons((short)port);
+s.sin_family=AF_INET;
+s.sin_port = htons((short)port);
 addr=inet_addr(host);
 //printf("ADDR=%d for host=%s\n",addr,host);
 if (addr != INADDR_NONE)  {
- *(int*)(&s.sa_data[2])=addr;
- if (connect(sock,&s,sizeof(s))) {
+s.sin_addr.s_addr=addr;
+if (connect(sock,(struct sockaddr*)&s,sizeof(s))) {
       printf("fail connect to addr %s port %d code %d\n",host,port,addr);
       return 0;
       }
@@ -90,9 +92,10 @@ if (!h) {
     return 0;
     }
 //h->
-memcpy(&s.sa_data[2],&h->h_addr_list,4);
-*(int*)(&s.sa_data[2])=*(int*)(h->h_addr_list[0]);
-if (connect(sock,&s,sizeof(s))) {
+s.sin_addr.s_addr = *(long*)h->h_addr_list[0];
+//memcpy(&s.sa_data[2],&h->h_addr_list,4);
+//*(int*)(&s.sa_data[2])=*(int*)(h->h_addr_list[0]);
+if (connect(sock,(struct sockaddr *)&s,sizeof(s))) {
      return 0;
      //printf("fail connect to namehost %d port %d\n",(char*)addr,port);
      }
@@ -135,11 +138,11 @@ return select(sock+1,0,&fs,0,&t);
 }
 
 int sock_accept(int lsock, int *ip) {
-struct sockaddr sa; int slen;
+struct sockaddr_in sa; int slen;
 int sock;
 slen = sizeof(sa);
-sock = accept(lsock, &sa,&slen);
-if (sock>0 && ip) { *ip = *(int*)(&sa.sa_data[2]);  } // Copy IP address
+sock = accept(lsock,(struct sockaddr*) &sa,&slen);
+if (sock>0 && ip) { *ip = sa.sin_addr.s_addr;  } // Copy IP address
 return sock;
 }
 
@@ -330,7 +333,7 @@ int proc_create(os_proc *p, char *cmd ) { // Запуск файла, получение процесса и 
      // }
 return 1;
 }
-
+int proc_destroy(os_proc *p, int abort);
 int proc_read(os_proc *p, char *buf, int len) { // Читаем из процесса (out)
 long nn;
 if (!p->hOut) return -2; // Уже закрыт
@@ -383,10 +386,10 @@ return sock;
 
 uchar *sa2str(struct sockaddr *sa,uchar *str) {
 static uchar szstr[80];
+struct sockaddr_in *sin = (struct sockaddr_in*)sa;
 if (!str) str = szstr;
-// ok - need to transform???
-uchar *ip  = (void*)(&sa->sa_data[2]);
-int port = ntohs(*(short*)(sa->sa_data));
+uchar *ip  =(void*)& (sin->sin_addr.s_addr);//(uchar*)((&(struct sock_addr_in*)sa)->sin_addr.s_addr);
+int port = ntohs(sin->sin_port);
 sprintf(str,"%d.%d.%d.%d:%d",ip[0],ip[1],ip[2],ip[3],port);
 return str;
 }
@@ -405,19 +408,18 @@ int get_local_ip(char * ip) {
 }
 
 int net_sa_(void *sa,int addr, int port) { // Compose socket addr ..
-struct sockaddr *s=sa;
+struct sockaddr_in *s=sa;
 memset(s,0,sizeof(struct sockaddr));
-s->sa_family = AF_INET;
-*(short*)(s->sa_data)=htons((short)port);
-*(int*)(&s->sa_data[2])=addr;
-//printf("SA=%d,port=%d\n",addr,port);
+s->sin_family = AF_INET;
+s->sin_port = htons( (short) port);
+s->sin_addr.s_addr = addr;
 return addr;
 }
 
 int net_sa(void *sa,char *host, int port) { // Compose socket addr ..
 char szhost[200];
 int    addr = 0;
-struct sockaddr *s=sa;
+struct sockaddr_in *s=sa;
 if (host) {
  strncpy(szhost,host,199); szhost[199]=0;
  host = strchr(szhost,':');
@@ -431,10 +433,9 @@ if (host) {
  //printf("addr=%d for %s\n",addr,szhost);
  }
 memset(s,0,sizeof(struct sockaddr));
-s->sa_family = AF_INET;
-*(short*)(s->sa_data)=htons((short)port);
-*(int*)(&s->sa_data[2])=addr;
-//printf("SA=%d,port=%d\n",addr,port);
+s->sin_family = AF_INET;
+s->sin_port= htons((short)port);
+s->sin_addr.s_addr = addr;
 return port;
 }
 

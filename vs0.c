@@ -260,7 +260,7 @@ int strDelete(uchar **str,int pos,int len) {
 }
 
 
-inline void strClear(uchar **str) { objClear((void**)str); };
+void strClear(uchar **str) { objClear((void**)str); };
 int  strLength(uchar *str) { return arrLength((void**)str);}
 
 // Arrays

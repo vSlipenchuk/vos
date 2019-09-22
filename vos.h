@@ -24,6 +24,10 @@
 
 #else // LINUX or UNIX
 #include <unistd.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+
 #define O_BINARY 0
 int filelength(int file);
 #endif
@@ -70,6 +74,7 @@ int sock_accept(int lsock, int *ip);
 int sock_readable(int sock);
 int sock_writable(int sock);
 int sock_close(int sock);
+int _sock_connect(int sock, unsigned char *cs,int cl, int port);
 
 // timing
 

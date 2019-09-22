@@ -1,25 +1,27 @@
 #include "coders.h"
 #include <stdarg.h>
 
+char *delims=" \t\r\n";
+
 uchar *ltrim(uchar *src) {
-while(*src&&*src<=32) src++;
+while(*src&&strchr(delims,*src)) src++;
 return src;
 }
 
 uchar *rtrim(uchar *src) {
 int i;
 for(i=0;src[i];i++);
-while(i>0 && src[i-1]<=32) i--;
+while(i>0 && strchr(delims,src[i-1])) i--;
 src[i]=0;
 return src;
 }
 
 uchar *trim(uchar *src) { return rtrim(ltrim(src)); }
 
-int lcmp(uchar **str,uchar *cmp) {
+int lcmp(char **str,char *cmp) {
 int l = strlen(cmp);
 if (memcmp(*str,cmp,l)==0) {
-   cmp=*str+l; while(*cmp&&*cmp<=32) { cmp++; l++;} // ltrim
+   cmp=*str+l; while(*cmp&& strchr(delims,*cmp)) { cmp++; l++;} // ltrim
    *str=cmp;
    return l; // OK
    }
@@ -70,20 +72,20 @@ return cnt;
 }
 
 
-uchar *get_word(uchar **str) { // gets a word or ""
-uchar *r = *str,*ret;
+char *get_word(char **str) { // gets a word or ""
+char *r = *str,*ret;
 //printf("R=<%s>\n",r);
-while(*r && *r<=32) r++; // ltrim
+while(*r && strchr(delims,*r) ) r++; // ltrim
 ret = r;
-while(*r && *r>32) r++; // collect
+while(*r && !strchr(delims,*r)) r++; // collect
 if (*r)  { *r=0; r++;}
-while(*r && *r<=32) r++; // ltrim again
+while(*r && strchr(delims,*r)) r++; // ltrim again
 *str = r;
 //printf("R=<%s>\n",r);
 return ret;
 }
 
-int get_int(uchar **str) {
+int get_int(char **str) {
 int ret=0;
 sscanf(get_word(str),"%d",&ret);
 return ret;

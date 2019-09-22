@@ -55,7 +55,7 @@ if (srv) { // Unreg from a pool -> some spec destructors ???
     }
 }
 
-#include "hexdump.c"
+//#include "hexdump.c"
 
 int wsFireOnMessage(Socket *sock,unsigned char *data,int len) {
 wsSrv *ws = (void*)sock->parent;
@@ -64,6 +64,7 @@ wsSrv *ws = (void*)sock->parent;
  // printf("wsOnMessage String:<%s>",data);
  if (ws->onMessage) ws->onMessage(sock,data,len);
  data[len]=back;
+ return 0;
 }
 
 int onWebSocketPacket(unsigned char *data, int len, Socket *sock) {
@@ -83,7 +84,7 @@ if ( (len>=2) && (data[0]==0x81)) { // small data < 125
      return l+2+4; // data ready
      }
   if ( (!masked) && (len>=l+2)) { // ok ready packet
-     int i;
+     //int i;
      //unsigned char *mask = data+2;
      unsigned char *d = data+2;
      //for(i=0;i<l;i++) d[i]=d[i]^mask[i%4];
@@ -99,9 +100,9 @@ return 0;
 
 int wsSrvUpgrade(wsSrv *ws, Socket *sock, vssHttp *req) {
 char buf[1024],buf2[512];
-vss reqID = {0,0};
-vss K; char key[100],b64[200];
-if (req && req->reqID.len>0) reqID=req->reqID;
+//vss reqID = {0,0};
+vss K; char b64[200];
+//if (req && req->reqID.len>0) reqID=req->reqID;
 //if (len<0) len = strlen(data);
 if (!vssFindMimeHeader(&req->H,"Sec-WebSocket-Key",&K)) {
   CLOG(ws,2,"new webSocket declined, no Sec-WebSocket-Key\n");
@@ -146,7 +147,7 @@ return 1;
 }
 
 int wsPutStr(Socket *sock, char *data,int len) {
-char ch=0;
+//char ch=0;
 if (len<0) len = strlen(data);
   //char h[]={0x81,0x05,0x48,0x65,0x6c,0x6c,0x6f}; strCat(&sock->out,h,7); //data,len);
 if (len>=125) len=125; // ZUZU - trim as is
@@ -166,7 +167,7 @@ return 1; // ok
 }
 
 int wsBroadcast(wsSrv *srv, char *msg,int len) { // send message to all
-int i,cnt=0;
+int i; //,cnt=0;
 SocketPool *sp = &srv->srv;
 if (len<0) len = strlen(msg);
 for(i=0;i<arrLength(sp->sock);i++) wsPutStr(sp->sock[i],msg,len);

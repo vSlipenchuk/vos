@@ -36,13 +36,13 @@ return h;
 }
 
 int httpReady(char *s) { // zu - to utils???
-char *eoh, *ct, *r=s; int hlen,clen,wait;
+char *eoh, *ct, *r=s; int hlen,clen;
 if (!s) return 0; // no yet
 while(*r && *r<=32) r++;
 eoh = strstr(r,"\r\n\r\n"); if (!eoh) return 0; // no "end of headers"
 ct = strstr(r,"Content-Length:"); if (!ct || ct>eoh) return 4+(eoh-s);  // no Content-Length or after headers
 hlen = 4+(eoh-s); clen = 0; sscanf(ct+15,"%d",&clen); // Define Header length & content length
-wait = hlen+clen-strLength(s);
+//int wait = hlen+clen-strLength(s);
 //printf("Here HttpReady hlen=%d clen=%d strLen=%d wait=%d\n%s",hlen,clen,strLength(s),wait,s);
 if (strLength(s)>=hlen+clen) {
     //printf("%s\n",s);
@@ -50,6 +50,7 @@ if (strLength(s)>=hlen+clen) {
     }
 return 0; // Not ready yet...
 }
+
 
 
 
@@ -310,7 +311,6 @@ return 1; // -- process
 int basicAuth_getUserPass(vss *heads,char *buf,int size) { // fill user-password buffer
 vss A={0,0};
 char *p;
-int ok;
 if (!vssFindMimeHeader(heads,"Authorization",&A)) return 0;
 vss2str(buf,size,&A);
 //   printf("Auth: %s\n", buf);

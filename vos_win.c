@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <winsock.h>
+//#include <winsock.h>
 #include <time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -43,8 +43,8 @@ for(i=0;os_env[i];i++) {
 return 0;
 }
 
-void msleep(int msec) { Sleep(msec); return 0; }
-int sleep(int sec) { Sleep(sec*1000); return 0;}
+void msleep(int msec) { Sleep(msec);  }
+unsigned int  sleep(unsigned int sec) { Sleep(sec*1000); return 0;}
 
 /*
 int os_sysdate(char *buf) {
@@ -124,7 +124,7 @@ DWORD WINAPI thread_create_do(thread_create_struct *fs) {
 void *thread_create(void *proc,void *arg) {
   HANDLE tid;
   DWORD  ID;
-  int p[VTHREAD_MAX_STACK];
+  //int p[VTHREAD_MAX_STACK];
   thread_create_struct fs;
   fs.proc=proc;
   fs.done=0;
@@ -225,14 +225,14 @@ void *mutex_create() {
 
 
 void mutex_lock(void *mutex){
-  if(!mutex) return 0;
+  if(!mutex) return;
   EnterCriticalSection(mutex);
   return ;
 }
 
 
 void mutex_unlock(void *mutex) {
-  if(!mutex) return 0;
+  if(!mutex) return ;
   LeaveCriticalSection((void*)mutex);
   return ;
 }
@@ -240,10 +240,10 @@ void mutex_unlock(void *mutex) {
 
 void mutex_destroy(void * mutex)
 {
-  if(!mutex) return 0;
+  if(!mutex) return ;
   DeleteCriticalSection(mutex);
   free(mutex);
-  return 1;
+  return ;
 }
 
 

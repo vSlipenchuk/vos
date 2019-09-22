@@ -9,16 +9,8 @@ int gsm2utf(char *out,char *ucs2,int len) ;
 int hexdump(char *msg,uchar *s,int len);
 int hexstr2bin_(unsigned char *out,int out_sz,unsigned char *in, int len);
 
-uchar *get_row(uchar **tbl); //@strutil.c
-uchar *get_col(uchar **row); //@strutil.c
-int get_cols(uchar **row,uchar *fmt,...); //@strutil.c
-uchar *get_word(uchar **str); //@strutil.c gets a word or ""
-int get_int(uchar **str); //@strutil.c
-int lcmp(uchar **str,uchar *cmp); //@strutil.c
-int strnstr(uchar *str,int sl,uchar *del,int dl); // Поиск подстроки
-uchar *trim(uchar *src); // left+right trim
-uchar *ltrim(uchar *src); // left trim
-uchar *get_till(uchar **data,uchar *del,int dl); // split a string...
+#include "strutil.h"
+
 /*
 
  Декларации разнообразных декодеров

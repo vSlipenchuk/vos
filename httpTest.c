@@ -181,7 +181,7 @@ return 0;
 
 int onHttpStat(Socket *sock, vssHttp *req, SocketMap *map) { // Генерация статистики по серверу
 char buf[1024];
-httpSrv *srv = sock->pool;
+httpSrv *srv = (void*)sock->pool;
 strSetLength(&srv->buf,0); // ClearResulted
 sprintf(buf,"{clients:%d,connects:%d,requests:%d,mem:%d,serverTime:'%s',pps:%d}",arrLength(srv->srv.sock)-1,
   srv->srv.connects,
@@ -199,10 +199,10 @@ wsSrv *ws; // webSocket Server
 
 
 int onWebSock(Socket *sock, vssHttp *req, SocketMap *map) { // Генерация статистики по серверу
-char buf[1024];
-httpSrv *srv = sock->pool;
+//char buf[1024];
+httpSrv *srv = (void*)sock->pool;
 strSetLength(&srv->buf,0); // ClearResulted
-vss h=req->H;
+//vss h=req->H;
 //printf("REQ: <%*.*s>\n",h.len,h.len,h.data);
 //Sec-WebSocket-Key
 /*
@@ -289,7 +289,7 @@ printf("SSL will use pem_file: %s\n",pem);
 #endif
 
 ws = wsSrvCreate();
-ws->onMessage = onWebMessage;
+ws->onMessage = (void*)onWebMessage;
 
 IFLOG(srv,0,"...starting microHttp {port:%d,logLevel:%d,rootDir:'%s',keepAlive:%d,Limit:%d},\n   mimes:'%s'\n",
   port,logLevel,rootDir,keepAlive,Limit,

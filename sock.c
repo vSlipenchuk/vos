@@ -35,7 +35,7 @@ if (sock->ssl) {
       SSLStateMachine_done(sock->ssl);
       sock->ssl=0;
       }
-#endif VOS_SSL
+#endif //VOS_SSL
 if (sock->sock>0) { // Если есть физический сокет
          //printf("SocketDone, close %d handle here...\n",sock->sock);
          send(sock->sock,(void*)&sock,0,MSG_NOSIGNAL); // send ZERO byte - EndOfConnect
@@ -131,7 +131,7 @@ if (srv->pem_file) { // create ssl mashine
           }
           else  CLOG(srv,6,"SocketPoolAccept created new SSL mashine %x\n",sock->ssl);
    }
-#endif VOS_SSL
+#endif //VOS_SSL
 sock = SocketNew();
 sock->sock = isock;
 sock->N = ++srv->connects; // first is 1
@@ -147,9 +147,13 @@ return sock;
 
 int SocketRun(Socket *sock) {
 int cnt =0;
+//printf("SocketRun %p\n",sock);
 SocketPool *srv = sock->pool;
+//printf("Run on pool %p\n",srv);
     sock->readable = sock_readable(sock->sock);
     sock->writable = sock_writable(sock->sock);
+//printf("Run on pool %p r=%d w=%d handle=%d sock=%p\n",srv,sock->readable,sock->writable,sock->sock,sock);
+
 #if VOS_SSL
     if (sock->ssl && SSLStateMachine_write_can_extract(sock->ssl)) SocketSend(sock,0,0); // decode output data
 #endif // VOS SSL
@@ -164,7 +168,7 @@ SocketPool *srv = sock->pool;
     //printf("readable:%d listen:%d\n",sock->readable>0,sock->state==sockListen);
     if ( (sock->readable>0) && (sock->state == sockListen) ) { // New connection here... how to accept???
         int s,ip; int (*onConnect)();
-           //printf("Accepting a new connection on socket %d\n",sock->sock);
+           printf("Accepting a new connection on socket %d\n",sock->sock);
         s = sock_accept(sock->sock,&ip);
            //printf("Acceped %d\n",sock);
            if (s<0) return 0; // Fail?
@@ -213,7 +217,7 @@ SocketPool *srv = sock->pool;
                 len = SSLStateMachine_read_extract(sock->ssl,buf,sizeof(buf));
                 if (len<0) SocketDie(sock,"sockSSL read error");
                 }
-            #endif VOS_SSL
+            #endif //VOS_SSL
             if (len>0) socketReadPush(sock,buf,len); // Try push it now ->>>
             //printf("done push\n");
             //counterAdd(&sock->readCounter,len);
@@ -260,9 +264,11 @@ int SocketPoolRun(SocketPool *srv) {
 int cnt = 0,i; //Socket *sock;
 SocketPool *sp = srv;
 CLOG(srv,7,"SocketPool - run %d sockets",arrLength(sp->sock));
-//printf("SocketPool - run %d sockets",arrLength(sp->sock));
+//printf("SocketPool - run %d sockets on pool %p\n",arrLength(sp->sock),srv);
 //rep = srv->report && (now!=sp->reported);sp->reported=now;
 for(i=0;i<arrLength(sp->sock);i++) cnt+=SocketRun(sp->sock[i]);
+//printf("Done cnt=%d length=%d\n",cnt,arrLength(sp->sock));
+//printf("Done sock[0]->pool=%p\n",sp->sock[0]->pool);
 for(i=0;i<arrLength(sp->sock);i++) {
     Socket *sock = sp->sock[i];
     if (sock->state == sockKillMe) {
@@ -271,6 +277,7 @@ for(i=0;i<arrLength(sp->sock);i++) {
         break;
         }
     } //cnt+=SocketRun(sp->sock[i]);
+//printf("Done2\n");
 return cnt;
 }
 
@@ -345,7 +352,7 @@ return 1; // ok
 int SocketListener(Socket *sock,int port,
    void *onConnect, void *checkPacket, void *onDie) {  // makes a pool & connect it to listener -)))
 SocketPool *ns;
-if (!SocketListen(sock,port)) return 0; // failed - remove a pool???
+if (SocketListen(sock,port)<=0) return 0; // failed - remove a pool???
 ns = SocketPoolNew();
 ns->log = sock->log; ns->logLevel = sock->logLevel;
 sprintf(ns->name,"tcpPort:%d",port);
