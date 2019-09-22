@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <sys/ioctl.h>
 
-int kbecho(int echo) {
+void kbecho(int echo) {
 static const int STDIN = 0;
  struct termios term;
         tcgetattr(STDIN, &term);
