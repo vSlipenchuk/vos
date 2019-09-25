@@ -98,7 +98,7 @@ for(i=0;i<sl-dl+1;i++) if (memcmp(str+i,del,dl)==0) return i;
 return -1;
 }
 
-uchar *get_till(uchar **data,uchar *del,int dl) {
+char *get_till(char **data,char *del,int dl) {
 uchar *str = *data; int sl,ipos;
 if (dl<0) dl = strlen(del); sl = strlen(str);
 ipos = strnstr(str,sl,del,dl);

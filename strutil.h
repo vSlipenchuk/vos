@@ -23,6 +23,6 @@ int get_cols(uchar **row,uchar *fmt,...); //@strutil.c
 int strnstr(uchar *str,int sl,uchar *del,int dl); // Поиск подстроки
 uchar *trim(uchar *src); // left+right trim
 uchar *ltrim(uchar *src); // left trim
-uchar *get_till(uchar **data,uchar *del,int dl); // split a string...
+char *get_till(char **data,char *del,int dl); // split a string...
 
 #endif // CODERS_H
