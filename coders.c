@@ -7,10 +7,10 @@
 #include <stdarg.h>
 #include "vtypes.h"
 
-uchar *CP_DECODE(uchar *dst, uchar *src, int len, uchar *tbl) {
+char *CP_DECODE(char *dst, char *src, int len, char *tbl) {
 char *ret = dst;
 if (len<0) len = strlen(src);
-for( ;len>0;src++,dst++,len--) *dst=tbl[*src];
+for( ;len>0;src++,dst++,len--) *dst=tbl[(unsigned char)*src];
 *dst=0;
 return ret;
 }
@@ -23,8 +23,8 @@ if (src>='A' && src<='F') return 10+src-'A';
 return -1; }
 
 
-unsigned char *url_decode(char *dst, unsigned char *src) { // Enocdes %XX and + in a http request headers ...
-unsigned char *ret = dst;
+char *url_decode(char *dst, char *src) { // Enocdes %XX and + in a http request headers ...
+char *ret = dst;
 while(*src) {
  if (*src=='+') *dst=' ';
   else if (*src=='%'&& hex(src[1])>=0 && hex(src[2])>=0)
@@ -84,9 +84,9 @@ return code/ok; // В сотнях процентов
 }
 
 
-char *cp_decode(unsigned char *src, unsigned char *cp) {
+char *cp_decode(char *src,char *cp) {
 char *r=src;
-while(*src) {*src=cp[*src]; src++;}
+while(*src) {*src=cp[(unsigned char)*src]; src++;}
 return r;
 }
 
@@ -236,7 +236,7 @@ return i;
 }
 
 
-int unicode_to_str(u_char *buf,int size,uchar *wbuf,int wsize) {
+int unicode_to_str(char *buf,int size,uchar *wbuf,int wsize) {
 int i;
 int j;
 
@@ -268,7 +268,7 @@ int j;
 
 
 
-int utf8_peek(u_char *d,u_char *s,int l) {
+int utf8_peek(char *d,char *s,int l) {
 int bit=0,i,byte=0,mask;
 //int utf[6]={0x7f,0x7ff,0xffff,0x1fffff,0x3ffffff,0x7fffffff};
 if (l<=0) return 0;
@@ -307,8 +307,8 @@ while(byte>=0)  {
 return l;
 }
 
-int decode_utf8(u_char *d,u_char *s,int sl) {// Results in win1251 ...
-u_char b[8],theb[2];
+int decode_utf8(char *d,char *s,int sl) {// Results in win1251 ...
+char b[8],theb[2];
 int k,t,len=0;
 if (sl<0) sl = strlen(s);
 while(sl>0)
@@ -405,12 +405,12 @@ int utf8_poke ( char *utf8char, int wchar, size_t count ) {
 
 
 /* Вот эту штуку и нужно доделать - если чо ... Собстно результат - перекодировка win1251 в UTF8 */
-int encode_utf8(u_char *d,u_char *s,int sl) { // Results in UTF8 ...
+int encode_utf8(char *d,char *s,int sl) { // Results in UTF8 ...
 int len = 0; wchar_t w;
 if (sl<0) sl = strlen(s);
 while (sl>0) {
 	int ulen;
-	str_to_unicode((char*)&w,2,s,1); // Convert 1 char ...
+	str_to_unicode((unsigned char*)&w,2,(unsigned char *)s,1); // Convert 1 char ...
 	ulen = utf8_poke(d,w,100); // Enough space ...
 	len+=ulen;
 	if (d) d+=ulen; // Move out buf ...
@@ -441,7 +441,7 @@ unsigned char table_base64[64]=
 int decode_base64(unsigned char *d,unsigned char *s,int slen) {
 int len=0,bit=0;
 unsigned char b=0, c;
-if (slen<0) slen=strlen(s);
+if (slen<0) slen=strlen((char*)s);
 while(slen>0)
   {
   int i;
@@ -480,7 +480,7 @@ return len;
 int encode_base64(unsigned char *d,unsigned char *s,int slen)
 {
 int len=0;  //int mask=128;
-if (slen<0)   slen=strlen(s);
+if (slen<0)   slen=strlen((char*)s);
 while(slen>=3)
   {
   if (d) {
@@ -520,7 +520,7 @@ return len;
 int encode_base64_(unsigned char *d,unsigned char *s,int slen)
 {
 int len=0,i;  int mask=128;
-if (slen<0)   slen=strlen(s);
+if (slen<0)   slen=strlen((char*)s);
 while(slen>0)
   {
   unsigned char b=0;
@@ -544,7 +544,7 @@ return len;
 }
 
 
-int c_decode(uchar *d,uchar *s,int l) {
+int c_decode(char *d,char *s,int l) {
 int c=0;
 if (l<0) l=strlen(s);
 while(l>0) {
@@ -564,7 +564,7 @@ if (d) *d=0;
 return c;
 }
 
-int c_encode(uchar *r, uchar *s, int l) {
+int c_encode(char *r, char *s, int l) {
 int i,ll;
 if (l<0) l = strlen(s);
 ll=l;
@@ -709,7 +709,7 @@ return r; // coded length
 
 int encode_uu(uchar *d, uchar *s, int len) { // 3->4 символа + длина строки + переводы строк (не более 61 в строке?)
 int r=0,lines;
-if (len<0) len = strlen(s);
+if (len<0) len = strlen((char*)s);
 //if (!d) { // Дефайн длину
     lines = len/45; if (len%45) lines++; // Столько будет линий
     r = 4*(len/3); // Это - тройки в целые четверки четверки
@@ -741,7 +741,7 @@ return r;
 
 int win2gsm(uchar *d,uchar *src,int len) {
 int r;
-if (len<0) len = strlen(src);
+if (len<0) len = strlen((char*)src);
 r = len*2;
 if (!d) return r; // NeedSize
 while(len>0) {
@@ -760,9 +760,9 @@ return r;
 
 int utf2gsm(uchar *d,uchar *src,int len) {
 uchar u[8]; int cnt=0;
-if (len<0) len=strlen(src);
+if (len<0) len=strlen((char*)src);
 while (len>0) {
-  int l = utf8_peek(u,src,len);
+  int l = utf8_peek((char*)u,(char*)src,len);
   if (l<0) break;
   //printf("u0=%d u1=%d u2=%d u3=%d\n",u[0],u[1],u[2],u[3]);
   d[0]=u[1]; d[1]=u[0];
@@ -774,9 +774,9 @@ return cnt;
 
 int utf_nonstd(uchar *src,int len) {
 uchar u[8]; int cnt=0;
-if (len<0) len=strlen(src);
+if (len<0) len=strlen((char*)src);
 while (len>0) {
-  int l = utf8_peek(u,src,len);
+  int l = utf8_peek((char*)u,(char*)src,len);
   if (l<0) break;
   if (u[1]) cnt++; // how many non-en pages?
   //d[0]=
@@ -787,9 +787,9 @@ return cnt;
 
 int utf2koi(uchar *dst, uchar *src, int len) {
 uchar u[8]; int cnt=0;
-if (len<0) len=strlen(src);
+if (len<0) len=strlen((char*)src);
 while (len>0) {
-  int l = utf8_peek(u,src,len);
+  int l = utf8_peek((char*)u,(char*)src,len);
   if (l<0) break;
   // now - convert unicode->win->koi
   *dst = unichar(u[1],u[0],'?');

@@ -7,7 +7,7 @@
 int gsm2utf(char *out,char *ucs2,int len) ;
 
 int hexdump(char *msg,uchar *s,int len);
-int hexstr2bin_(unsigned char *out,int out_sz,unsigned char *in, int len);
+//int hexstr2bin_(unsigned char *out,int out_sz,unsigned char *in, int len);
 
 #include "strutil.h"
 
@@ -24,8 +24,8 @@ int md5sign(uchar *d,uchar *s,int l); //@md5.c  Sign this MD5 message
 int md5hash(uchar *d,uchar *s,int l); //@md5.c Signs & show it ans hex...
 int md5hash_(uchar *dst,uchar *src,int len,...); //@md5
 
-int c_decode(uchar *d,uchar *s,int l);
-int c_encode(uchar *d,uchar *s,int l);
+int c_decode(char *d,char *s,int l);
+int c_encode(char *d,char *s,int l);
 int q_encode(char *dst, char *src, int len) ; // double print ''
 
 int encode_base64(unsigned char *d,unsigned char *s,int slen);
@@ -33,8 +33,8 @@ int decode_base64(unsigned char *d,unsigned char *s,int slen);
 
 int encode_uu(uchar *d, uchar *s, int len);
 
-int encode_utf8(uchar *d,uchar *s,int sl); // Results in UTF8 ...
-int decode_utf8(uchar *d,uchar *s,int sl); // Results in UTF8 ...
+int encode_utf8(char *d,char *s,int sl); // Results in UTF8 ...
+int decode_utf8(char *d,char *s,int sl); // Results in UTF8 ...
 
 extern unsigned char win_dos[256];
 extern unsigned char dos_win[256];
@@ -46,16 +46,16 @@ extern unsigned char win_koi[256];
 extern unsigned char win_dos[256];
 extern unsigned char dos_win[256];
 
-uchar *CP_DECODE(uchar *dst, uchar *src, int len, uchar *tbl);
+char *CP_DECODE(char *dst, char *src, int len, char *tbl);
 #define dos2win(A,B,LEN) CP_DECODE(A,B,LEN,dos_win)
 #define win2dos(A,B,LEN) CP_DECODE(A,B,LEN,win_dos)
 
-char *cp_decode(unsigned char *src, unsigned char *cp);
+char *cp_decode(char *src,char *cp);
 
 int hex(uchar src); // -1 on invalid
 
 int win2gsm(uchar *d,uchar *src,int len);
-int unicode_to_str(uchar *buf,int size,uchar *wbuf,int wsize);
+int unicode_to_str(char *buf,int size,uchar *wbuf,int wsize);
 
 uchar unichar(uchar page, uchar code, uchar def); // win2151 <- unichar
 int hexstr2bin(char *out,char *in, int len); // converts 00ffbbcc -> len/2

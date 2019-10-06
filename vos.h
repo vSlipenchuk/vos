@@ -74,7 +74,12 @@ int sock_accept(int lsock, int *ip);
 int sock_readable(int sock);
 int sock_writable(int sock);
 int sock_close(int sock);
-int _sock_connect(int sock, unsigned char *cs,int cl, int port);
+int _sock_connect(int sock, char *cs,int cl, int port);
+
+
+/* assigns UDP socket, if port>0 starts listen, if ip!=NULL binds to signle interface */
+int udp_sock(int port,char *ip) ;
+int net_sa(void *sa,char *host, int port); // compose socket addr from host:port
 
 // timing
 

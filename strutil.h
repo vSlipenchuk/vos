@@ -12,17 +12,17 @@ int get_int(char **str); //@strutil.c
 int gsm2utf(char *out,char *ucs2,int len) ;
 
 int hexdump(char *msg,uchar *s,int len);
-int hexstr2bin_(unsigned char *out,int out_sz,unsigned char *in, int len);
+int hexstr2bin_(char *out,int out_sz,char *in, int len);
 
-uchar *get_row(uchar **tbl); //@strutil.c
-uchar *get_col(uchar **row); //@strutil.c
-int get_cols(uchar **row,uchar *fmt,...); //@strutil.c
+char *get_row(char **tbl); //@strutil.c
+char *get_col(char **row); //@strutil.c
+int get_cols(char **row,char *fmt,...); //@strutil.c
 
 
 
-int strnstr(uchar *str,int sl,uchar *del,int dl); // Поиск подстроки
-uchar *trim(uchar *src); // left+right trim
-uchar *ltrim(uchar *src); // left trim
+int strnstr(char *str,int sl,char *del,int dl); // Поиск подстроки
+char *trim(char *src); // left+right trim
+char *ltrim(char *src); // left trim
 char *get_till(char **data,char *del,int dl); // split a string...
 
 #endif // CODERS_H

@@ -63,12 +63,12 @@ return fcntl(sock, F_SETFL, O_NONBLOCK); // =õ ñûşúø¨º¦•øù ¸şúõª...
 }
 
 
-int _sock_connect(int sock, unsigned char *cs,int cl, int port) {
-uchar host[80],*p;
+int _sock_connect(int sock,char *cs,int cl, int port) {
+char host[80],*p;
 struct sockaddr_in s;
 struct hostent *h;
 int addr;
-if (cl<0) cl=strlen(cs);
+if (cl<0) cl=strlen((char*)cs);
 if (cl>79) cl=79;
 memmove(host,cs,cl); host[cl]=0;
 p=strchr(host,':');
@@ -138,7 +138,7 @@ return select(sock+1,0,&fs,0,&t);
 }
 
 int sock_accept(int lsock, int *ip) {
-struct sockaddr_in sa; int slen;
+struct sockaddr_in sa; unsigned int slen;
 int sock;
 slen = sizeof(sa);
 sock = accept(lsock,(struct sockaddr*) &sa,&slen);
@@ -372,20 +372,20 @@ return 1;
 
 int net_sa(void *sa,char *host, int port) ;
 
-int udp_sock(int port,uchar *ip) { // Create UDP sock & starts listen (if need)
+int udp_sock(int port,char *ip) { // Create UDP sock & starts listen (if need)
 int sock;
 struct sockaddr s;
 sock=socket(AF_INET,SOCK_DGRAM,0);
 if (port>0) { // bind to port ...
-	net_sa(&s,ip,port);
+	net_sa(&s,ip,(unsigned int)port);
 	if (bind(sock,&s,sizeof(s))) {   closesocket(sock);  return -2;  }
 	//if (listen(sock,8))   {   closesocket(sock);  return -3;  }
 	}
 return sock;
 }
 
-uchar *sa2str(struct sockaddr *sa,uchar *str) {
-static uchar szstr[80];
+char *sa2str(struct sockaddr *sa,char *str) {
+static char szstr[80];
 struct sockaddr_in *sin = (struct sockaddr_in*)sa;
 if (!str) str = szstr;
 uchar *ip  =(void*)& (sin->sin_addr.s_addr);//(uchar*)((&(struct sock_addr_in*)sa)->sin_addr.s_addr);
@@ -402,7 +402,7 @@ int get_local_ip(char * ip) {
    phost = gethostbyname(hostname);
    if(!phost) return -2;
    memcpy(&addr, phost->h_addr_list[0], sizeof(struct in_addr));
-   uchar *szaddr=inet_ntoa(addr);
+   char *szaddr=inet_ntoa(addr);
    strcpy(ip, szaddr);
    return 1;
 }
