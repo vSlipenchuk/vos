@@ -36,8 +36,11 @@ while(!aborted) {
 return 0;
 }
 
-
+#ifdef VOS_SSL
 #include <openssl/sha.h>
+#else
+#include "sha1/sha1.h" // in vos/sha1
+#endif
 
 void SocketClearPool(Socket *sock) {
 SocketPool *srv = sock->pool;
@@ -93,7 +96,7 @@ if ( (len>=2) && (data[0]==0x81)) { // small data < 125
      return l+2; // data ready
      }
   }
-hex_dump("WebSocket -> wsUnknownData",data,len);
+hexdump("WebSocket -> wsUnknownData",data,len);
   // PING + PONG ? example: 88 82 52 5A E6 26 51 B3
 return 0;
 } ; // to do
@@ -114,7 +117,12 @@ vss2str(buf,40,&K);
 strcat(buf,"258EAFA5-E914-47DA-95CA-C5AB0DC85B11");
 unsigned char hash[SHA_DIGEST_LENGTH];
 //printf("MakeIt to sha: %s\n",buf);
+#ifdef VOS_SSL
 SHA1(buf,strlen(buf), hash);
+#else
+SHA1(hash, buf,strlen(buf));
+#endif
+
 encode_base64(b64,hash,SHA_DIGEST_LENGTH);
 //printf("b64: %s\n",b64);
 
@@ -150,11 +158,18 @@ int wsPutStr(Socket *sock, char *data,int len) {
 //char ch=0;
 if (len<0) len = strlen(data);
   //char h[]={0x81,0x05,0x48,0x65,0x6c,0x6c,0x6f}; strCat(&sock->out,h,7); //data,len);
-if (len>=125) len=125; // ZUZU - trim as is
+//if (len>=125) len=125; // ZUZU - trim as is
 if (len<=125) {
     char h[2]={0x81,len};
     SocketSend(sock,h,2); SocketSend(sock,data,len);
-   }
+   } else {
+if (len>65535) len=65535;
+   char h[4]={0x81, 126, len>>8, len&0xFF};
+    SocketSend(sock,h,4); SocketSend(sock,data,len);
+
+
+
+}
 /*
 if (len<0) len = strlen(data);
 ch = 0; strCat(&sock->out,&ch,1); //zero

@@ -15,14 +15,13 @@
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-Wno-pointer-sign" />
-					<Add option="-DVOS_SSL" />
 					<Add directory="../../../OpenSSL/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add library="crypto" />
-					<Add library="pthread" />
-					<Add library="ssl" />
+					<Add library="wsock32" />
+					<Add library="psapi" />
+					<Add library="../../../OpenSSL/lib/libcrypto.lib" />
 				</Linker>
 			</Target>
 		</Build>

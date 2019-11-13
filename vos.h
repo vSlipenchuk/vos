@@ -106,6 +106,7 @@ typedef struct {
     BIO *pbioRead;
     BIO *pbioWrite;
     SSL *pSSL;
+    int isServer;
     } SSLStateMachine;
 
 

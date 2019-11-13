@@ -14,6 +14,7 @@
 
 #include "strutil.h"
 #include "sock.h"
+#include "hexdump.c"
 
 int lineReady(char *s) { // zu - to utils???
 char *eoh, *r=s;
@@ -79,6 +80,7 @@ int MicroHttpMain(int npar,char **par) ;
 int main(int npar,char **par)
 {
     net_init();
-    return SocketEchoServer(1234);
+    return test_http(); // _httpTest.c
+    //return SocketEchoServer(1234);
     //return MicroHttpMain(npar,par);
 }

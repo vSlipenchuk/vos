@@ -38,47 +38,60 @@ SSLStateMachine *SSLStateMachine_new(const char *szCertificateFile,
 {
     SSLStateMachine *pMachine=malloc(sizeof *pMachine);
     int n;
-
+    memset(pMachine,0,sizeof(*pMachine));
+//printf("m=%p\n",pMachine);
+// SSL_library_init();
+ //OPENSSL_add_all_algorithms_noconf();
     if (!pMachine) { SSLStateMachine_done(pMachine); return 0;}
     //die_unless(pMachine);
 
     //pMachine->pCtx=SSL_CTX_new(SSLv23_server_method());
-
+//printf("2\n");
      if ( isServer )
         pMachine->pCtx=SSL_CTX_new(SSLv23_server_method());
     else
         pMachine->pCtx=SSL_CTX_new(SSLv23_client_method());
-
+//printf("m=%d\n",pMachine->pCtx);
     if (!pMachine->pCtx) { SSLStateMachine_done(pMachine); return 0;}
     //die_unless(pMachine->pCtx);
-
+    if (szCertificateFile) {
     n=SSL_CTX_use_certificate_file(pMachine->pCtx,szCertificateFile,
 				   SSL_FILETYPE_PEM);
 
     if (n<=0) { SSLStateMachine_done(pMachine); return 0;}
+    }
+//printf("3\n");
 
+    if (szKeyFile) {
     n=SSL_CTX_use_PrivateKey_file(pMachine->pCtx,szKeyFile,SSL_FILETYPE_PEM);
     if (n<=0) { SSLStateMachine_done(pMachine); return 0;}
+    }
 
     pMachine->pSSL=SSL_new(pMachine->pCtx);
+//printf("4\n");
     //die_unless(pMachine->pSSL);
     if (!pMachine->pSSL) { SSLStateMachine_done(pMachine); return 0;}
+//printf("5\n");
 
     pMachine->pbioRead=BIO_new(BIO_s_mem());
 
     pMachine->pbioWrite=BIO_new(BIO_s_mem());
+//printf("6\n");
 
     SSL_set_bio(pMachine->pSSL,pMachine->pbioRead,pMachine->pbioWrite);
 
     //SSL_set_accept_state(pMachine->pSSL);
-
+//printf("7\n");
     if ( isServer )
         SSL_set_accept_state(pMachine->pSSL);
-    else
+    else {
         SSL_set_connect_state(pMachine->pSSL);
-
+        SSL_do_handshake(pMachine->pSSL);
+        }
     return pMachine;
 }
+
+int ssl_init_finished(SSLStateMachine *pMachine) { return SSL_is_init_finished(pMachine->pSSL); }
 
 void SSLStateMachine_read_inject(SSLStateMachine *pMachine,
 				 const unsigned char *aucBuf,int nBuf)
@@ -95,12 +108,16 @@ void SSLStateMachine_read_inject(SSLStateMachine *pMachine,
 int SSLStateMachine_read_extract(SSLStateMachine *pMachine,
 				 unsigned char *aucBuf,int nBuf)
     {
-    int n;
+    int n=0;
 
     if(!SSL_is_init_finished(pMachine->pSSL))
 	{
 	fprintf(stderr,"Doing SSL_accept\n");
-	n=SSL_accept(pMachine->pSSL);
+	if (pMachine->isServer) n=SSL_accept(pMachine->pSSL);
+	      else {
+           // SSL_do_handshake(pMachine->pSSL);
+	       n=SSL_connect(pMachine->pSSL); //SSL_do_handshake(pMachine->pSSL);
+	       }
 	if(n == 0)
 	    fprintf(stderr,"SSL_accept returned zero\n");
 	if(n < 0)
@@ -114,7 +131,7 @@ int SSLStateMachine_read_extract(SSLStateMachine *pMachine,
 		}
 
 	     SSLStateMachine_print_error(pMachine,"SSL_accept error");
-	      exit(7);
+	     exit(7);
 	    }
 	return 0;
 	}
@@ -131,7 +148,7 @@ int SSLStateMachine_read_extract(SSLStateMachine *pMachine,
 	    }
 
 	SSLStateMachine_print_error(pMachine,"SSL_read error");
-	exit(8);
+	exit(8); // ZUZU!
 	}
 
     fprintf(stderr,"%d bytes of decrypted data read from state machine\n",n);

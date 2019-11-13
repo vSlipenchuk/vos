@@ -121,24 +121,25 @@ return ip2szbuf(ip,buf);
 
 
 Socket *SocketPoolAccept(SocketPool *srv, int isock, int ip) {
-Socket *sock; void *ssl = 0;
-#ifdef VOS_SSL
-if (srv->pem_file) { // create ssl mashine
-   ssl = SSLStateMachine_new(srv->pem_file,srv->pem_file,1);
-   if (!ssl) {
-          CLOG(srv,1,"SocketPoolAccept  SSL_pem '%s' create failed, kill socket\n",srv->pem_file);
-          return 0; //
-          }
-          else  CLOG(srv,6,"SocketPoolAccept created new SSL mashine %x\n",sock->ssl);
-   }
-#endif //VOS_SSL
+Socket *sock; //void *ssl = 0;
+
 sock = SocketNew();
 sock->sock = isock;
 sock->N = ++srv->connects; // first is 1
 sock->state = sockConnected;
 sock->connectStatus = connectTCP;
 sock->modified = TimeNow;
-sock->ssl = ssl;
+#ifdef VOS_SSL
+if (srv->pem_file) { // create ssl mashine
+   sock->ssl = SSLStateMachine_new(srv->pem_file,srv->pem_file,1);
+   if (!sock->ssl) {
+          CLOG(srv,1,"SocketPoolAccept  SSL_pem '%s' create failed, kill socket\n",srv->pem_file);
+          return 0; //
+          }
+          else  CLOG(srv,6,"SocketPoolAccept created new SSL mashine %x\n",sock->ssl);
+   }
+#endif //VOS_SSL
+//sock->ssl = ssl;
 ip2szbuf(ip,sock->szip);
 CLOG(srv,6,"SocketPoolAccept:{n:%d,ip:'%s',sock:%d}\n",sock->N,sock->szip,sock->sock);
 Socket2Pool(sock,srv); // AddIt
@@ -147,15 +148,26 @@ return sock;
 
 int SocketRun(Socket *sock) {
 int cnt =0;
+if (sock->state == sockNone) return 0;
 //printf("SocketRun %p\n",sock);
 SocketPool *srv = sock->pool;
 //printf("Run on pool %p\n",srv);
     sock->readable = sock_readable(sock->sock);
+   // if ( sock->readable ) printf("readable!\n");
     sock->writable = sock_writable(sock->sock);
+    //if ( sock->writable) printf("writable!\n");
 //printf("Run on pool %p r=%d w=%d handle=%d sock=%p\n",srv,sock->readable,sock->writable,sock->sock,sock);
 
 #if VOS_SSL
-    if (sock->ssl && SSLStateMachine_write_can_extract(sock->ssl)) SocketSend(sock,0,0); // decode output data
+    if (sock->ssl) {
+      int len; char buf[1024];
+      if (SSLStateMachine_write_can_extract(sock->ssl)) { SocketSend(sock,0,0);cnt++;} // decode output data
+      if ( ssl_init_finished(sock->ssl) ) {
+       len = SSLStateMachine_read_extract(sock->ssl,buf,sizeof(buf));
+       if (len>0) { socketReadPush(sock,buf,len); cnt++;}
+       }
+      }
+    //if (sock->ssl && SSLStateMachine_read_can_extract())
 #endif // VOS SSL
     //sock->readable=1; // ZU!
 
@@ -204,6 +216,8 @@ SocketPool *srv = sock->pool;
         if (len>0) { // Можно читать чуть - чуть
         if (len>sizeof(buf)) len = sizeof(buf); // Но не более текущего буфера
         len = recv(sock->sock,buf,len,0); // Try it
+          //printf("recv: %d bytes\n", len);
+          //if ( len == 252) hexdump("data",buf,len);
         cnt++;
         sock->modified = TimeNow;
         if (len==0) SocketDie(sock,"connection closed remotely");
@@ -214,7 +228,9 @@ SocketPool *srv = sock->pool;
             #if VOS_SSL
             if (sock->ssl) {
                 SSLStateMachine_read_inject(sock->ssl,buf,len);
+                //while(1) {
                 len = SSLStateMachine_read_extract(sock->ssl,buf,sizeof(buf));
+                //printf("extracted %d bytes\n",len);
                 if (len<0) SocketDie(sock,"sockSSL read error");
                 }
             #endif //VOS_SSL

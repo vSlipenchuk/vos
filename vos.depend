@@ -11,6 +11,8 @@
 	<windows.h>
 	<unistd.h>
 
+1568841276 
+
 1400828470 /mnt/c/prj/vos/vtypes.h
 	<stdio.h>
 	<stdlib.h>
@@ -26,12 +28,16 @@
 	"sys/types.h"
 	<termios.h>
 
+1568838574 >
+
 1400828435 source:/mnt/c/prj/vos/vos_linux_kbhit.c
 	"vos.h"
 	<termios.h>
 	<stropts.h>
 	<stdio.h>
 	<sys/ioctl.h>
+
+1568838574 .h>
 
 1402308725 source:/mnt/c/prj/vos/vos.c
 	"vos.h"
@@ -92,6 +98,8 @@
 	"vos.h"
 	"mutex-1.1.c"
 
+1400828435 .c"
+
 1400828435 /mnt/c/prj/vos/exe.c
 	"vtypes.h"
 	"coders.h"
@@ -114,6 +122,8 @@
 	<sys/time.h>
 	<stdio.h>
 	<sys/resource.h>
+
+1402310288 rce.h>
 
 1402308843 /mnt/c/prj/vos/vs0.c
 	<fcntl.h>
@@ -277,6 +287,8 @@
 	<sys/resource.h>
 	"vos_win.c"
 
+1568927938 "
+
 1442572588 c:\prj\vos\vos_win.c
 	<stdio.h>
 	<stdlib.h>
@@ -402,6 +414,8 @@
 	<sys/socket.h>
 	<netinet/in.h>
 
+1568921021 n.h>
+
 1568920842 source:c:\cygwin64\prj\vos\httpsrv.c
 	"httpSrv.h"
 	<stdarg.h>
@@ -461,6 +475,8 @@
 	"vos.h"
 	"vtypes.h"
 	<sys/stat.h>
+
+1568922741 h>
 
 1568838574 c:\cygwin64\prj\vos\exe.c
 	"vtypes.h"
@@ -593,6 +609,8 @@
 	<openssl/dtls1.h>
 	<openssl/srtp.h>
 
+1568214648 rtp.h>
+
 1568214648 c:\openssl\include\openssl\e_os2.h
 	<openssl/opensslconf.h>
 	<inttypes.h>
@@ -601,12 +619,16 @@
 1568214648 c:\openssl\include\openssl\opensslconf.h
 	<openssl/opensslv.h>
 
+1568214648 pensslv.h>
+
 1568214648 c:\openssl\include\openssl\opensslv.h
 
 1568214648 c:\openssl\include\openssl\comp.h
 	<openssl/opensslconf.h>
 	<openssl/crypto.h>
 	<openssl/comperr.h>
+
+1568214648 omperr.h>
 
 1568214648 c:\openssl\include\openssl\crypto.h
 	<stdlib.h>
@@ -627,6 +649,8 @@
 	<openssl/stack.h>
 	<openssl/e_os2.h>
 
+1568214648 _os2.h>
+
 1568214648 c:\openssl\include\openssl\stack.h
 
 1568214648 c:\openssl\include\openssl\ossl_typ.h
@@ -635,6 +659,8 @@
 
 1568214648 c:\openssl\include\openssl\cryptoerr.h
 	<openssl/symhacks.h>
+
+1568214648 ymhacks.h>
 
 1568214648 c:\openssl\include\openssl\symhacks.h
 	<openssl/e_os2.h>
@@ -646,12 +672,16 @@
 	<openssl/symhacks.h>
 	<openssl/opensslconf.h>
 
+1568214648 pensslconf.h>
+
 1568214648 c:\openssl\include\openssl\bio.h
 	<openssl/e_os2.h>
 	<stdio.h>
 	<stdarg.h>
 	<openssl/crypto.h>
 	<openssl/bioerr.h>
+
+1568214648 ioerr.h>
 
 1568214648 c:\openssl\include\openssl\bioerr.h
 	<openssl/symhacks.h>
@@ -674,6 +704,8 @@
 	<openssl/x509_vfy.h>
 	<openssl/pkcs7.h>
 
+1568214648 kcs7.h>
+
 1568214648 c:\openssl\include\openssl\buffer.h
 	<openssl/ossl_typ.h>
 	<openssl/crypto.h>
@@ -692,6 +724,8 @@
 	<openssl/evperr.h>
 	<openssl/objects.h>
 
+1568214648 bjects.h>
+
 1568214648 c:\openssl\include\openssl\evperr.h
 	<openssl/symhacks.h>
 
@@ -700,6 +734,8 @@
 	<openssl/bio.h>
 	<openssl/asn1.h>
 	<openssl/objectserr.h>
+
+1568214648 bjectserr.h>
 
 1568214648 c:\openssl\include\openssl\obj_mac.h
 
@@ -725,6 +761,8 @@
 	<openssl/crypto.h>
 	<openssl/bnerr.h>
 
+1568214648 nerr.h>
+
 1568214648 c:\openssl\include\openssl\bnerr.h
 	<openssl/symhacks.h>
 
@@ -738,6 +776,8 @@
 	<openssl/bn.h>
 	<openssl/ecerr.h>
 
+1568214648 cerr.h>
+
 1568214648 c:\openssl\include\openssl\ecerr.h
 	<openssl/symhacks.h>
 	<openssl/opensslconf.h>
@@ -750,6 +790,8 @@
 	<openssl/ossl_typ.h>
 	<openssl/bn.h>
 	<openssl/rsaerr.h>
+
+1568214648 saerr.h>
 
 1568214648 c:\openssl\include\openssl\rsaerr.h
 	<openssl/symhacks.h>
@@ -772,6 +814,8 @@
 	<openssl/ossl_typ.h>
 	<openssl/bn.h>
 	<openssl/dherr.h>
+
+1568214648 herr.h>
 
 1568214648 c:\openssl\include\openssl\dherr.h
 	<openssl/symhacks.h>
@@ -800,6 +844,8 @@
 	<openssl/e_os2.h>
 	<openssl/bio.h>
 
+1568214648 io.h>
+
 1568214648 c:\openssl\include\openssl\pkcs7.h
 	<openssl/asn1.h>
 	<openssl/bio.h>
@@ -807,6 +853,8 @@
 	<openssl/symhacks.h>
 	<openssl/ossl_typ.h>
 	<openssl/pkcs7err.h>
+
+1568214648 kcs7err.h>
 
 1568214648 c:\openssl\include\openssl\pkcs7err.h
 	<openssl/symhacks.h>
@@ -827,9 +875,13 @@
 	<openssl/opensslconf.h>
 	<openssl/evp.h>
 
+1568214648 vp.h>
+
 1568214648 c:\openssl\include\openssl\async.h
 	<stdlib.h>
 	<openssl/asyncerr.h>
+
+1568214648 syncerr.h>
 
 1568214648 c:\openssl\include\openssl\asyncerr.h
 	<openssl/symhacks.h>
@@ -840,6 +892,8 @@
 	<openssl/safestack.h>
 	<openssl/x509.h>
 	<openssl/cterr.h>
+
+1568214648 terr.h>
 
 1568214648 c:\openssl\include\openssl\cterr.h
 	<openssl/symhacks.h>
@@ -856,9 +910,13 @@
 	<openssl/evp.h>
 	<openssl/ssl.h>
 
+1568214648 sl.h>
+
 1568214648 c:\openssl\include\openssl\tls1.h
 	<openssl/buffer.h>
 	<openssl/x509.h>
+
+1568214648 509.h>
 
 1568214648 c:\openssl\include\openssl\dtls1.h
 
@@ -1114,4 +1172,243 @@
 	"hexdump.c"
 
 1568838574 c:\prj\nbiot_demo\vos\hexdump.c
+
+1570355857 source:/mnt/c/prj/vos/coders.c
+	"coders.h"
+	<stdarg.h>
+	"vtypes.h"
+
+1570355679 /mnt/c/prj/vos/coders.h
+	"vtypes.h"
+	"strutil.h"
+
+1569144614 /mnt/c/prj/vos/vtypes.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	<windows.h>
+
+1570355469 /mnt/c/prj/vos/strutil.h
+	"vtypes.h"
+
+1533379925 source:/mnt/c/prj/vos/exe.c
+	"vtypes.h"
+	"coders.h"
+	"vos.h"
+
+1570353080 /mnt/c/prj/vos/vos.h
+	"vtypes.h"
+	<fcntl.h>
+	<netdb.h>
+	<sys/stat.h>
+	<sys/socket.h>
+	<linux/limits.h>
+	<windows.h>
+	<unistd.h>
+	<sys/socket.h>
+	<netinet/in.h>
+	<arpa/inet.h>
+	<openssl/ssl.h>
+	<assert.h>
+	<unistd.h>
+	<string.h>
+	<openssl/err.h>
+	<sys/types.h>
+	<sys/socket.h>
+	<netinet/in.h>
+
+1570563295 source:/mnt/c/prj/vos/httpSrv.c
+	"httpSrv.h"
+	<stdarg.h>
+	<fcntl.h>
+	<dirent.h>
+
+1533379925 /mnt/c/prj/vos/httpSrv.h
+	"vos.h"
+	"sock.h"
+	"vss.h"
+
+1538589733 /mnt/c/prj/vos/sock.h
+	"vos.h"
+	"vs0.h"
+	"vss.h"
+	"logger.h"
+	"vtypes.h"
+
+1569144614 /mnt/c/prj/vos/vs0.h
+	"vtypes.h"
+	"vss.h"
+
+1533379925 /mnt/c/prj/vos/vss.h
+	"vtypes.h"
+
+1533379925 /mnt/c/prj/vos/logger.h
+	"vs0.h"
+	<stdio.h>
+	<time.h>
+	"coders.h"
+
+1569144614 source:/mnt/c/prj/vos/httpTest.c
+	"httpSrv.h"
+	"wsSrv.h"
+	"logger.c"
+	"std_sock.c"
+	"exe.c"
+	"sock.c"
+	"httpSrv.c"
+	"vos.c"
+	"vs0.c"
+	"vss.c"
+	"coders.c"
+	<signal.h>
+
+1538596590 /mnt/c/prj/vos/wsSrv.h
+	"sock.h"
+	"httpSrv.h"
+
+1533379925 /mnt/c/prj/vos/logger.c
+	"logger.h"
+	<time.h>
+	<stdarg.h>
+	"vos.h"
+
+1570352695 /mnt/c/prj/vos/std_sock.c
+	"vos.h"
+	"vtypes.h"
+	<sys/stat.h>
+
+1533379925 /mnt/c/prj/vos/exe.c
+	"vtypes.h"
+	"coders.h"
+	"vos.h"
+
+1569144614 /mnt/c/prj/vos/sock.c
+	"sock.h"
+	<stdarg.h>
+
+1570563295 /mnt/c/prj/vos/httpSrv.c
+	"httpSrv.h"
+	<stdarg.h>
+	<fcntl.h>
+	<dirent.h>
+
+1533379925 /mnt/c/prj/vos/vos.c
+	"vos.h"
+	"pthread.h"
+	"stdlib.h"
+	"unistd.h"
+	<sys/time.h>
+	<stdio.h>
+	<sys/resource.h>
+	"vos_win.c"
+
+1569144614 /mnt/c/prj/vos/vos_win.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<sys/types.h>
+	<sys/stat.h>
+	"vos.h"
+	<psapi.h>
+	<windows.h>
+
+1569144614 /mnt/c/prj/vos/vs0.c
+	<fcntl.h>
+	"vs0.h"
+	"vos.h"
+	<sys/stat.h>
+	<fcntl.h>
+
+1533379925 /mnt/c/prj/vos/vss.c
+	"vss.h"
+	"vos.h"
+
+1570355857 /mnt/c/prj/vos/coders.c
+	"coders.h"
+	<stdarg.h>
+	"vtypes.h"
+
+1533379925 source:/mnt/c/prj/vos/logger.c
+	"logger.h"
+	<time.h>
+	<stdarg.h>
+	"vos.h"
+
+1569144614 source:/mnt/c/prj/vos/sock.c
+	"sock.h"
+	<stdarg.h>
+
+1570352695 source:/mnt/c/prj/vos/std_sock.c
+	"vos.h"
+	"vtypes.h"
+	<sys/stat.h>
+
+1570355494 source:/mnt/c/prj/vos/strutil.c
+	"coders.h"
+	<stdarg.h>
+
+1533379925 source:/mnt/c/prj/vos/vos.c
+	"vos.h"
+	"pthread.h"
+	"stdlib.h"
+	"unistd.h"
+	<sys/time.h>
+	<stdio.h>
+	<sys/resource.h>
+	"vos_win.c"
+
+1553416108 source:/mnt/c/prj/vos/vos_com_linux.c
+	"vos.h"
+	"stdio.h"
+	"unistd.h"
+	"fcntl.h"
+	<sys/ioctl.h>
+	<sys/types.h>
+	<termios.h>
+
+1569144862 source:/mnt/c/prj/vos/vos_linux_kbhit.c
+	"vos.h"
+	<termios.h>
+	<stropts.h>
+	<stdio.h>
+	<sys/ioctl.h>
+
+1569144614 source:/mnt/c/prj/vos/vs0.c
+	<fcntl.h>
+	"vs0.h"
+	"vos.h"
+	<sys/stat.h>
+	<fcntl.h>
+
+1533379925 source:/mnt/c/prj/vos/vss.c
+	"vss.h"
+	"vos.h"
+
+1573537565 source:/mnt/c/prj/vos/wsSrv.c
+	"httpSrv.h"
+	"wsSrv.h"
+	<openssl/sha.h>
+	"sha1/sha1.h"
+
+1573389959 /mnt/c/prj/vos/sha1/sha1.h
+	"stdint.h"
+
+1573573036 source:/mnt/c/prj/vos/_testHttp.c
+	"vos.h"
+	"sock.h"
+	"stdarg.h"
+	"ssl_sock.c"
+
+1573537599 source:/mnt/c/prj/vos/main.c
+	<stdio.h>
+	<stdlib.h>
+	"strutil.h"
+	"sock.h"
+	"hexdump.c"
+
+1549035463 /mnt/c/prj/vos/hexdump.c
+
+1573572673 /mnt/c/prj/vos/ssl_sock.c
+	"vos.h"
 

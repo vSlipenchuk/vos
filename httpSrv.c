@@ -239,6 +239,7 @@ char buf[1024];
 //strCat(out,"linux unimplemented yet",-1);
 DIR *dirHandle;
 snprintf(buf,sizeof(buf),"%s",dir); // Copy Dir
+//printf("OpenDir for <%s>\n",buf);
 dirHandle = opendir(buf);
 if (!dirHandle) {
     printf("!!!opendir '%s' failed!!!",buf);
@@ -271,7 +272,7 @@ char szPath[MAX_PATH];
 httpSrv *srv = (void*)sock->pool;
 int len;
 snprintf(szPath,sizeof(szPath),"%s/%*.*s",map->data,VSS(req->page));
- // printf("Try file <%s>\n",szPath);
+  //printf("Try file <%s>\n",szPath);
 len = strlen(szPath); strSetLength(&srv->buf,0);
 if (len>0 && szPath[len-1]=='/') { // is Dir!!!
     if (httpGetDirList(req->U,szPath,&srv->buf)>0) { // List Generated
