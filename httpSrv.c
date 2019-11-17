@@ -64,7 +64,7 @@ int SocketMapSortDo(SocketMap **sm1,SocketMap **sm2) {
 return -strcmp(sm1[0]->name,sm2[0]->name); // Самые длинные - первые
 }
 
-SocketMap *httpSrvAddMap(httpSrv *srv, uchar *Name, void *proc, void *Data) { // Такой вот хендлер
+SocketMap *httpSrvAddMapAuth(httpSrv *srv, uchar *Name,httpAuth *auth, void *proc, void *Data) { // Такой вот хендлер
 SocketMap *sm;
 sm = SocketMapNew();
 sm->name = Name;
@@ -72,11 +72,16 @@ sm->page = vssCreate(Name,-1);
 //sm->data = objAddRef(data);
 sm->onRequest = proc;
 sm->data = Data;
+sm->auth = auth;
 // now - push it
 SocketMapPush(&srv->map,sm);
 qsort(srv->map,arrLength(srv->map),sizeof(void*),(void*)SocketMapSortDo);
 //SocketMapClear(&sm);
 return sm; // Return Self
+}
+
+SocketMap *httpSrvAddMap(httpSrv *srv, uchar *Name, void *proc, void *Data) { // Такой вот хендлер
+return httpSrvAddMapAuth(srv,Name,srv->defauth,proc,Data);
 }
 
 int getFileData(char *filename,uchar **out) { // Тупо - пытаемся загрузить файл, если получится - отсылаем, инача - NULL
@@ -326,6 +331,15 @@ char *u=p; p=strchr(u,':'); if (!p) return 0;
 return 1; // no auth yet
 }
 
+int SocketSendHttp401(Socket *sock,char *realm) {
+char buf[200];
+   if (!realm) realm="";
+   snprintf(buf,sizeof(buf),"401 Unauthorized\r\nWWW-Authenticate: Basic realm=\"%s\"",realm);
+return SocketSendHttpCode(sock,0,buf, 0,0 );
+}
+
+
+
 int onHttpClientPacket(uchar *data,int len, Socket *sock) { // CHeck - if packet ready???
 //vssHttp req;
 len = httpReady(data); if (len<=0) return len; // Process protocol error or not ready
@@ -342,8 +356,7 @@ if  (auth_ok && srv->auth) auth_ok = srv->auth(buf,srv);
 srv->userId = auth_ok; // copy
 if (auth_ok<=0) { // unauth
    if (!srv->realm) srv->realm="";
-   snprintf(buf,sizeof(buf),"401 Unauthorized\r\nWWW-Authenticate: Basic realm=\"%s\"",srv->realm);
-   SocketSendHttpCode(sock,&srv->req,buf, 0,0 );
+   SocketSendHttp401(sock,srv->realm);
    return len;
    }
 #endif
@@ -354,6 +367,21 @@ if (!map) {
            VSS(srv->req.page), sock->N,sock->recvNo,sock->szip);
     SocketPrintHttp(sock,&srv->req,"Request#%d '%*.*s' Unmapped. ServerTime:%s",sock->recvNo,VSS(srv->req.page),szTimeNow); // GOOD???
     } else { // Map Found !!!
+    if (map->auth) { // now - check - do we need Auth check?
+        httpAuth *a = map->auth;
+        a->usr=0; // not authorized.
+        if (a->allowIP && strstr(a->allowIP, sock->szip)) a->usr=1; // if found in white list..
+         else { // check auth headers...
+           char buf[100]; // user-pass
+           if ( basicAuth_getUserPass(&srv->req.H,buf,sizeof(buf)) <=0) { SocketSendHttp401(sock,a->realm); return len;} // need headers
+           if ( a->basicUserPass && (!a->login) && a->basicUserPass[0] && strcmp(a->basicUserPass,buf)==0) {  // default basic
+              a->usr=1;
+              }
+           //if (bas)
+
+           }
+        if (!a->usr) { SocketSendHttp401(sock,a->realm); return len;}  // failed or not defined
+        }
     map->onRequest(sock,&srv->req,map); // ProcessThis by a Map
     //SocketPrintHttp(sock,"Request#%d Accepted, MAP=%s, ServerTime:%s",sock->recvNo,map->name, szTimeNow); // GOOD???
     }

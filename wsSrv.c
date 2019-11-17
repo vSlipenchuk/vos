@@ -70,23 +70,56 @@ wsSrv *ws = (void*)sock->parent;
  return 0;
 }
 
+enum { wsNormal=1000,wsNoPeer=1001,wsProtocolError=1002,wsDataError=1003};
+#define wsMAXPACKET 1024
+
+void wsSendClose(Socket *sock,int reason) {
+unsigned char buf[4]={0x08,0x02, reason>>8, reason &0xFF };
+SocketSend(sock,buf,4);
+sock->dieOnSend=1;
+printf("wsClose sock=%d with reason:%d\n",sock->sock,reason);
+}
+
+char *wsUnmask(unsigned char *mask,int l) {
+unsigned char *d = mask+4; // data starts here
+int i; for(i=0;i<l;i++) d[i]=d[i]^mask[i%4];
+return d;
+}
+
 int onWebSocketPacket(unsigned char *data, int len, Socket *sock) {
-if (len == 0) return 0;
+if (len == 0 ) return 0;
 //printf("len=%d data[0]=0x%x\n",len,data[0]);
-//hex_dump("wsRawData",data,len);
-if ( (len>=2) && (data[0]==0x81)) { // small data < 125
-  int l = data[1] & 0x7F;
-  int masked = data[1] >> 7;
-  //printf("l=%d len=%d masked=%d\n",l,len,masked);
-  if ( masked && (len>=l+2+4)) { // ok ready packet
-     int i;
-     unsigned char *mask = data+2;
-     unsigned char *d = data+2+4;
-     for(i=0;i<l;i++) d[i]=d[i]^mask[i%4];
-         wsFireOnMessage(sock,d,l);
-     return l+2+4; // data ready
+hex_dump("wsRawData",data,len);
+if (len<2) return 0; // no data here
+int masked = data[0] >> 7;
+if (!masked) { wsSendClose(sock,wsProtocolError); return len;} // data MUST be masked
+int opcode = data[0]&0x7f;
+if (opcode !=1 ) { wsSendClose(sock,wsProtocolError); return len;} ;// data MUST be text
+int l = data[1] & 0x7F;
+if (l==127) {  // entended len
+     if ( len<2+4+4) return 0; // need ID+LEN+exlen[4]+mask[4]
+     unsigned int  rlen = (data[2]<<24) | (data[3]<<16) | (data[4]<<8) || data[5] ; // real len
+     if (rlen>wsMAXPACKET) {  wsSendClose(sock,wsProtocolError); return len;} ;// too big packet
+     if ( len<2+4+4+rlen) return 0; // not ready yet
+     wsFireOnMessage( sock, wsUnmask(data+6,rlen), rlen);
+     return 2+4+4+rlen; //
      }
-  if ( (!masked) && (len>=l+2)) { // ok ready packet
+  else
+if (l==126) { // extended len 2bytes in len
+     if ( len<4+4) return 0; // need ID+LEN+exlen[2]+mask[4]
+     int  rlen = (data[2]<<8) | data[3]; // real len
+     //printf("realen=%d\n",rlen);
+     if ( len<4+4+rlen) return 0; // not ready yet
+     // printf("realen=%d packetlen=%d\n",rlen,len);
+     wsFireOnMessage( sock, wsUnmask(data+4,rlen),rlen);
+     return 4+4+rlen; //
+     }
+  else {
+  if ( len<l+2+4 ) return 0;
+  wsFireOnMessage( sock, wsUnmask(data+2,l),l);
+  return l+2+4; // data ready
+  }
+  /*if ( (!masked) && (len>=l+2)) { // ok ready packet
      //int i;
      //unsigned char *mask = data+2;
      unsigned char *d = data+2;
@@ -95,9 +128,9 @@ if ( (len>=2) && (data[0]==0x81)) { // small data < 125
      //printf("wsString:<%*.*s>",l,l,d);
      return l+2; // data ready
      }
-  }
-hexdump("WebSocket -> wsUnknownData",data,len);
-  // PING + PONG ? example: 88 82 52 5A E6 26 51 B3
+    }
+*/
+hexdump("WebSocket -> wsUnknownData",data,len); // never reach it?
 return 0;
 } ; // to do
 

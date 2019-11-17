@@ -152,7 +152,7 @@ if (sock->state == sockNone) return 0;
 //printf("SocketRun %p\n",sock);
 SocketPool *srv = sock->pool;
 //printf("Run on pool %p\n",srv);
-    sock->readable = sock_readable(sock->sock);
+    sock->readable = sock_readable(sock->sock) && !sock->dieOnSend; // can read and no request to kill
    // if ( sock->readable ) printf("readable!\n");
     sock->writable = sock_writable(sock->sock);
     //if ( sock->writable) printf("writable!\n");

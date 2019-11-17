@@ -7,12 +7,21 @@
 #include "sock.h"
 #include "vss.h"
 
+typedef struct _httpAuth {
+   char *realm;
+   int  (*login)(char *UserPass,struct _httpAuth *auth); // if defined - check it
+   char *basicUserPass; // user:password for local authorization (mapped to login=1)
+   char *allowIP; // iplist, authorized in login 1 (=null means no ip authorizations
+   int  usr;      // lastUser id returned by httpAuth
+   } httpAuth;
+
 typedef struct { // Маппер используется для соответствия URL (или SOAP)
     uchar *name; // Точка линковки мапа
     uchar *data; // Произвольные данные
     vss page; // == Name для ускорения поиска
     int enabled; // Можно включать-выключать "на лету"
     int (*onRequest)(); // Сокет, Сам Мар - функция, которая вызывается
+    struct _httpAuth *auth; // if assigned - than required local IP or Authorization header
     } SocketMap;
 
 VS0OBJH(SocketMap);
@@ -43,6 +52,7 @@ typedef struct _httpSrv {
     time_t created; // When it has beed created -)))
     time_t runTill;
     void *handle; // any user defined handle
+    httpAuth *defauth; // default auth for all maps
 #ifdef HTTPSRV_AUTH
     char *realm; // report on 401 Unauthorized
     int  (*auth)(char *UserPass, struct _httpSrv *); // user:password, func must return >0 on success
@@ -56,6 +66,7 @@ VS0OBJH(httpMime);
 
 httpSrv   *httpSrvCreate(char *ini); // Создание сервера http
 SocketMap *httpSrvAddMap(httpSrv *srv, uchar *Name, void *proc, void *Data); // Такой вот хендлер
+SocketMap *httpSrvAddMapAuth(httpSrv *srv, uchar *Name,httpAuth *auth, void *proc, void *Data);
 SocketMap *httpSrvAddFS1(httpSrv *srv,uchar *url,uchar *path); // Add One FileMapping
 SocketMap *httpSrvAddRedirect(httpSrv *srv,uchar *Name,uchar *Host); // Adds New Mapping for a host
 int httpSrvAddFS(httpSrv *srv,uchar * url,...);
