@@ -187,9 +187,34 @@ if (ws->readLimit.Limit) sock->readPacket = &ws->readLimit; // SetLimiter here
 return 1;
 }
 
+int utf8_peek(char *d,char *s,int l);
+
+int utf8_valid(char *d,char *s, int l) { // validates source as utf8 and fills ok chars
+int r = 0;
+if (l<0) l = strlen(s);
+while(l>0) {
+  char U[6];
+  int len = utf8_peek(U,s,l);
+ //printf("LEN:%d for %02x %02x REST:%d\n",len,s[0],s[1],l);
+  if (len<0) { s++; l--; continue; } // just skip invalid
+  if (d) { memcpy(d,s,len); d+=len;}
+  s+=len; r+=len; l-=len; // ok, check next
+  }
+if (d) *d=0;
+return r;
+}
+
 int wsPutStr(Socket *sock, char *data,int len) {
 //char ch=0;
 if (len<0) len = strlen(data);
+int ulen = utf8_valid(0,data,len);
+if (ulen!=len) { // not utf8 - send only 254 first valid
+   char buf[256];
+   printf("ws-correcting len=%d to ulen=%d\n",len,ulen);
+   if (len>sizeof(buf)-1) len=sizeof(buf)-1;
+   len = utf8_valid(buf,data,len); data=buf;
+   }
+ // clear, only valid data here
   //char h[]={0x81,0x05,0x48,0x65,0x6c,0x6c,0x6f}; strCat(&sock->out,h,7); //data,len);
 //if (len>=125) len=125; // ZUZU - trim as is
 if (len<=125) {
