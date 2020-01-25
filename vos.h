@@ -74,6 +74,7 @@ int sock_accept(int lsock, int *ip);
 int sock_readable(int sock);
 int sock_writable(int sock);
 int sock_close(int sock);
+int sock_read(int sock, char *buf, int len);
 int _sock_connect(int sock, char *cs,int cl, int port);
 
 

@@ -99,9 +99,9 @@ uchar *strNew(uchar *data,int len); // Создание новой строки
 uchar *strLoad(uchar *filename); // Загружает строку из файла, NULL при ошибке
 int    strSave(uchar *str, uchar *filename); // -1 при ошибке, иначе - размер файла
 int strDelete(uchar **str,int pos,int len); // Возвращает - количество удаленных
-uchar *strCat(uchar **str, uchar *data, int len); // Добавить в буффер
+uchar *strCat(char **str, uchar *data, int len); // Добавить в буффер
 uchar *strCatFile(uchar **Str,uchar *filename); // Добавляет в строку, загружая ее из файла
-uchar *strCatD(uchar **str, uchar *src, int len, int (*decoder)()); // Добавить с декодированием
+uchar *strCatD(char **str, uchar *src, int len, int (*decoder)()); // Добавить с декодированием
 int    strLength(uchar *str); // Длина строки
 int    strSetLength(uchar **str, int len); // NewLength
 

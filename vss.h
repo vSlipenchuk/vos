@@ -78,4 +78,11 @@ int vssGetMimeHeader(vss  *src, vss *name, vss *val) ; // Вытаскивает MimeHeader
 int vsslcmp(vss *src, char *name); // chage a shift ( like vssLcmp+)
 int VSSVSS(vss v1,vss v2); // finds occurence v2 in v1 (returns position or <0
 
+// json_data parser
+
+enum { jsonNone, jsonDel, jsonGrp, jsonStruct, jsonArray, jsonString }; // types
+int json_data(vss *src,vss *name,vss *data,int *type); // -1 error, 0 - not enough data, >0 requested stream length
+int json_get_by_name(vss s, char *name,char *buf, int size);
+
+
 #endif //VSS_H

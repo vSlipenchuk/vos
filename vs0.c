@@ -149,7 +149,7 @@ return str;
 }
 
 
-uchar *strCat(uchar **str, uchar *data, int len) { // Добавить в буффер
+uchar *strCat(char **str, uchar *data, int len) { // Добавить в буффер
 uchar *d;
 if (!str) return 0;
 if (len<0) { len = data?strlen((char*)data):0; }; // Автовычисление длины
@@ -166,7 +166,7 @@ obj2head(*str)->len--;
 return d;
 }
 
-uchar *strCatD(uchar **str, uchar *src, int len, int (*decoder)()) {
+uchar *strCatD(char **str, uchar *src, int len, int (*decoder)()) {
 int sz; uchar *d;
 if (len<0) len = strlen((char*)src); // Длина для кодирования
 sz = decoder(0,src,len); // Определяем длину выходного буфера

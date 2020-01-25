@@ -10,7 +10,7 @@
 
 #define fprintf null
 
-void inline null(FILE *f,...) {}
+void  null(FILE *f,...) {}
 
 
 void SSLStateMachine_print_error(SSLStateMachine *pMachine,const char *szErr)
