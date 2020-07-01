@@ -1,4 +1,4 @@
-int hex_dump(char *msg,uchar *s,int len) {
+int hex_dump(char *msg,char *s,int len) {
 int i;
  printf("%-30s[%d]\n",msg,len);
  while(len>0) {
@@ -13,10 +13,10 @@ return 0;
 }
 
 
-int hexdump(char *msg,uchar *s,int len) {
+int hexdump(char *msg,char *s,int len) {
 int i;
  printf("\n%s[%d]:",msg,len);
- for(i=0;i<len;i++) printf("%02x ",s[i]);
+ for(i=0;i<len;i++) printf("%02x ",(unsigned char)s[i]);
  printf("\n");
 return 0;
 }

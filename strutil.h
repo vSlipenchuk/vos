@@ -11,7 +11,7 @@ int get_int(char **str); //@strutil.c
 
 int gsm2utf(char *out,char *ucs2,int len) ;
 
-int hexdump(char *msg,uchar *s,int len);
+int hexdump(char *msg,char *s,int len);
 int hexstr2bin_(char *out,int out_sz,char *in, int len);
 
 char *get_row(char **tbl); //@strutil.c

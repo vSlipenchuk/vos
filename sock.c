@@ -334,7 +334,7 @@ strCat(&sock->out,data,len); // Push it & Forget???
 return len;
 }
 
-int SocketSendf(Socket *sock,uchar *fmt,...) {
+int SocketSendf(Socket *sock,char *fmt,...) {
 char buf[1024];
 BUF_FMT(buf,fmt);
 return SocketSend(sock,buf,-1);

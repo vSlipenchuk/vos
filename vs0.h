@@ -35,7 +35,7 @@ enum objClassTyp {
 
 typedef struct packed { // Мета описатель класса
     int typ;     // Маска - см objClassTyp
-    uchar *name;  // Имя - статическое для статических и динамическое для динамических
+    char *name;  // Имя - статическое для статических и динамическое для динамических
     int size1;   // единица объема для инстанса класса
     void (*done)(); // Ссылка на деструктор единицы объекта
     void **par;    // Список дочерних полей - параметров
@@ -64,7 +64,7 @@ extern pClass IntegerClass,ByteClass,NumberClass,DateClass,StringClass,BlobClass
 
 typedef struct { // Cтруктура для именованых хешей
     void  *owner; // Владелец ссылки
-    uchar *name; // Имя - если ссылка именованная
+    char *name; // Имя - если ссылка именованная
     void  *data;  // Если ссыла на значение (child)
     } objRef;
 

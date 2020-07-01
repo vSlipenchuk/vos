@@ -52,11 +52,12 @@ typedef struct { // Это будет структура - сокет
     time_t modified; // Last read or write time
     void *parent; // This is parent structure
     struct _SocketPool *pool; // if socket in a pool???
-    uchar name[80]; int logLevel; void *log;
-    uchar status[80]; // last line for text messages
+    char name[80]; int logLevel; void *log;
+    char status[80]; // last line for text messages
     int   code; // status code (assoc)
     int   lineMode; // lineMode '\r\n' or '\r\n.\r\n'
     void *handle; // any use
+    void *auth; // authinfo if need to atuhoriztions of session
     } Socket;
 
 uchar *ip2szbuf(int ip,uchar *buf);
@@ -96,7 +97,7 @@ int socketConnectNow(Socket *Sock, char *host, int defPort) ; // Синхронный конн
 int SocketSendDataNow(Socket *sock, void *data, int len); // Adds data to out & try send() it now
 
 int SocketSend(Socket *sock,void *data,int len);
-int SocketSendf(Socket *sock,uchar *fmt,...);
+int SocketSendf(Socket *sock,char *fmt,...);
 int SocketPoolRun(SocketPool *p); // Запускает асинхронные отсылки - приемы для каждого сокета
 //int socketConnect(Socket *Sock, char *host, int defPort);
 int SocketListen(Socket *Sock, int port) ; // Создаем слушателя...

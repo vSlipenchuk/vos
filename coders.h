@@ -6,7 +6,7 @@
 
 int gsm2utf(char *out,char *ucs2,int len) ;
 
-int hexdump(char *msg,uchar *s,int len);
+int hexdump(char *msg,char *s,int len);
 //int hexstr2bin_(unsigned char *out,int out_sz,unsigned char *in, int len);
 
 #include "strutil.h"
@@ -186,7 +186,7 @@ int prn_sms(t_sms *sm);
 int sms_put_addr2(char *dst, char *addr);
 
 // Дебуг
-int hex_dump(char *msg,uchar *s,int len); // где лежит???
+int hex_dump(char *msg,char *s,int len); // где лежит???
 
 // some utf8 coders
 
